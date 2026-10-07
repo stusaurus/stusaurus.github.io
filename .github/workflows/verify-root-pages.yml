@@ -1,0 +1,32 @@
+name: Verify root Pages delivery
+
+on:
+  push:
+    paths:
+      - ".github/workflows/verify-root-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify root files over public HTTPS
+        shell: bash
+        run: |
+          set -u
+          for url in             "https://stusaurus.github.io/"             "https://stusaurus.github.io/robots.txt"             "https://stusaurus.github.io/sitemap.xml"             "https://stusaurus.github.io/sitemap-index.xml"
+          do
+            echo "===== $url ====="
+            for i in 1 2 3 4 5; do
+              code=$(curl -L --max-time 20 --connect-timeout 10 -sS                 -o /tmp/body -D /tmp/headers -w '%{http_code}' "$url" || echo CURL_ERROR)
+              echo "TRY=$i CODE=$code BYTES=$(wc -c </tmp/body 2>/dev/null || echo 0)"
+              grep -Ei '^(HTTP/|content-type:|content-length:|cache-control:|etag:|last-modified:|location:)' /tmp/headers || true
+              head -c 180 /tmp/body 2>/dev/null | tr '\n' ' '; echo
+              [ "$code" = "200" ] && break
+              sleep 3
+            done
+          done
