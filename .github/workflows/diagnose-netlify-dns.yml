@@ -1,0 +1,33 @@
+name: Diagnose Netlify Public DNS
+
+on:
+  push:
+    paths:
+      - ".github/workflows/diagnose-netlify-dns.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe DNS and HTTP
+        shell: bash
+        run: |
+          set -u
+          for host in stirring-crepe-326292.netlify.app daily-cost-api.netlify.app netlify.app; do
+            echo "===== DNS: $host ====="
+            getent ahosts "$host" | head -n 4 || true
+            echo "===== HTTPS: $host ====="
+            curl -sSL --connect-timeout 5 --max-time 15               -o /tmp/netlify-body -D /tmp/netlify-headers               -w "code=%{http_code} ip=%{remote_ip} type=%{content_type} final=%{url_effective}\n"               "https://$host/" || echo "curl failed"
+            grep -Ei '^(HTTP/|content-type:|location:|server:)' /tmp/netlify-headers | tail -n 6 || true
+            head -c 160 /tmp/netlify-body 2>/dev/null | tr '\n' ' '; echo
+          done
+          for path in sitemap.xml sitemap.txt robots.txt googlef35e71acece62b67.html; do
+            echo "===== TARGET $path ====="
+            curl -sSL --connect-timeout 5 --max-time 15               -o /tmp/netlify-body -D /tmp/netlify-headers               -w "code=%{http_code} ip=%{remote_ip} type=%{content_type}\n"               "https://stirring-crepe-326292.netlify.app/$path" || echo "curl failed"
+            head -c 160 /tmp/netlify-body 2>/dev/null | tr '\n' ' '; echo
+          done
