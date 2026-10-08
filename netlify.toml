@@ -1,0 +1,3 @@
+[build]
+  command = "node tools/build-netlify-test.cjs"
+  publish = ".netlify-gsc-site"
