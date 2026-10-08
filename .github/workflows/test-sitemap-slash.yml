@@ -1,0 +1,24 @@
+name: Test sitemap trailing slash
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test-sitemap-slash.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe sitemap paths
+        shell: bash
+        run: |
+          for u in             "https://stusaurus.github.io/sitemap.xml"             "https://stusaurus.github.io/sitemap.xml/"             "https://stusaurus.github.io/sitemap.txt"             "https://stusaurus.github.io/sitemap.txt/"
+          do
+            echo "=== $u ==="
+            curl -L -sS -o /tmp/b -D /tmp/h -w 'code=%{http_code} type=%{content_type} url=%{url_effective} bytes=%{size_download}\n' "$u" || true
+            grep -Ei '^(HTTP/|content-type:|location:)' /tmp/h || true
+            head -c 100 /tmp/b | tr '\n' ' '; echo
+          done
