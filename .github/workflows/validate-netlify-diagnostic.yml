@@ -1,0 +1,34 @@
+name: Validate Netlify Sitemap Diagnostic
+on:
+  push:
+    paths:
+      - ".github/workflows/validate-netlify-diagnostic.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Generate standalone diagnostic site
+        run: URL=https://sample-diagnostic.netlify.app node tools/build-netlify-test.cjs
+      - name: Check URLs and XML
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          root=Path(".netlify-gsc-site")
+          assert (root/"index.html").exists()
+          assert (root/"robots.txt").exists()
+          doc=ET.parse(root/"sitemap.xml")
+          ns="{http://www.sitemaps.org/schemas/sitemap/0.9}"
+          locs=[x.text for x in doc.findall(f"{ns}url/{ns}loc")]
+          assert locs == ["https://sample-diagnostic.netlify.app/"], locs
+          assert (root/"sitemap.txt").read_text().strip() == locs[0]
+          assert "google-site-verification" in (root/"googlef35e71acece62b67.html").read_text()
+          print("PASS: standalone origin and sitemap, verification, index page")
+          PY
