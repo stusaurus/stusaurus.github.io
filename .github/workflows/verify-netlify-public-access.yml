@@ -1,0 +1,25 @@
+name: Verify Public Netlify After Access Change
+on:
+  push:
+    paths:
+      - ".github/workflows/verify-netlify-public-access.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Diagnose Netlify endpoints
+        shell: bash
+        run: |
+          set -u
+          base="https://stirring-crepe-326292.netlify.app"
+          for path in / /sitemap.xml /sitemap.txt /robots.txt /googlef35e71acece62b67.html; do
+            url="${base}${path}"
+            echo "===== URL: ${url} ====="
+            curl -L --connect-timeout 10 --max-time 25 -sS -D /tmp/resp_headers               -o /tmp/resp_body               -w 'http=%{http_code} url=%{url_effective} type=%{content_type} size=%{size_download}\n'               "${url}" || true
+            grep -Ei '^(HTTP/|content-type:|location:|server:|x-nf-request-id:)' /tmp/resp_headers | tail -n 10 || true
+            head -c 450 /tmp/resp_body 2>/dev/null | tr '\n' ' '; echo
+          done
