@@ -1,0 +1,1449 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>フリコ・クエスト｜振り子と振動</title>
+<style>
+:root{--bg:#0b1528;--panel:#111e36;--panel2:#182a46;--ink:#f2f6ff;--sub:#b0c6e6;--line:#344862;--cyan:#64dfeb;--amber:#ffcb77;--green:#86e3a7;--pink:#f7a6c0;--round:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;background:radial-gradient(circle at 80% -100px,#1b4770 0,transparent 31%),radial-gradient(circle at 9% 18%,#2d244b 0,transparent 38%),var(--bg);line-height:1.6;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--cyan)}
+.wrap{max-width:1240px;margin:auto;padding:22px 20px 65px}.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:20px}.brand{display:flex;gap:14px;align-items:center}.sigil{width:62px;height:62px;border-radius:19px;background:linear-gradient(145deg,#53d0e1,#9fdcb2);color:#0c2638;display:grid;place-items:center;font-weight:900;font-size:32px;box-shadow:0 10px 30px #0005}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-size:11px;font-weight:800}.brand h1{margin:-5px 0 0;font-size:clamp(24px,3.4vw,39px);letter-spacing:.015em;line-height:1.3}.brand p{margin:2px 0 0;color:var(--sub);font-size:13px}.status{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}.pill{background:#152940;border:1px solid var(--line);padding:9px 13px;border-radius:99px;font-size:13px;color:#dceaf9}.pill strong{color:var(--amber);font-size:16px}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;background:linear-gradient(120deg,#1c3657,#112139 70%);border:1px solid #3b5b7a;border-radius:28px;padding:23px 30px;position:relative;overflow:hidden;margin-bottom:16px}.hero:after{content:"";position:absolute;width:220px;height:220px;border:2px solid #9bdfe11a;border-radius:50%;right:-40px;top:-80px;box-shadow:0 0 0 30px #9bdfe108,0 0 0 60px #9bdfe108;pointer-events:none}.hero h2{font-size:clamp(20px,2.5vw,28px);margin:3px 0 6px}.hero p{color:#cfdef2;margin:0;font-size:14px}.progress-area{align-self:center;z-index:1}.progress-label{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:7px}.progress-label b{color:var(--amber)}.bar{height:12px;background:#091a2b;border:1px solid #426681;border-radius:50px;overflow:hidden}.bar>span{display:block;height:100%;background:linear-gradient(90deg,#37bdd7,#98eab7);width:0;transition:width .4s}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}.tab{border:1px solid #3b5271;border-radius:14px;padding:11px 18px;background:#172a42;color:#d6e2ef;font-weight:800;transition:.15s}.tab:hover{transform:translateY(-1px);background:#213954}.tab[aria-current="page"]{background:var(--cyan);color:#0c2535;border-color:var(--cyan)}
+.main{min-height:590px}.columns{display:grid;grid-template-columns:325px minmax(0,1fr);gap:20px;align-items:start}.panel{background:linear-gradient(155deg,#172840,#101d31);border:1px solid var(--line);border-radius:var(--round);box-shadow:0 12px 34px #00000020;overflow:hidden}.panelpad{padding:23px}.section-kicker{color:var(--amber);font-size:12px;font-weight:900;letter-spacing:.15em}.section-title{margin:2px 0 7px;font-size:23px;line-height:1.4}.muted{color:var(--sub)}.mini{font-size:13px}.missionlist{padding:16px}.list-heading{font-size:12px;letter-spacing:.14em;color:var(--cyan);font-weight:900;margin:16px 4px 7px}.list-heading:first-child{margin-top:0}.mission{border:1px solid transparent;background:transparent;color:#dce7f5;border-radius:12px;width:100%;padding:11px 12px;text-align:left;display:flex;gap:11px;align-items:center}.mission:hover{background:#263b56}.mission.active{background:#26425a;border-color:#61bac0}.mission .num{color:var(--cyan);font-weight:900;min-width:27px;font-size:12px}.mission .mission-text{flex:1;min-width:0}.mission .mission-text b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mission .mission-text span{display:block;font-size:11px;color:#97afcd}.mission .starmark{color:var(--amber);font-size:12px;white-space:nowrap}
+.headline{display:flex;gap:15px;align-items:flex-start;justify-content:space-between}.headline .page{border-radius:12px;color:#c5e5ed;background:#244a62;padding:7px 10px;font-size:12px;white-space:nowrap;font-weight:800}.brief{margin:13px 0 15px;font-size:16px;color:#eaf5fc}.visual-frame{border:1px solid #33546d;background:linear-gradient(130deg,#0e2d45,#12263f);border-radius:17px;padding:7px;overflow:hidden}.visual-frame canvas{display:block;width:100%;height:auto;border-radius:12px}.controls{padding:17px;margin-top:15px;background:#0c1a2b;border:1px solid #2a4158;border-radius:15px}.control-head{font-size:13px;color:#e1effb;font-weight:900;margin-bottom:12px}.control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.control-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.range-field{min-width:0}.range-label{display:flex;justify-content:space-between;align-items:center;gap:4px;color:#b9cee7;font-size:12px;margin-bottom:4px}.range-label output{color:#fff;font-weight:900;white-space:nowrap}.range-field input{width:100%;accent-color:var(--cyan);cursor:pointer}.mission-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{border:none;border-radius:12px;padding:12px 17px;font-weight:900;line-height:1.4}.btn.primary{background:linear-gradient(115deg,#74e9e9,#9eedc1);color:#0d2a32}.btn.secondary{background:#304866;color:#e7f4fd;border:1px solid #55718b}.btn.amber{background:var(--amber);color:#332410}.btn:hover:not(:disabled){filter:brightness(1.08)}.tip{font-size:13px;color:#bdcce1;border-left:3px solid var(--amber);padding-left:11px;margin-top:16px}.feedback{padding:14px 17px;border-radius:15px;margin-top:13px;background:#19334a;border:1px solid #4a6681;display:none}.feedback.show{display:block}.feedback.good{border-color:#67c7a0;background:#1c493f}.feedback.bad{border-color:#db999b;background:#502d40}.feedback b{color:#f8fafc}.feedback p{margin:4px 0 0;font-size:13px}.new-knowledge{margin-top:14px;border:1px dashed #526881;border-radius:12px;padding:13px 15px;color:#d4e9f9;font-size:13px}.new-knowledge strong{color:var(--amber)}.choicegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.choicebtn{padding:13px 9px;border-radius:12px;color:#e4f4fc;background:#273a55;border:1px solid #56708d;font-weight:800;min-height:62px}.choicebtn:hover{background:#31516a}.choicebtn.selected{border-color:var(--cyan);background:#1c5d67}.side-stats{padding:15px 21px;background:#122236;border-top:1px solid var(--line);font-size:12px;color:var(--sub)}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lab-card{padding:22px}.lab-card p{font-size:14px;color:#bad0e8}.lab-card h3{font-size:21px;margin:0 0 7px}.lab-card .visual-frame{margin:10px 0}.note{padding:14px;border-radius:14px;background:#142e46;border:1px solid #3c6881;color:#d5e6f5;font-size:13px}.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}.stat{border-radius:10px;background:#203750;padding:8px 9px;text-align:center}.stat span{display:block;color:#c2d6eb;font-size:11px}.stat b{color:var(--amber);font-size:18px}
+.quiz-shell{max-width:870px;margin:auto}.quizfilter{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}.filter{border:1px solid #56718d;background:#172d43;color:#d9eafa;border-radius:12px;padding:9px 14px;font-weight:800}.filter.active{color:#062b37;background:var(--cyan);border-color:var(--cyan)}.quizbox{padding:26px}.quizbox .qnum{color:var(--amber);font-size:13px;font-weight:900}.quizbox h3{font-size:clamp(19px,2.4vw,26px);line-height:1.6;margin:12px 0 21px}.answers{display:grid;gap:10px}.answer{display:flex;align-items:center;gap:12px;text-align:left;min-height:57px;background:#1c3350;border:1px solid #48617e;color:#e6f3ff;border-radius:13px;padding:12px 14px}.answer .letter{display:grid;place-items:center;flex-shrink:0;width:27px;height:27px;border-radius:8px;background:#314d6b;color:#b9dcea;font-weight:900}.answer:hover:not(:disabled){background:#2b4d69}.answer.right{background:#205546;border-color:#7ee8ac}.answer.wrong{background:#66333a;border-color:#ffaaa9}.quiz-control{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:16px}.quiz-msg{font-size:13px;color:#bfd8e9}.quiz-results{border:1px solid #56718d;background:#162c44;padding:17px;border-radius:13px;margin-top:17px}
+.teacher-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:18px}.coverage{width:100%;border-collapse:collapse;font-size:13px}.coverage th,.coverage td{padding:10px;border-bottom:1px solid #324760;text-align:left;vertical-align:top}.coverage th{color:var(--cyan);font-size:12px}.coverage td:first-child{white-space:nowrap;color:var(--amber);font-weight:900}.bullet{margin:12px 0;padding-left:21px;color:#d7e7f6;font-size:14px}.bullet li{margin:8px 0}.footer{margin-top:23px;font-size:12px;color:#95abc7}.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.spacer{height:10px}.em{color:var(--amber)}.mobile-select{display:none;max-width:100%;border:1px solid #607d97;border-radius:11px;background:#1c3853;color:#f3faff;padding:10px;margin:13px 0;font-weight:800}.graph-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.wave-card{min-width:0;padding:7px 5px;border:1px solid #4a6982;border-radius:10px;text-align:center;font-weight:900;color:#e0f1fb}.wave-card svg{display:block;width:100%;height:42px}.graph-choice{display:flex;flex-wrap:wrap;gap:8px}.graph-choice button{flex:1;min-width:44px}@media(max-width:980px){.mobile-select{display:block}}
+@media(max-width:980px){.columns{display:flex;flex-direction:column-reverse}.columns>aside,.columns>section{width:100%}.missionlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.list-heading{grid-column:1/-1}.teacher-grid{grid-template-columns:1fr}}@media(max-width:700px){.wrap{padding:13px 11px 42px}.topbar{display:block}.status{justify-content:flex-start;margin-top:13px}.hero{grid-template-columns:1fr;padding:18px}.hero p{font-size:13px}.tabs{display:grid;grid-template-columns:repeat(2,1fr)}.tab{padding:10px}.missionlist{grid-template-columns:1fr}.panelpad,.quizbox{padding:18px}.control-grid,.control-grid.two{grid-template-columns:1fr;gap:15px}.range-field{display:block}.range-label{font-size:13px}.choicegrid{grid-template-columns:1fr}.choicebtn{min-height:45px}.graph-grid{gap:4px}.wave-card{padding:4px 1px;font-size:11px}.wave-card svg{height:30px}.lab-grid{grid-template-columns:1fr}.headline{display:block}.headline .page{display:inline-block;margin-top:8px}.coverage{font-size:11px}.coverage th,.coverage td{padding:8px 5px}}
+@media(max-width:700px){.columns>aside{display:none}.tip summary,.new-knowledge summary{cursor:pointer}.tip p,.new-knowledge p{margin:8px 0 0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+
+
+/* v0.3: physics-safe fall experiments, controlled variables */
+.challenge-ribbon{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 13px}
+.challenge-tag{font-size:11px;letter-spacing:.04em;border:1px solid #69d6d1;background:#14484f;color:#b5fff2;padding:5px 11px;border-radius:999px;font-weight:900}
+.challenge-tag.activity{border-color:#e9be7c;background:#4c3424;color:#ffe1ad}
+.challenge-ribbon .muted{font-size:12px}
+.game-callout{background:#1b3148;padding:13px 15px;border:1px solid #456681;border-radius:13px;margin:10px 0;color:#f5f8ff;font-weight:800;font-size:14px}
+.game-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.game-row>.btn{flex:1;min-width:140px}
+.step-track{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0}
+.step-dot{min-width:40px;padding:8px 10px;border:1px solid #6f8299;background:#233b54;border-radius:11px;font-size:12px;text-align:center}
+.step-dot.done{border-color:#8debb9;background:#205346;color:#e4ffee}
+.melody-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.note-card{border:1px solid #476b87;background:#19384f;border-radius:13px;padding:10px;min-width:0;color:#effaff;text-align:center}
+.note-card:focus-visible,.piece:focus-visible{outline:3px solid var(--amber)}
+.note-card svg{display:block;height:42px;width:100%}.note-card>span{display:block;font-size:12px;margin-top:7px}
+.piece-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.piece{min-height:55px;border-radius:13px;background:#28445e;color:#e6f5ff;border:1px solid #4f738d;padding:9px;font-weight:900}
+.piece:disabled{opacity:.42;filter:grayscale(.7)}
+.room-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.room-wall{background:#173147;border:1px solid #4c728c;border-radius:14px;padding:10px}
+.room-wall strong{font-size:13px;display:block;margin-bottom:7px}
+.room-wall select{width:100%;background:#304c65;color:white;border:1px solid #648aa2;border-radius:9px;padding:10px;font-size:13px}
+.challenge-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.challenge-result .stat{padding:12px 7px}
+@media(max-width:700px){.melody-row{grid-template-columns:1fr 1fr 1fr}.note-card{padding:7px 3px}.note-card svg{height:30px}.note-card span{font-size:11px}.room-grid{grid-template-columns:1fr}.piece-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* v0.4: gameplay-first bonus missions */
+.boss-home{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0}
+.boss-tile{position:relative;display:flex;flex-direction:column;gap:9px;padding:22px;border:1px solid #52728c;border-radius:20px;background:linear-gradient(135deg,#153957,#1d253e);text-align:left;color:var(--ink);min-height:176px;overflow:hidden}
+.boss-tile:after{content:"";position:absolute;width:130px;height:130px;border:2px solid #84e8e518;border-radius:50%;right:-25px;bottom:-72px}
+.boss-tile strong{font-size:21px}.boss-tile span{font-size:13px;color:#c3d8eb}.boss-tile em{font-size:13px;color:#ffcc75;font-style:normal;font-weight:900}
+.boss-tile.active{border-color:var(--cyan);box-shadow:inset 0 0 0 1px #71dfe6}.boss-tile:hover{transform:translateY(-2px)}
+.boss-header{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:13px}
+.boss-main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(245px,.7fr);gap:17px}
+.boss-work{padding:19px}.boss-notes{padding:19px}.boss-notes h4{margin:5px 0 11px;color:var(--amber)}.boss-notes p{font-size:13px;color:#cbdff0}
+.boss-phase{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.boss-phase span{border-radius:99px;background:#1c344b;border:1px solid #48627e;padding:7px 11px;font-size:12px;color:#d0e5f4}.boss-phase .active{border-color:#f6cf79;background:#664d29;color:#fff5d5}.boss-phase .done{background:#245a4a;border-color:#79ddbb}
+.boss-callout{padding:13px 15px;border-radius:13px;background:#203d51;border:1px solid #46748d;color:#eef9ff;font-size:14px;margin:12px 0}
+.boss-hud{display:flex;justify-content:space-around;gap:9px;flex-wrap:wrap;margin:11px 0}.boss-chip{flex:1;min-width:105px;border-radius:12px;background:#243b50;padding:9px;text-align:center}.boss-chip b{display:block;font-size:20px;color:#ffc86b}.boss-chip span{font-size:12px;color:#bfd5ea}
+.boss-slider{margin:16px 0}.boss-slider input{width:100%;accent-color:#6ce3e7}.boss-meter{height:13px;border-radius:15px;border:1px solid #516f87;background:linear-gradient(90deg,#2e597d,#39657d);overflow:hidden}.boss-meter span{display:block;height:100%;background:linear-gradient(90deg,#71dce5,#ffe0a1);transition:width .2s}
+.boss-graphic{border:1px solid #3d6181;background:#0d283c;border-radius:17px;padding:7px;overflow:hidden}.boss-graphic canvas{width:100%;height:auto;display:block;border-radius:10px}
+.boss-feedback{min-height:40px;margin-top:12px;padding:12px 14px;background:#1d3449;border:1px solid #446981;border-radius:12px;font-size:14px}.boss-feedback.positive{background:#1b5046;border-color:#64cc9c}.boss-feedback.negative{background:#502e40;border-color:#dd9a9b}
+.signal-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;width:100%;max-width:610px;margin:14px auto;padding:12px;border-radius:18px;background:#0d293d;border:1px solid #365c7c}
+.signal-tile{position:relative;min-width:0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border:1px solid #36536b;border-radius:10px;background:#173449;color:#f1f9ff;font-weight:900;font-size:clamp(16px,3.1vw,28px);padding:0}
+.signal-tile.source{background:#1b5264;color:#ffe1aa}.signal-tile.target{background:#3c345e;color:#ffeaab}.signal-tile.absorber{background:repeating-linear-gradient(45deg,#2b3b49,#2b3b49 6px,#334455 6px,#334455 12px);color:#b2c1c9}.signal-tile.mirror{border:2px solid #d3b874;background:#4b4258;color:#fff1c9;cursor:pointer;font-size:clamp(29px,5vw,44px)}.signal-tile.mirror:focus-visible{outline:3px solid #ffe59d}.signal-tile.traced{box-shadow:inset 0 0 0 3px #7de4dd}.signal-tile.target.traced{background:#39644f}.signal-tile.absorber.traced{box-shadow:inset 0 0 0 3px #f6a1a1}.signal-tile small{position:absolute;bottom:1px;right:4px;font-size:9px;opacity:.82}
+.boss-room-title{font-weight:900;color:#f5d18d}.boss-caption{font-size:12px;color:#b2d0e4}.boss-result{border:1px solid #6dcbad;border-radius:15px;padding:18px;background:linear-gradient(125deg,#1c4d40,#13344a);margin:10px 0}.boss-result h3{margin:0 0 8px;font-size:22px}.boss-result p{margin:0 0 8px;font-size:14px}
+@media (max-width:800px){.boss-main{grid-template-columns:1fr}.boss-home{grid-template-columns:1fr}.boss-tile{min-height:120px}.boss-work,.boss-notes{padding:16px}}
+@media(max-width:430px){.signal-board{gap:3px;padding:7px}.signal-tile{border-radius:6px}.boss-tile strong{font-size:19px}.boss-chip{min-width:89px}.boss-chip b{font-size:17px}}
+
+
+/* v0.5: chapter adventure map + story + knowledge seals */
+.story-hero{background:linear-gradient(130deg,#243556,#14243d 58%,#123b45);border:1px solid #618395;border-radius:26px;overflow:hidden;position:relative;padding:26px;margin-bottom:15px}
+.story-hero:before{content:"";position:absolute;top:-110px;right:-25px;width:340px;height:340px;border-radius:50%;border:1px solid #ffffff20;box-shadow:0 0 0 38px #8bdde309,0 0 0 77px #8bdde309;pointer-events:none}
+.story-head{display:grid;grid-template-columns:1.45fr .55fr;gap:16px;align-items:center;position:relative;z-index:1}
+.story-head h2{font-size:clamp(23px,3.4vw,34px);line-height:1.45;margin:7px 0 9px}.story-head p{color:#d6e7f2;font-size:14px;margin:0 0 15px}.story-visual{height:188px;display:grid;place-items:center}.tower-art{display:grid;place-items:center;width:160px;height:176px;position:relative;filter:drop-shadow(0 18px 12px #040d1955)}
+.tower-art .tower-body{width:106px;height:142px;border:3px solid #90b7c8;border-radius:14px 14px 6px 6px;background:linear-gradient(115deg,#3d6684,#1f3559);box-shadow:inset 11px 0 0 #a9e6ff16,0 0 24px #5cdaea17;position:relative;margin-top:26px}
+.tower-art .tower-roof{position:absolute;top:7px;width:132px;height:32px;background:#8caac0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.tower-art .tower-face{position:absolute;top:18px;left:27px;width:49px;height:49px;border:5px solid #bacbdb;border-radius:50%;background:#173c58;display:grid;place-items:center;font-size:25px}
+.tower-art .tower-window{position:absolute;bottom:13px;left:31px;width:39px;height:46px;border-radius:22px 22px 6px 6px;background:#14273a;border:2px solid #7a9baf;overflow:hidden}
+.tower-art .tower-lamp{height:38px;width:14px;background:#536f80;border-radius:99px;display:block;margin:5px auto;transform-origin:50% 0}
+.tower-art.powered .tower-face{border-color:#ffe39e;box-shadow:0 0 18px #ffc3698b}.tower-art.powered .tower-lamp{background:#ffcf83;animation:towerSwing 2s ease-in-out infinite alternate}
+@keyframes towerSwing{from{transform:rotate(-23deg)}to{transform:rotate(23deg)}}
+.story-actions,.chapter-actions{display:flex;flex-wrap:wrap;gap:10px}.story-actions .btn,.chapter-actions .btn{min-width:152px}
+.area-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.area-card{background:linear-gradient(140deg,#182c46,#122037);border:1px solid #3d617a;border-radius:22px;padding:19px;position:relative;overflow:hidden}.area-card.focus{border-color:#f3c37e;box-shadow:inset 0 0 0 1px #f3c37e50,0 8px 28px #0003}.area-card.finished{border-color:#518e88}
+.area-head{display:flex;justify-content:space-between;gap:9px;align-items:flex-start}.area-icon{display:inline-grid;place-items:center;font-size:30px;width:49px;height:49px;border-radius:15px;background:#234d65;border:1px solid #527991;flex-shrink:0}.area-card h3{margin:7px 0 3px;font-size:21px}.area-card p{font-size:13px;color:#bcd4e8;margin:6px 0 11px}.area-progress{font-weight:900;font-size:12px;color:#ffe1ad;white-space:nowrap}.area-track{height:7px;background:#0c1c30;border-radius:99px;overflow:hidden;margin:10px 0 12px}.area-track span{display:block;height:100%;background:linear-gradient(90deg,#54bbd7,#a9ebc1);border-radius:99px}
+.stage-dots{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:10px 0 12px}.stage-dot{background:#233b55;border:1px solid #446881;border-radius:9px;aspect-ratio:1;color:#e0f5ff;font-size:12px;font-weight:900;padding:3px;display:grid;place-items:center}.stage-dot.done{background:#216052;border-color:#6bceb0}.stage-dot.next{background:#534124;border-color:#ffd389;box-shadow:0 0 0 2px #ffd38925}.stage-dot:hover{transform:translateY(-2px)}
+.area-boss{border-top:1px solid #38556e;padding-top:12px;margin-top:13px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.area-boss b{font-size:12px;color:#fbd5aa}.area-boss button{font-size:12px;padding:8px 12px}
+.story-dialog{display:flex;gap:12px;align-items:flex-start;background:#1e3851;border:1px solid #4f8192;border-radius:14px;padding:14px;margin:12px 0}.story-dialog .avatar{flex-shrink:0;width:43px;height:43px;border-radius:13px;background:#215c68;display:grid;place-items:center;font-size:25px}.story-dialog strong{color:#ffe29e}.story-dialog p{margin:3px 0 0;font-size:13px;color:#e0f2ff}
+.badge-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.badge{background:#1b3047;border:1px solid #3b5971;border-radius:13px;text-align:center;padding:13px 8px;min-height:112px}.badge.locked{opacity:.54;filter:grayscale(.8)}.badge .medal{font-size:29px}.badge strong{display:block;font-size:12px}.badge small{display:block;color:#afc6dd;font-size:10px;margin-top:3px}
+.seal-shell{max-width:830px;margin:0 auto}.seal-crest{font-size:53px;margin:0 0 4px}.seal-question{font-size:clamp(17px,2vw,23px);margin:10px 0 20px}.seal-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.seal-options button{border-radius:13px;background:#234056;border:1px solid #567f90;padding:13px;color:#f0fcff;text-align:left;font-weight:800}.seal-options button:hover{background:#2c5971}.seal-options button.correct{border-color:#7ee8b2;background:#1c5947}.seal-options button.incorrect{border-color:#f3a0a6;background:#612b43}.seal-message{padding:13px 15px;border-radius:12px;margin:14px 0;background:#263e50;border:1px solid #547b89}.seal-task{font-size:13px;color:#c4deee}.seal-gem{background:#164c55;border:1px solid #5bbfb8;border-radius:99px;padding:4px 10px;color:#bff8dd;font-size:12px;font-weight:900}
+.next-quest{margin-top:13px;border:1px solid #d3bd7b;background:#453824;border-radius:16px;padding:14px}.next-quest strong{color:#ffe6aa}.next-quest p{font-size:12px;margin:4px 0 10px;color:#f2e9d7}
+@media(max-width:780px){.badge-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.story-head{grid-template-columns:1fr .42fr}}
+@media(max-width:650px){.story-hero{padding:19px}.story-head{grid-template-columns:1fr}.story-visual{height:134px;order:-1}.tower-art{transform:scale(.72)}.area-grid,.seal-options{grid-template-columns:1fr}.area-card{padding:15px}.story-actions .btn{width:100%}.badge-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.tower-art.powered .tower-lamp{animation:none}}
+
+
+/* v0.6: four distinct, science-first interactive normal missions */
+.lab-tasks,.wave-rounds,.route-progress{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.lab-tasks span,.wave-rounds span,.route-progress span{border:1px solid #4e7086;border-radius:100px;padding:7px 10px;font-size:12px;background:#1c344b;color:#cee4f6}
+.lab-tasks .current,.wave-rounds .current,.route-progress .current{border-color:#f5c981;background:#62462c;color:#fff0c8}
+.lab-tasks .done,.wave-rounds .done,.route-progress .done{border-color:#83dec4;background:#164f46;color:#c8ffec}
+.experiment-options,.radio-parts,.canyon-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0}
+.experiment-options button,.radio-parts button,.canyon-routes button{cursor:pointer;background:#1e3b57;border:1px solid #577b94;border-radius:15px;color:#eaf7ff;padding:12px 8px;min-height:63px;display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;font-weight:800}
+.experiment-options button:focus-visible,.radio-parts button:focus-visible,.canyon-routes button:focus-visible{outline:3px solid #f1cc74;outline-offset:2px}
+.experiment-options button.selected,.radio-parts button.selected,.canyon-routes button.selected{background:#356b77;border-color:#96f5db;box-shadow:0 0 0 2px #6fc8b433}
+.experiment-options button small,.radio-parts button small,.canyon-routes button small{font-size:11px;color:#bbd5e6;font-weight:500}
+.workbench{background:linear-gradient(120deg,#183047,#112f41);border:1px solid #54778a;border-radius:16px;padding:14px;margin:12px 0}
+.workbench h3{margin:2px 0 9px;font-size:18px}.workbench p{font-size:13px;margin:6px 0;color:#d3e8f4}
+.signal-compare{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}.signal-compare .wave-preview{padding:11px 9px;border:1px solid #58798c;border-radius:13px;background:#16374b}
+.signal-compare svg{width:100%;height:70px}.signal-compare strong{font-size:13px;color:#fff0c8}.signal-compare p{margin:4px 0 0;font-size:12px;color:#c2d9e8}
+.bridge-beats{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:12px 0}.bridge-beats span{font-size:24px;min-width:52px;text-align:center;padding:11px;background:#1e3a50;border:1px solid #5c8992;border-radius:12px}.bridge-beats span.done{background:#216154}
+@media(max-width:620px){.signal-compare{grid-template-columns:1fr}.experiment-options,.radio-parts,.canyon-routes{gap:6px}.experiment-options button,.radio-parts button,.canyon-routes button{font-size:12px;min-height:66px;padding:9px 4px}.workbench{padding:10px}}
+
+/* v0.8: celebration, animation & classroom-friendly sound settings */
+.sound-switch{border-radius:13px;border:1px solid #648b9a;background:#193448;color:#eaf8ff;min-height:43px;padding:8px 13px;font-size:13px;font-weight:850;white-space:nowrap;cursor:pointer}
+.sound-switch[aria-pressed="true"]{background:#245c5b;border-color:#8ee7ca;color:#dcfffa}
+.sound-switch small{display:block;font-size:10px;font-weight:500;color:#c9dfe5}
+.sound-switch:hover{filter:brightness(1.16)}
+.fx-host{position:fixed;inset:0;pointer-events:none;z-index:9997;overflow:hidden}
+.fx-particle{position:absolute;width:10px;height:10px;border-radius:3px;left:var(--fx-x);top:var(--fx-y);background:var(--fx-color);box-shadow:0 0 10px var(--fx-color);animation:quest-burst var(--fx-dur,1050ms) cubic-bezier(.14,.6,.3,1) forwards;opacity:0;transform:translate(-50%,-50%)}
+.fx-particle.dot{border-radius:50%;width:7px;height:7px}
+.fx-ring{position:absolute;left:var(--fx-x);top:var(--fx-y);border:3px solid #a5fff1;border-radius:50%;width:18px;height:18px;transform:translate(-50%,-50%);animation:quest-ring .75s ease-out forwards}
+.fx-toast{position:fixed;pointer-events:none;z-index:9998;left:50%;top:23%;transform:translate(-50%,-12%) scale(.88);font-size:clamp(19px,3.3vw,33px);font-weight:1000;letter-spacing:.035em;text-align:center;padding:15px 26px;border-radius:22px;color:#fff8df;background:linear-gradient(145deg,#286b75f5,#1c3e61fa);border:2px solid #ffdb8d;box-shadow:0 12px 42px #030e1eaa,0 0 35px #8dfbe560;opacity:0;max-width:92vw;animation:quest-toast 1.45s cubic-bezier(.19,.85,.28,1) forwards}
+@keyframes quest-burst{0%{transform:translate(-50%,-50%) scale(.4) rotate(0);opacity:1}15%{opacity:1}75%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.6) rotate(var(--rot));opacity:0}}
+@keyframes quest-ring{0%{width:18px;height:18px;opacity:1}100%{width:210px;height:210px;opacity:0}}
+@keyframes quest-toast{0%{opacity:0;transform:translate(-50%,9px) scale(.82)}19%{opacity:1;transform:translate(-50%,0) scale(1.04)}28%{transform:translate(-50%,0) scale(1)}82%{opacity:1}100%{opacity:0;transform:translate(-50%,-21px) scale(.94)}}
+@keyframes quest-halo{0%{box-shadow:0 0 0 0 #90f8d27f, inset 0 0 0 #90f8d200}52%{box-shadow:0 0 0 9px #8cffe600,inset 0 0 28px #8cffe660}100%{box-shadow:0 0 0 0 #8cffe600,inset 0 0 0 #8cffe600}}
+@keyframes quest-action-bump{0%,100%{transform:scale(1)}45%{transform:scale(1.035)}}
+@keyframes quest-map-glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.16)}}
+@keyframes quest-trail-light{0%{background:#1e3d52;box-shadow:inset 0 0 0 0 #a1fae800}50%{background:#2b7374;box-shadow:inset 0 0 14px #a1fae8c0}100%{box-shadow:inset 0 0 0 #a1fae800}}
+.visual-frame.fx-energized{animation:quest-halo 1s ease-out}
+.feedback.show.good{animation:quest-action-bump .22s ease-out}
+.signal-tile.traced{animation:quest-trail-light .7s ease-out}
+.boss-result{animation:quest-action-bump .6s ease-out}
+.badge:not(.locked) .medal,.area-card.focused{animation:quest-map-glow 3.5s ease-in-out infinite}
+@media(max-width:700px){.sound-switch{margin-top:10px;width:100%;max-width:245px}.fx-toast{top:16%;padding:12px 18px}}
+@media(prefers-reduced-motion:reduce){.fx-host,.fx-toast{display:none!important}.visual-frame.fx-energized,.feedback.show.good,.signal-tile.traced,.boss-result,.badge:not(.locked) .medal,.area-card.focused{animation:none!important}}
+
+/* v0.9 - moving machinery, resonance energy, traveling sound signal */
+@keyframes furiko-wave-travel{
+  0%, 7% {box-shadow:inset 0 0 0 0 #6cfff000;filter:brightness(.85)}
+  40%{box-shadow:inset 0 0 0 4px #90ffeda9,0 0 19px #57f5c97d;filter:brightness(1.55)}
+  80%,100%{box-shadow:inset 0 0 0 3px #7de4dd;filter:brightness(1.1)}
+}
+.signal-tile.traced{animation:furiko-wave-travel .52s ease-out var(--trace-delay,0ms) both}
+.signal-tile.traced.absorber{animation-name:furiko-wave-absorb}
+@keyframes furiko-wave-absorb{
+  0%{filter:brightness(.8);box-shadow:none}
+  40%{filter:brightness(1.5);box-shadow:inset 0 0 0 4px #ff9797,0 0 18px #ff79797f}
+  100%{filter:brightness(1);box-shadow:inset 0 0 0 3px #f6a1a1}
+}
+.signal-board{isolation:isolate}
+.wave-legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-size:12px;color:#bfebef;margin:9px 0}
+.wave-legend span{background:#1b3c50;border:1px solid #456f81;border-radius:20px;padding:5px 11px}
+@media(prefers-reduced-motion:reduce){.signal-tile.traced,.signal-tile.traced.absorber{animation:none!important}}
+
+/* v0.10 visual clarity: labels, focus cue, accessible animation */
+.focus-console{display:flex;gap:13px;align-items:center;justify-content:space-between;margin:9px 0 2px;padding:10px 13px;border-radius:13px;border:1px solid #8d7857;background:linear-gradient(100deg,#302f39,#153747);box-shadow:inset 3px 0 0 #ffce78}
+.focus-content{display:flex;gap:9px;align-items:flex-start;min-width:0}
+.focus-eye{flex-shrink:0;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fbd486;color:#172c3b;font-size:15px;font-weight:900}
+.focus-copy{min-width:0}.focus-copy strong{display:block;font-size:12px;color:#ffdda3;letter-spacing:.035em}.focus-copy p{margin:2px 0 0;line-height:1.5;font-size:13px;color:#ecf7ff}
+.focus-toggle{border-radius:9px;border:1px solid #829dab;background:#193f53;color:#fff6d8;cursor:pointer;padding:8px 9px;flex-shrink:0;min-width:74px;font-weight:800;font-size:12px}
+.focus-console.off{border-color:#405d6d;background:#183345;box-shadow:none}.focus-console.off .focus-eye{background:#547080;color:#e8f1f6}.focus-console.off .focus-copy p{color:#b4cbd6}
+.focus-console:focus-within{outline:1px solid #ffd58a}
+.visual-frame:has(+ .focus-console){border-color:#668b96}
+@media(max-width:570px){.focus-console{align-items:flex-start;padding:10px 9px;gap:7px}.focus-copy p{font-size:12px}.focus-toggle{font-size:11px;min-width:68px;padding:8px 5px}}
+@media(prefers-reduced-motion:reduce){.focus-console *{animation:none!important}}
+
+
+/* v0.11: visibility and discoverability fix. Scientific behavior unchanged. */
+.visual-frame.scene-feature,.boss-graphic.scene-feature{border:3px solid #a9f6dc;background:#103a4e;box-shadow:0 0 0 2px #153e52,0 0 24px #77efc21e}
+.visual-frame.scene-feature canvas,.boss-graphic.scene-feature canvas{background:#173d54}
+.focus-console{margin:0 0 10px;padding:13px 15px;border:2px solid #ffd37b;background:linear-gradient(95deg,#634826,#163e4b);box-shadow:0 0 0 2px #b78a3733}
+.focus-eye{width:34px;height:34px;font-size:20px;background:#fff1bb}
+.focus-copy strong{font-size:15px;color:#fff0b2}
+.focus-copy p{font-size:15px;color:#fff;line-height:1.5;font-weight:700}
+.focus-console.off{background:#183345}
+.focus-toggle{font-size:13px;min-width:90px;padding:10px}
+.jumpbar{margin:14px 0 18px;border:2px solid #4f9b9a;border-radius:17px;background:linear-gradient(120deg,#1b4253,#1a2e4b);padding:14px 15px;color:#fff}
+.jumpbar strong{display:block;font-size:16px;color:#ffde94;margin-bottom:9px}
+.jumpbar .jumpbuttons{display:flex;gap:9px;flex-wrap:wrap}
+.jumpbar button{border:2px solid #9bcfcb;background:#234c5d;color:#f5ffff;border-radius:12px;font-weight:900;font-size:13px;min-height:44px;padding:9px 13px}
+.jumpbar button:hover,.jumpbar button:focus-visible{background:#397478;outline-color:#ffe4a2}
+.scene-label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0 7px;font-size:14px;font-weight:900;color:#fff0b2}
+.scene-label small{color:#cceee8;font-size:12px}
+@media(max-width:700px){
+ .focus-console{padding:13px 10px;gap:8px}.focus-copy strong{font-size:15px}.focus-copy p{font-size:14px}
+ .focus-eye{width:30px;height:30px}.focus-toggle{font-size:12px;min-width:75px}
+ .scene-feature canvas{max-width:100%;width:100%;height:auto}
+ .jumpbar{padding:11px}.jumpbar .jumpbuttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .jumpbar button{font-size:12px;padding:8px 6px}
+ .scene-label{font-size:13px}
+}
+
+/* Non-JS/Quick Look safe fallback, removed automatically by game render() */
+.preview-fallback{max-width:850px;margin:18px auto 24px;padding:20px;background:linear-gradient(160deg,#132f45,#111d33);border:2px solid #5eacb7;border-radius:24px;box-shadow:0 16px 45px #0003}
+.preview-fallback h2{font-size:clamp(20px,4vw,28px);color:#fff3c4;line-height:1.35;margin:11px 0}
+.preview-fallback p{color:#d4e7ef;font-size:15px;line-height:1.8}
+.preview-tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.05em;background:#294b5e;border-radius:999px;border:1px solid #8acfd6;color:#deffff;padding:5px 12px}
+.preview-illustration{margin:16px 0;background:#112b40;border-radius:22px;overflow:hidden}
+.preview-illustration svg{display:block;width:100%;height:auto;max-height:320px}
+.preview-alert{border-left:4px solid #ffcc79;padding:11px 13px;background:#26334a;border-radius:8px}
+.preview-hint{font-size:13px!important;color:#a2c7d5!important}
+.preview-swing{animation:preview-pendulum 2.8s ease-in-out infinite alternate}
+.preview-gear{animation:preview-rotate 10s linear infinite}
+@keyframes preview-pendulum{0%{transform:rotate(-16deg)}100%{transform:rotate(16deg)}}
+@keyframes preview-rotate{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.preview-swing,.preview-gear{animation:none}}
+@media(max-width:520px){.preview-fallback{padding:14px;margin:10px 0 24px}.preview-fallback p{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar"><div class="brand"><div class="sigil" aria-hidden="true">◷</div><div><div class="eyebrow">SCIENCE GAME WORLD · EPISODE 01</div><h1>フリコ・クエスト</h1><p>振り子と振動／物理パズル × リズムアクション × キーワードクイズ</p></div></div><div class="status"><span class="pill">★ <strong id="stageCount">0</strong> / 21 ステージ</span><span class="pill">知識 <strong id="quizCount">0</strong> / 49 問</span><span class="pill">ボス <strong id="bossCount">0</strong> / 2</span><button class="sound-switch" id="soundSwitch" type="button" aria-pressed="false" aria-label="演出用の効果音を切り替える">🔇 効果音 OFF<small>授業中は無音で遊べます</small></button></div></header>
+<section class="hero"><div><div class="eyebrow">THE CLOCKTOWER & THE SOUND LAB</div><h2>21ステージから、ひとつの冒険へ。</h2><p>4つのエリアを進み、科学の力で時の街を救おう。装置を動かして法則を発見。ことばの宝物庫では、教材のまとめ49問に対応したクイズに挑戦しよう。</p></div><div class="progress-area"><div class="progress-label"><span>全体の冒険進行度</span><b id="progressText">0%</b></div><div class="bar" role="progressbar" aria-label="冒険進行度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><span id="progressFill"></span></div><p style="font-size:11px;margin-top:8px">※進み具合はこの端末のブラウザ内だけに保存されます。</p></div></section>
+<nav class="tabs" aria-label="ゲームのメニュー"><button class="tab" data-view="map">🗺️ 冒険マップ</button><button class="tab" data-view="world">🗝️ ステージ</button><button class="tab" data-view="boss">🏰 ボスチャレンジ</button><button class="tab" data-view="lab">🔬 じっけんラボ</button><button class="tab" data-view="quiz">📚 ことばクイズ</button><button class="tab" data-view="teacher">📋 先生向け</button></nav>
+<div class="jumpbar" aria-label="新しいアニメーションを直接見る"><strong>👀 今回の見どころを直接開く</strong><div class="jumpbuttons">
+<button type="button" data-quickstage="s07">🌉 07 歯車と橋</button>
+<button type="button" data-quickstage="s11">🪁 11 共振ブランコ</button>
+<button type="button" data-quickstage="s18">🔊 18 こだま</button>
+<button type="button" data-quickboss="clock">⏰ 時計塔ボス</button>
+</div></div><main class="main" id="app" aria-live="polite">
+<!-- This static scene is replaced by the full game when JavaScript executes. -->
+<section class="preview-fallback" aria-label="ゲームが動かないときの案内">
+  <div class="preview-tag">表示確認｜ゲームの実行待ち</div>
+  <h2>ゲーム画面が表示されない場合</h2>
+  <p>この画面はHTMLファイルのプレビューかもしれません。プレビューでは、ボタンやアニメーションのためのJavaScriptが停止することがあります。</p>
+  <div class="preview-illustration" aria-label="振り子と歯車のイメージ図">
+    <svg viewBox="0 0 540 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="時計塔でゆれる振り子と歯車のイラスト">
+      <defs>
+      <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#234769"/><stop offset="1" stop-color="#0d2139"/></linearGradient>
+      <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fce8a7"/><stop offset="1" stop-color="#ac7444"/></linearGradient>
+      </defs>
+      <rect x="1" y="1" width="538" height="298" rx="22" fill="url(#pbg)" stroke="#457188" stroke-width="2"/>
+      <path d="M0 258 H540" stroke="#56849a" stroke-width="3" opacity=".5"/>
+      <path d="M65 45 L65 250 M475 45 L475 250" stroke="#3c7085" stroke-width="14"/>
+      <path d="M48 41 H492" stroke="#d7b37a" stroke-width="11" stroke-linecap="round"/>
+      <g class="preview-swing" transform-origin="190px 66px"><path d="M190 67 V206" stroke="#f6ebd0" stroke-width="7" stroke-linecap="round"/><circle cx="190" cy="208" r="22" fill="url(#gold)" stroke="#fff0c1" stroke-width="4"/></g>
+      <circle cx="190" cy="66" r="10" fill="#f6ca80" stroke="#fff4c7" stroke-width="3"/>
+      <g class="preview-gear" transform-origin="371px 166px"><circle cx="371" cy="166" r="59" fill="#ae8155" stroke="#fff0c1" stroke-width="4"/><circle cx="371" cy="166" r="42" fill="#214155" stroke="#d6b984" stroke-width="4"/><path d="M371 115 V217 M320 166 H422 M335 130 L407 202 M335 202 L407 130" stroke="#c6a476" stroke-width="7"/><circle cx="371" cy="166" r="13" fill="#e5c287"/></g>
+      <g fill="#ffecc0"><circle cx="95" cy="105" r="4"/><circle cx="436" cy="94" r="4"/><circle cx="441" cy="238" r="3"/></g>
+      <text x="270" y="283" text-anchor="middle" fill="#bfe4e5" font-size="17" font-weight="700">ふりこの動き × 時計塔の仕掛け</text>
+    </svg>
+  </div>
+  <p class="preview-alert"><strong>操作できないとき：</strong>HTMLファイルのプレビューではなく、JavaScriptを動かせるSafariなどのブラウザで開いてください。これまでの21ステージとクイズはファイル内に収録されています。</p>
+  <p class="preview-hint">この案内が表示されたままなら、ゲーム本体のスクリプトが実行されていません。</p>
+</section>
+</main><footer class="footer">授業用の試作版 v0.12（プレビュー判別対応）。効果音は初期設定でOFF。波形・音の実験では再生ボタンから試聴できます。振り子は単振り子近似（大きな角度では補正）、音速は教材に示された代表値を使っています。音の反射迷宮は進路を単純化した模式図です。</footer>
+</div>
+<noscript><p style="padding:24px;background:#fff3cc;color:#202020">JavaScriptが無効です。ブラウザでJavaScriptを有効にして開いてください。</p></noscript>
+<div id="questFxLayer" class="fx-host" aria-hidden="true"></div>
+<script>
+'use strict';
+const DATA={"questions":[{"n":1,"q":"振り子とは、どのようなもの？","options":["支点からつるしたおもりが左右に行き来するもの","熱で伸び縮みする金属の棒","電気で回転する車輪","風が流れる透明な管"],"correct":0,"explain":"支点からつるされたおもりが、重力によって往復運動するしくみです。","page":"P.1","kind":"keyword"},{"n":2,"q":"振り子時計で振り子が果たす大切な役割は？","options":["ぜんまいを巻き直す","一定のリズムで針の進み方を調整する","時計を重くして安定させる","音を鳴らすだけ"],"correct":1,"explain":"振り子の周期を使って、時計の機構が一定のペースで進みます。","page":"P.1","kind":"keyword"},{"n":3,"q":"「周期」とは？","options":["1秒間の往復回数","片道にかかった時間","1往復にかかる時間","おもりの重さ"],"correct":2,"explain":"A→B→C→B→Aのような1往復にかかる時間が周期です。","page":"P.2–3","kind":"keyword"},{"n":4,"q":"周期が1.0秒の振り子は、地球上では長さがおよそ何cm？","options":["約6cm","約25cm","約100cm","約200cm"],"correct":1,"explain":"小さい振れ角では T＝2π√(L/g)。1秒ならLは約24.8cmです。支点からおもりの重心までの長さで考えます。","page":"P.2・24","kind":"calc"},{"n":5,"q":"一度に「長さ・重さ・振れ幅」を全部変えると、なぜ困る？","options":["振り子が止まるから","おもりが熱くなるから","結果に影響した条件が分からないから","測定時間が必ず延びるから"],"correct":2,"explain":"条件を同時に変えると、どの変更が結果を生んだのか判別しにくくなります。","page":"P.4","kind":"thinking"},{"n":6,"q":"実験で調べたい条件だけを変え、ほかをそろえる方法は？","options":["条件制御","共振","吸音","反射"],"correct":0,"explain":"調べたい要因以外の条件を一定にして比べるのが条件制御です。","page":"P.4","kind":"keyword"},{"n":7,"q":"小さい振れ角の振り子で、周期を主に決める条件は？","options":["おもりの材質","おもりの重さ","振り子の長さ","おもりの色"],"correct":2,"explain":"地球上の単振り子で、ほぼ小さい振れ角なら長さが周期を決めます。","page":"P.5–6","kind":"thinking"},{"n":8,"q":"同じ長さで大人1人と3人をおもりにした測定が、10.21秒と10.45秒。何が言える？","options":["人数で周期が大きく変わると確定","測定誤差も考え、繰り返し調べる","大人3人なら必ず1秒遅れる","長さの影響は無いと確定"],"correct":1,"explain":"一度の測定値の差だけで重さの影響と断定せず、誤差と条件を確認します。","page":"P.25","kind":"thinking"},{"n":9,"q":"「誤差」とは？","options":["周期が長いこと","同じ実験を10回すること","測定値と真の値・基準値のずれ","重さを変える操作"],"correct":2,"explain":"測る人の反応時間や器具などが測定値のずれを生むことがあります。","page":"P.8","kind":"keyword"},{"n":10,"q":"振り子の周期の測定誤差を小さくする工夫として適切なのは？","options":["1往復だけ測って終える","何度も測り、複数往復の平均を調べる","毎回長さを変える","目を閉じて時間を測る"],"correct":1,"explain":"10往復分を計るなど、複数回の計測や平均によって偶然のずれを減らせます。","page":"P.7–8","kind":"thinking"},{"n":11,"q":"同じ場所で、短い振り子と長い振り子。周期が短いのは？","options":["長い振り子","短い振り子","いつも同じ","重い方だけ"],"correct":1,"explain":"長さが短いほど周期も短く、速いリズムで揺れます。","page":"P.6","kind":"thinking"},{"n":12,"q":"長さが周期に影響するか調べる最もよい方法は？","options":["長さ・重さ・幅を全部変える","重さだけ変える","長さだけ変え、重さと振れ幅をそろえる","同じ振り子を眺めるだけ"],"correct":2,"explain":"長さだけが異なる2条件を比較すれば、長さの効果を調べられます。","page":"P.5・26","kind":"thinking"},{"n":13,"q":"振り子の振れ幅がだんだん小さくなると、周期はどうなる？（小さい角度）","options":["ほぼ変わらない","必ず2倍になる","毎回半分になる","0秒になる"],"correct":0,"explain":"小さい振れ角では、振れ幅が減っても周期はほぼ一定です。非常に大きな角度では少し変化します。","page":"P.6・26","kind":"thinking"},{"n":14,"q":"振り子の「等時性」とは？","options":["振り子がずっと止まらないこと","同じ長さで周期がほぼ一定になること","重いほど速く動くこと","揺れが音を生むこと"],"correct":1,"explain":"同じ振り子で周期がほぼ一定になる性質です。小さい振れ角という条件があります。","page":"P.8","kind":"keyword"},{"n":15,"q":"「振動数」は何を表す？","options":["1往復の移動距離","単位時間あたりの振動回数","おもりの大きさ","糸の張力"],"correct":1,"explain":"一定時間に繰り返す振動の回数です。1秒あたりの回数で表せます。","page":"P.8","kind":"keyword"},{"n":16,"q":"周波数の単位「Hz」は何を表す？","options":["1秒間の振動回数","1回の移動距離","1往復の仕事量","1回の音の大きさ"],"correct":0,"explain":"1Hzは1秒間に1回の繰り返しを表します。","page":"P.8","kind":"keyword"},{"n":17,"q":"周波数が f（Hz）のとき、周期 T（秒）の求め方は？","options":["T＝f×f","T＝f＋1","T＝1÷f","T＝f÷2"],"correct":2,"explain":"周期と周波数は逆数関係で、T＝1/f です。","page":"P.8–9","kind":"calc"},{"n":18,"q":"4Hzの振動の周期は？","options":["4秒","2秒","0.5秒","0.25秒"],"correct":3,"explain":"1÷4＝0.25秒です。","page":"P.26","kind":"calc"},{"n":19,"q":"周期 T（秒）のとき、周波数 f（Hz）の求め方は？","options":["f＝T×2","f＝1÷T","f＝T＋1","f＝T÷10"],"correct":1,"explain":"周波数は1秒あたりの回数なので、f＝1/T です。","page":"P.9","kind":"calc"},{"n":20,"q":"周期2秒の振り子の周波数は？","options":["2Hz","1Hz","0.5Hz","0.2Hz"],"correct":2,"explain":"1÷2＝0.5Hzです。","page":"P.27","kind":"calc"},{"n":21,"q":"5Hzの振動の周期は？","options":["5秒","0.5秒","0.2秒","0.05秒"],"correct":2,"explain":"1÷5＝0.2秒です。","page":"P.9・27","kind":"calc"},{"n":22,"q":"周期0.2秒の振動の周波数は？","options":["0.2Hz","2Hz","4Hz","5Hz"],"correct":3,"explain":"1÷0.2＝5Hzです。","page":"P.9・27","kind":"calc"},{"n":23,"q":"50Hzの振動の周期は？","options":["0.02秒","0.2秒","2秒","50秒"],"correct":0,"explain":"1÷50＝0.02秒です。","page":"P.9・27","kind":"calc"},{"n":24,"q":"周期5秒の振り子の周波数は？","options":["5Hz","0.2Hz","2Hz","0.5Hz"],"correct":1,"explain":"1÷5＝0.2Hzです。","page":"P.9・27","kind":"calc"},{"n":25,"q":"周期0.01秒の振動の周波数は？","options":["0.01Hz","1Hz","10Hz","100Hz"],"correct":3,"explain":"1÷0.01＝100Hzです。","page":"P.9・27","kind":"calc"},{"n":26,"q":"空気のない場所で、同じ高さから鉄球と木球を同時に落としたら？","options":["鉄球が先","木球が先","ほぼ同時","動かない"],"correct":2,"explain":"真空中では空気抵抗がないので、質量が違っても同じ加速度で落ちます。空気中の結果は、質量だけでなく形・面積などにも左右されます。","page":"P.10・28","kind":"thinking"},{"n":27,"q":"「共鳴」とは、音が関わる場合のどんな現象？","options":["音が真空を伝わること","振動が伝わって別の物体が同じように強く振動し、音が強まること","光が反射すること","電流が流れること"],"correct":1,"explain":"外からの振動が物体の固有の振動と合うと、音の振動が大きくなる場合があります。","page":"P.13・28","kind":"keyword"},{"n":28,"q":"「共振」に最も近い現象は？","options":["固有のリズムに合わせて押したブランコが大きく揺れる","光がプリズムで分かれる","水が蒸発する","音が真空を進む"],"correct":0,"explain":"固有の振動に合ったタイミングで力を加えると、揺れが大きくなります。","page":"P.13–14","kind":"keyword"},{"n":29,"q":"音が耳に届くしくみは？","options":["色の変化","光の反射のみ","物体から伝わる振動","磁石の引力"],"correct":2,"explain":"音源の振動が空気や水などを伝わって耳に届きます。","page":"P.15","kind":"keyword"},{"n":30,"q":"耳に入った音が脳に伝わる流れとして適切なのは？","options":["鼓膜→耳小骨→蝸牛→神経信号","眼球→網膜→鼓膜","鼻→舌→脳","鼓膜→心臓→胃"],"correct":0,"explain":"鼓膜や耳小骨の振動を蝸牛が神経信号に変換して脳へ伝えます。","page":"P.15・28","kind":"thinking"},{"n":31,"q":"三半規管が主に関わるのは？","options":["食べ物の味","体の回転やバランスの感覚","血液の色","汗の量"],"correct":1,"explain":"三半規管は頭の回転運動を感じ、平衡感覚に関わります。","page":"P.16","kind":"keyword"},{"n":32,"q":"人が聞き取れる音の周波数の一般的な目安は？","options":["1〜10Hz","20〜20,000Hz","20,000〜200,000Hz","100,000Hz以上だけ"],"correct":1,"explain":"個人差や年齢差はありますが、およそ20〜20,000Hzが目安です。","page":"P.15","kind":"thinking"},{"n":33,"q":"440Hz・220Hz・880Hzは、どんな関係？","options":["3つとも同じ高さ","すべてドの音","同じラで、1オクターブずつ違う","880Hzがいちばん低い"],"correct":2,"explain":"標準的な音高では220Hzは低いラ、440Hzはラ、880Hzは高いラです。","page":"P.16・29","kind":"thinking"},{"n":34,"q":"同じ弦をより強くはじくと、主に何が変わる？","options":["音の高さが必ず2倍になる","音が大きくなる","音が必ず低くなる","音が伝わらなくなる"],"correct":1,"explain":"振動の幅が大きくなり、音が大きくなります。","page":"P.16・29","kind":"thinking"},{"n":35,"q":"ほかの条件が同じで弦を太くすると、音の高さはどうなる？","options":["高くなる","低くなる","同じである","無音になる"],"correct":1,"explain":"通常、太い弦は線密度が大きくなるため、基本振動数が下がり低い音になります。","page":"P.18・29","kind":"thinking"},{"n":36,"q":"ほかの条件が同じで弦を強く張ると、音の高さはどうなる？","options":["高くなる","低くなる","変わらない","周波数は0になる"],"correct":0,"explain":"弦の張力を大きくすると、基本振動数が上がります。","page":"P.18・29","kind":"thinking"},{"n":37,"q":"ほかの条件が同じで弦を短くすると、音の高さは？","options":["低くなる","高くなる","大きさだけ変わる","変わらない"],"correct":1,"explain":"短い弦ほど振動数が増え、高い音になります。","page":"P.17–18","kind":"thinking"},{"n":38,"q":"弦の音を高くする組み合わせとして適切なのは？","options":["長く・太く・弱く張る","短く・細く・強く張る","長く・細く・弱く張る","短く・太く・弱く張る"],"correct":1,"explain":"弦を短く、細く、強く張る方向は、いずれも音を高くする方法です。","page":"P.18・29","kind":"thinking"},{"n":39,"q":"真空で音が伝わらない主な理由は？","options":["真空は暗いから","音を伝える物質がないから","重力がないから","音が光になるから"],"correct":1,"explain":"音は物質の振動として伝わるため、媒質がない真空では進みません。","page":"P.19","kind":"keyword"},{"n":40,"q":"教材のフラスコ実験で、熱した後に冷やすと内部の圧力が下がる主な理由は？","options":["水蒸気が液体の水にもどるから","ガラスが重くなるから","水が燃えるから","熱が磁石に変わるから"],"correct":0,"explain":"水蒸気が冷えて凝縮すると、内部の気体の量が減り圧力が下がります。完全な真空ではなく減圧状態です。","page":"P.19–20・30","kind":"thinking"},{"n":41,"q":"「音速」とは？","options":["音の大きさ","音が1秒あたりに進む距離","音の周波数","聞こえる方向"],"correct":1,"explain":"音が伝わる速さです。物質や温度などで変わります。","page":"P.21","kind":"keyword"},{"n":42,"q":"教材の代表値で音が速く伝わるのはどちら？","options":["空気（約340m/s）","水（約1500m/s）","まったく同じ","真空（約3000m/s）"],"correct":1,"explain":"水中の音速は約1500m/sで、空気中の約340m/sより速いです。","page":"P.21・30","kind":"thinking"},{"n":43,"q":"「集音」に近い工夫は？","options":["反射を利用して音をある方向へ集める","音源を真空に入れる","音を冷却して止める","弦の太さを変える"],"correct":0,"explain":"音の反射や形状を利用して音を集めたり、向きを整えたりします。","page":"P.23・31","kind":"keyword"},{"n":44,"q":"「吸音」とは？","options":["音の高さを倍にする","反射して戻る音を減らすよう音エネルギーを吸収する","音を必ず完全に止める","音を真空で遠くへ送る"],"correct":1,"explain":"吸音材は音のエネルギーの一部を吸収して反射を抑えます。完全に音が消えるわけではありません。","page":"P.23・31","kind":"keyword"},{"n":45,"q":"光ってから3.5秒後に雷の音。音速340m/sなら距離は？","options":["約340m","約680m","約1190m","約2380m"],"correct":2,"explain":"光が届く時間を無視できるので、340×3.5＝1190mです。","page":"P.22・31","kind":"calc"},{"n":46,"q":"「やっほー」が2.6秒後に返ってきた。音速340m/sなら山までの距離は？","options":["221m","442m","884m","1360m"],"correct":1,"explain":"往復2.6秒なので、340×2.6÷2＝442mです。","page":"P.22・31","kind":"calc"},{"n":47,"q":"海底へ出した音が8秒後に返ってきた。水中の音速1500m/sなら深さは？","options":["750m","3000m","6000m","12000m"],"correct":2,"explain":"音が海底を往復するため、1500×8÷2＝6000mです。","page":"P.22・31","kind":"calc"},{"n":48,"q":"水中でイルカの声が0.5秒後に相手へ届く。音速1500m/sなら距離は？","options":["375m","500m","750m","1500m"],"correct":2,"explain":"声は相手へ一方向なので1500×0.5＝750mです。","page":"P.22・31","kind":"calc"},{"n":49,"q":"波形グラフで、1秒間の山の数が多い波は、一般にどんな音？","options":["高い音","低い音","必ず大きな音","必ず小さな音"],"correct":0,"explain":"1秒間の振動回数が多いほど周波数が高く、音の高さも高くなります。山の高さ（振幅）は主に音の大きさに関係します。","page":"P.18・32","kind":"thinking"}],"stages":[{"id":"s01","zone":"pend","name":"止まった古時計","mode":"pendulum","page":"P.1–3","goal":1.0,"brief":"古時計を動かすには、1往復が1.00秒の振り子が必要。長さを調整しよう！","tip":"おもりの重さではなく、支点からおもりの中心までの長さに注目。","learn":"周期は1往復の時間。地球上では約25cmの単振り子が1秒周期になります。"},{"id":"s02","zone":"pend","name":"博士の実験室","mode":"labdesign","page":"P.4","task":"onlyOne","brief":"時計の故障原因を調べよう。毎回1つの条件だけを変えて、実験結果から法則を見つけてね。","tip":"「重さ」「長さ」「振れ幅」を1つずつ変えて比較。測定後に周期の変化を推理しよう。","learn":"条件制御：調べる条件以外をそろえる。振り子では小さい角度の範囲なら長さで周期が変わり、質量・振れ幅の影響は小さい。"},{"id":"s03","zone":"pend","name":"おもりのワナ","mode":"compare","page":"P.5–6","task":"weight","brief":"おもりの重さだけ変えて実験しよう。周期は変わるかな？","tip":"長さと振れ幅を変えず、おもりだけ増やす。","learn":"単振り子の周期はおもりの質量に依存しません（理想モデル）。"},{"id":"s04","zone":"pend","name":"スピードゲート","mode":"pendulum","page":"P.5–6","goal":0.8,"brief":"短いリズムのゲートを開こう。周期を0.80秒に合わせて！","tip":"長さを短くすると振り子は速く振れます。","learn":"周期は振り子の長さが短いほど短くなります。"},{"id":"s05","zone":"pend","name":"振れ幅トリック","mode":"compare","page":"P.5–8","task":"amplitude","brief":"振れ幅だけ変えて、周期がほぼ同じか観察しよう。","tip":"長さと重さを固定し、小さい振れ角の範囲で振れ幅を変える。","learn":"振れ角が小さい範囲では周期はほぼ一定です。大角度では厳密には変化します。"},{"id":"s06","zone":"pend","name":"測定博士","mode":"measure","page":"P.7–8","brief":"1回だけ計るより10往復を計ると、ばらつきを抑えられるかな？","tip":"「1往復測定」と「10往復測定」をそれぞれ試して、結果を比べよう。","learn":"反応時間による測定誤差は、複数往復の平均で相対的に小さくできます。"},{"id":"s07","zone":"pend","name":"2秒のリズム橋","mode":"beatbridge","page":"P.8–9","goal":2.0,"brief":"周期2秒の振り子を作り、中央通過に合わせてスイッチを3回操作し、橋をかけよう。","tip":"1往復が2秒になるのは、支点から重心までの長さが約1mのとき。長さを調整したら振り子が中央に来る瞬間を狙おう。","learn":"周期2秒の振り子の周波数は0.5Hz。周波数は1秒間の振動回数で、周期の逆数。"},{"id":"s08","zone":"pend","name":"落下のなぞを解け！","mode":"fall","page":"P.10","brief":"2つの実験で、「重さの違い」と「空気抵抗の違い」を分けて調べよう。","choices":["軽い球が先に落ちる","重い球が先に落ちる","ほぼ同時に落ちる"],"correct":2,"tip":"1つ目は真空で球の重さだけを変える。2つ目は空気中で紙の形だけを変える。どちらも落とす高さは同じ。","learn":"真空では空気抵抗がなく、同じ高さから静かに放せば重さに関係なく同時に落下します。空気中では、重さのほかに形・断面積などが空気抵抗に影響します。この2つを混ぜて考えないことが大切です。"},{"id":"s09","zone":"pend","name":"地球を回す大振り子","mode":"foucault","page":"P.11","brief":"北極のフーコーの振り子を観察。床の矢印が反対向きになる時刻を探せ！","choices":["地球の自転","地球の表面温度","海の深さ"],"correct":0,"tip":"北極では地球が24時間で1回転するため、床の向きが変化して見えます。","learn":"北極での模式図。フーコーの振り子は地球の自転を示します。地上の観測地点によって見かけの回転速度は違います。"},{"id":"s10","zone":"pend","name":"ふりこスピード大会","mode":"duel","page":"P.12","brief":"重さや長さの違う2つの振り子。10往復を先に終えるのはどっち？3ラウンド勝負！","choices":["50cmのほう","80cmのほう","同じ"],"correct":1,"tip":"おもりの重さだけで速さを決めていないかな？","learn":"周期を主に決めるのは振り子の長さです。短いほど周期が短く、同じ長さなら重さに関係なくほぼ同じです。"},{"id":"s11","zone":"pend","name":"共振ブランコ","mode":"rhythm","page":"P.13–14","brief":"振り子が真ん中を通る瞬間に「ひと押し」！4回タイミングをそろえよう。","tip":"振り子が真ん中を勢いよく通るタイミングで押してみよう。","learn":"揺れに合ったタイミングで力を加えると、振動の振幅が大きくなります。"},{"id":"s12","zone":"sound","name":"失われた音の通信","mode":"wavecode","page":"P.15–16","goalHz":440,"goalAmp":55,"brief":"壊れた音の通信機を復旧！見本の波形と音を観察し、周波数と振幅を合わせて3つの暗号を送ろう。","tip":"1秒間の波の数が周波数、波の上下の大きさが振幅。聞けないときも波形だけで解けるよ。","learn":"周波数が大きいほど音は高くなる。振幅が大きいほど音は大きくなる傾向がある。音量の再生は安全上の上限付き。"},{"id":"s13","zone":"sound","name":"音のひみつの楽譜","mode":"melody","page":"P.16・18","goalHz":880,"goalAmp":70,"brief":"3つの鍵を音と波形から聞き分け、失われたメロディーを取り戻そう。","tip":"同じ時間に振動する回数が多いほど高い音。1オクターブ上は周波数が2倍。","learn":"音の高さは振動数に関係します。440Hzの1オクターブ上は880Hzです。"},{"id":"s14","zone":"sound","name":"楽器職人","mode":"string","page":"P.17–18","brief":"弦の長さ・張り・太さを工夫して「高い音」を作ろう。","tip":"弦を短くする・強く張る・細くする方向を試してみよう。","learn":"弦の基本振動数は長さ、張力、線密度の影響を受けます。"},{"id":"s15","zone":"sound","name":"耳の中の配達リレー","mode":"ear","page":"P.15–16","brief":"音の情報を鼓膜から脳まで届けよう。道筋を正しい順番でつなげ！","choices":["鼓膜","蝸牛（かぎゅう）","三半規管"],"correct":1,"tip":"空気の振動が耳の中を伝わり、途中で電気信号に変わります。","learn":"鼓膜→耳小骨→蝸牛→聴神経→脳。蝸牛で振動が電気信号に変換されます。"},{"id":"s16","zone":"sound","name":"消えるベルの実験室","mode":"chamber","page":"P.19–21","goalMedium":"vacuum","brief":"まず空気がある状態で音を確かめ、ポンプで空気を減らして違いを観察しよう。","tip":"音は物質を通じて伝わります。空気が少なくなると、ベルの音はどうなる？","learn":"真空中では音は伝わりません。ゲームは減圧時の音の弱まりを単純化したモデルです。"},{"id":"s17","zone":"sound","name":"フラスコの4つの謎","mode":"flask","page":"P.19–20","brief":"4つの操作を正しい順番で進めて、フラスコに水が押し込まれる仕組みを解こう。","choices":["水蒸気が凝縮して内部圧力が下がる","ガラスが磁石になる","内部に大量の空気が発生する"],"correct":0,"tip":"水蒸気が冷えると液体に戻ります。内部の圧力が変わることに注目。","learn":"密閉した水蒸気が冷えて凝縮すると内部の圧力が下がり、外側の大気圧で水が押し込まれます。"},{"id":"s18","zone":"sound","name":"こだま峡谷の救助隊","mode":"echoquest","page":"P.21–23","goalTime":2.0,"goalMedium":"air","brief":"やまびこは音の往復、雷は音が届くまでの片道。音が戻る時間を測って、3つの地点で道を見つけよう。","tip":"山びこは反射面まで往復するので距離＝音速×時間÷2。雷の光と音のずれは片道で考える。","learn":"音速を約340m/sとすると、やまびこの距離は音の往復時間の半分で計算する。雷の光はほぼ瞬時に届くと近似し、音の片道時間から距離を見積もる。"},{"id":"s19","zone":"sound","name":"海底ソナー探索隊","mode":"sonar","page":"P.21–22","goalTime":4.0,"goalMedium":"water","brief":"3つの海域を調査！音が帰ってくる時間から海底までの深さを推理しよう。","tip":"音は海底まで行って戻ります。片道の距離と往復の距離は違います。","learn":"水中の音速は約1500m/s。深さ＝音速×往復時間÷2 です。"},{"id":"s20","zone":"sound","name":"ひびかない音楽室","mode":"acoustic","page":"P.23","brief":"反響しすぎる部屋を改造！限られた予算で3つの壁の吸音材を選んでみよう。","choices":["吸音材を壁に設ける","金属板を壁一面に貼る","音源を大きくする"],"correct":0,"tip":"吸音性能だけでなく、材料費も考えて設計しよう。","learn":"吸音材は音の反射を減らします。材質・配置・周波数によって効果が異なります。"},{"id":"s21","zone":"sound","name":"波形グラフの探偵","mode":"graph","page":"P.18・32","brief":"5種類の波を観察して「音の高さ」と「音の大きさ」を3問見抜こう。","tip":"1秒間の波の回数が多いほど高音。波の上下の幅が大きいほど大きな音。","learn":"波形の振動回数は音の高さ（周波数）、波の振幅は音の大きさと関係します。"}],"coverage":[["P.1–3","振り子時計・一秒振り子・周期","s01／実験ラボ／Q1–4"],["P.4","条件制御","s02／Q5–6"],["P.5–6","長さ・重さ・振れ幅の比較","s03–05／Q7・11–13"],["P.7–8","10往復測定・誤差・等時性","s05–06／Q8–10・14"],["P.8–9","振動数・周波数・計算","s07／Q15–25"],["P.10","自由落下・重力・空気抵抗","s08／Q26"],["P.11","フーコーの振り子","s09／学びのメモ"],["P.12","周期順の比較問題","s10／Q11・12（同趣旨）"],["P.13–14","共鳴・共振・ブランコ","s11／Q27–28"],["P.15–16","音・耳・聴覚・超音波・音階","s12–13・15／Q29–34"],["P.17–18","弦の高さ・大きさ・波形比較","s14・s21／Q34–38・49／音ラボ"],["P.19–20","真空・水蒸気の凝縮と減圧","s16–17／Q39–40"],["P.21–22","音速・媒体・雷・やまびこ・ソナー・イルカ","s16・18–19／Q41–42・45–48"],["P.23","音の反射・集音・吸音","s18・20／Q43–44"],["P.24–32","まとめ問題（1〜49）","ことばクイズにQ1–49全問を別表現で収録"]]};
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
+const htmlEsc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const STORE='furiko-quest-pendulum-v01';
+const SFX_STORE='furiko-quest-sfx-v08';
+let sfxOn=false;try{sfxOn=localStorage.getItem(SFX_STORE)==='on'}catch(e){}
+let sfxAC=null;let fxLast=0;let fxEventCount=0;
+function retrieve(){try {const p=JSON.parse(localStorage.getItem(STORE));return p&&typeof p==='object'?p:{}}catch(e){return {}}}
+const saved=retrieve();
+const state={fallMedium:'vacuum',fallTrials:[],fallQuizStep:0,fallRunning:false,fallStart:-10,earthHours:0,duelAnswer:null,phase:0,solvedPieces:[],pressure:100,heardNormal:false,heardThin:false,flaskStep:0,room:[0,0,0],melodyChoice:null,sonarChoice:null,view:'map',sid:'s01',progress:saved.progress||{},quizCorrect:saved.quizCorrect||{},quizFilter:'all',qi:0,selectedAnswer:null,answered:false,choice:null,pValues:{length:60,mass:20,amp:12},compareValues:{length:45,mass:20,amp:10},measureOne:null,measureTen:null,rhythmHit:0,rhythmLast:-10,waveValues:{freq:300,amp:40},stringValues:{length:40,tension:50,thick:2,strength:50},distance:400,medium:'air',graphStep:0,stageDoneNow:false,labSetup:{length:25,mass:20,amp:12},labWave:{freq:440,amp:55},sealChapter:0,sealIndex:0,sealAnswered:false,sealChoice:null,labRound:0,labChoice:null,labMeasured:false,labMistakes:0,bridgeLength:70,bridgeReady:false,bridgeStart:0,bridgeHits:0,bridgeLast:-20,bridgeMistakes:0,signalRound:0,signalPitch:0,signalAmp:0,signalMisses:0,echoRound:0,echoScanned:false,echoChoice:null,echoMisses:0};
+const save=()=>{try{localStorage.setItem(STORE,JSON.stringify({progress:state.progress,quizCorrect:state.quizCorrect,bossRecord:state.bossRecord}))}catch(e){}};
+state.bossRecord=saved.bossRecord||{};
+state.bossScreen='clock';
+// v0.9 visual animation state (kept out of localStorage)
+state.bridgePulseTime=-100;
+state.rhythmPulseTime=-100;
+state.echoScanStart=-100;
+const pCount=()=>Object.keys(state.progress).length;
+const qCount=()=>Object.keys(state.quizCorrect).length;
+function updateHUD(){let percent=Math.round(100*(pCount()+qCount()+Object.keys(state.bossRecord).length)/(DATA.stages.length+DATA.questions.length+2));$('#bossCount').textContent=Object.keys(state.bossRecord).length;$('#stageCount').textContent=pCount();$('#quizCount').textContent=qCount();$('#progressText').textContent=percent+'%';$('#progressFill').style.width=percent+'%';$('#progressBar').setAttribute('aria-valuenow',String(percent));}
+const period=(length,amp=10)=>{let rad=amp*Math.PI/180;return 2*Math.PI*Math.sqrt(length/100/9.80665)*(1+rad*rad/16+11*Math.pow(rad,4)/3072)};
+const f=(n)=>Number(n).toFixed(2);
+const stage=()=>DATA.stages.find(x=>x.id===state.sid);
+function rangeField(key,label,min,max,step,value,unit=''){return `<label class="range-field"><span class="range-label">${htmlEsc(label)}<output id="out-${key}">${value}${unit}</output></span><input type="range" id="rng-${key}" min="${min}" max="${max}" step="${step}" value="${value}" aria-label="${htmlEsc(label)}"></label>`;}
+function attachRange(key,obj,keyInObj,unit='',extra=()=>{}){let el=$('#rng-'+key);if(!el)return;el.oninput=()=>{obj[keyInObj]=Number(el.value);const out=$('#out-'+key);if(out)out.textContent=el.value+unit;extra();};}
+
+function paintSoundSwitch(){const b=$('#soundSwitch');if(!b)return;b.setAttribute('aria-pressed',String(sfxOn));b.innerHTML=sfxOn?'🔊 効果音 ON<small>もう一度で消音</small>':'🔇 効果音 OFF<small>授業中は無音で遊べます</small>';}
+function effectAudio(type){
+ if(!sfxOn)return;
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  if(!sfxAC)sfxAC=new AC();if(sfxAC.state==='suspended')sfxAC.resume();
+  const now=sfxAC.currentTime;
+  const notes={tap:[[520,0,.075]],miss:[[215,0,.10],[160,.09,.13]],good:[[540,0,.09],[730,.09,.12]],reward:[[500,0,.12],[670,.10,.12],[850,.22,.19]],boss:[[392,0,.12],[494,.11,.13],[587,.23,.13],[784,.35,.25]]}[type]||[];
+  for(const [hz,dt,dur] of notes){const osc=sfxAC.createOscillator(),gain=sfxAC.createGain();osc.type=type==='miss'?'triangle':'sine';osc.frequency.setValueAtTime(hz,now+dt);gain.gain.setValueAtTime(.0001,now+dt);gain.gain.linearRampToValueAtTime(.055,now+dt+.017);gain.gain.exponentialRampToValueAtTime(.0001,now+dt+dur);osc.connect(gain);gain.connect(sfxAC.destination);osc.start(now+dt);osc.stop(now+dt+dur+.025);}
+ }catch(e){} // On browsers with sound restrictions, gameplay stays functional.
+}
+function questEffect(kind='good',text=''){
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(reduced)return;
+ const host=$('#questFxLayer');if(!host)return;
+ const anchor=$('#gameCanvas')||$('#bossClockCanvas')||$('.signal-board')||$('.seal-shell')||$('#quizResult')||$('.story-hero')||$('#app');
+ if(!anchor)return;
+ const r=anchor.getBoundingClientRect(),x=Math.max(26,Math.min(innerWidth-26,r.left+r.width/2)),y=Math.max(28,Math.min(innerHeight-28,r.top+r.height*.47));
+ const palette=kind==='boss'?['#ffda7a','#ffeeba','#87efcd','#92cfff']:kind==='reward'?['#ffde87','#9df6dc','#a8d9ff']:['#91f8d5','#a3d5f9'];
+ const count=kind==='boss'?40:kind==='reward'?25:11;
+ const radius=kind==='boss'?220:kind==='reward'?153:94;
+ const ring=document.createElement('i');ring.className='fx-ring';ring.style.setProperty('--fx-x',x+'px');ring.style.setProperty('--fx-y',y+'px');host.appendChild(ring);setTimeout(()=>ring.remove(),850);
+ for(let i=0;i<count;i++){
+  const angle=i*Math.PI*(3-Math.sqrt(5)),dist=34+(i%9)*radius/10;
+  const d=document.createElement('i');d.className='fx-particle'+(i%3===0?' dot':'');
+  d.style.setProperty('--fx-x',x+'px');d.style.setProperty('--fx-y',y+'px');d.style.setProperty('--fx-color',palette[i%palette.length]);
+  d.style.setProperty('--dx',(Math.cos(angle)*dist).toFixed(1)+'px');d.style.setProperty('--dy',(Math.sin(angle)*dist-20).toFixed(1)+'px');d.style.setProperty('--rot',((i*31)%360)+'deg');
+  host.appendChild(d);setTimeout(()=>d.remove(),1200);
+ }
+ if(text){const toast=document.createElement('div');toast.className='fx-toast';toast.textContent=text;host.appendChild(toast);setTimeout(()=>toast.remove(),1520);}
+ const visual=$('.visual-frame');if(visual){visual.classList.remove('fx-energized');void visual.offsetWidth;visual.classList.add('fx-energized');setTimeout(()=>visual.classList.remove('fx-energized'),1100);}
+ fxEventCount++;
+}
+function toggleSFX(){sfxOn=!sfxOn;try{localStorage.setItem(SFX_STORE,sfxOn?'on':'off')}catch(e){}paintSoundSwitch();if(sfxOn)effectAudio('good')}
+$('#soundSwitch').onclick=toggleSFX;
+paintSoundSwitch();
+
+function selectTab(view){state.view=view;render();window.scrollTo({top:0,behavior:'smooth'});}
+$$('.tab').forEach(btn=>btn.addEventListener('click',()=>selectTab(btn.dataset.view)));
+$$('[data-quickstage]').forEach(btn=>btn.addEventListener('click',()=>{
+ state.view='world';selectStage(btn.dataset.quickstage);document.getElementById('app')?.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+$$('[data-quickboss]').forEach(btn=>btn.addEventListener('click',()=>{
+ state.bossScreen='clock';selectTab('boss');document.getElementById('app')?.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+function render(){for(const btn of $$('.tab'))btn.setAttribute('aria-current',btn.dataset.view===state.view?'page':'false');const app=$('#app');if(state.view==='map')renderMap(app);else if(state.view==='seal')renderSeal(app);else if(state.view==='world')renderWorld(app);else if(state.view==='quiz')renderQuiz(app);else if(state.view==='boss')renderBoss(app);else if(state.view==='lab')renderLab(app);else renderTeacher(app);updateHUD();}
+function selectStage(id){state.sid=id;state.choice=null;state.stageDoneNow=false;state.rhythmHit=0;state.measureOne=null;state.measureTen=null;state.pValues={length:60,mass:20,amp:12};state.compareValues={length:45,mass:20,amp:10};state.waveValues={freq:300,amp:40};state.stringValues={length:40,tension:50,thick:2,strength:50};state.distance=400;state.medium='air';state.graphStep=0;state.fallMedium='vacuum';state.fallTrials=[];state.fallQuizStep=0;state.fallRunning=false;state.fallStart=-10;state.earthHours=0;state.duelAnswer=null;state.phase=0;state.solvedPieces=[];state.pressure=100;state.heardNormal=false;state.heardThin=false;state.flaskStep=0;state.room=[0,0,0];state.melodyChoice=null;state.sonarChoice=null;state.labRound=0;state.labChoice=null;state.labMeasured=false;state.labMistakes=0;state.bridgeLength=70;state.bridgeReady=false;state.bridgeStart=0;state.bridgeHits=0;state.bridgeLast=-20;state.bridgeMistakes=0;state.bridgePulseTime=-100;state.rhythmPulseTime=-100;state.echoScanStart=-100;state.signalRound=0;state.signalPitch=0;state.signalAmp=0;state.signalMisses=0;state.echoRound=0;state.echoScanned=false;state.echoChoice=null;state.echoMisses=0;render();}
+function stageMenu(){let body='',previous='';DATA.stages.forEach((s,i)=>{if(s.zone!==previous){body+=`<div class="list-heading">${s.zone==='pend'?'第1章｜時の塔（振り子）':'第2章｜音の研究所（振動と音）'}</div>`;previous=s.zone;}const star=state.progress[s.id]?'★'.repeat(state.progress[s.id]):'・';body+=`<button class="mission ${s.id===state.sid?'active':''}" data-stage="${s.id}" aria-label="${htmlEsc(s.name)}"><span class="num">${String(i+1).padStart(2,'0')}</span><span class="mission-text"><b>${htmlEsc(s.name)}</b><span>${htmlEsc(s.page)}</span></span><span class="starmark" aria-label="${state.progress[s.id]||0}つ星">${star}</span></button>`});return body;}
+function waveSVG(cycles,amplitude){let points=[];for(let i=0;i<=180;i+=3){let y=25-amplitude*Math.sin(i/180*cycles*2*Math.PI);points.push(`${i},${y.toFixed(1)}`)}return `<svg viewBox="0 -12 180 76" aria-label="振動${cycles}回、振幅${amplitude}"><line x1="0" y1="25" x2="180" y2="25" stroke="#748da6"/><polyline points="${points.join(' ')}" stroke="#80e8df" stroke-width="3" fill="none"/></svg>`;}
+
+// v0.10: attention cues are optional and never change the answer or physics.
+let focusEnabled=true;
+try{const v=localStorage.getItem('furiko-focus-v010');if(v==='off')focusEnabled=false;}catch(_e){}
+function focusMarkup(){return `<div class="focus-console ${focusEnabled?'':'off'}" data-focus-console>
+ <div class="focus-content"><span class="focus-eye" aria-hidden="true">◎</span><div class="focus-copy"><strong>👀 注目ポイント</strong><p data-focus-message>観察してみよう。</p></div></div>
+ <button class="focus-toggle" type="button" data-focus-toggle aria-pressed="${focusEnabled}">${focusEnabled?'ガイド ON':'ガイド OFF'}</button></div>`;}
+function bindFocus(){const b=document.querySelector('[data-focus-toggle]');if(!b)return;b.onclick=()=>{focusEnabled=!focusEnabled;try{localStorage.setItem('furiko-focus-v010',focusEnabled?'on':'off')}catch(_e){};document.querySelector('[data-focus-console]')?.classList.toggle('off',!focusEnabled);b.setAttribute('aria-pressed',String(focusEnabled));b.textContent=focusEnabled?'ガイド ON':'ガイド OFF';refreshFocus(performance.now()/1000);};refreshFocus(performance.now()/1000)}
+function currentFocus(t){
+ if(state.view==='boss'&&state.bossScreen==='clock'){
+  const c=clockBoss;
+  if(c.phase===0)return '糸の長さと「10往復」の測定時間を比べよう。まだ歯車は動かない。';
+  if(c.phase===2)return '歯車が動いた！ 振り子は時計のエネルギー源ではなく、動きを刻むリズムの調整役。';
+  if(t-c.gearPulseTime>=0&&t-c.gearPulseTime<2)return '右側の歯車が1段進んだ瞬間に注目。次も中央通過をねらおう。';
+  const T=period(c.length,c.angle),z=Math.abs(Math.sin(2*Math.PI*(t-c.startTime)/T));
+  return z>.78?'いま中央付近！ 下端の光と「押す」操作を合わせよう。':'おもりが中央（最も低い位置）を通る瞬間を観察しよう。';
+ }
+ if(state.view!=='world')return '';
+ const m=stage()?.mode;
+ if(m==='beatbridge'){
+  if(!state.bridgeReady)return '① 糸の長さを変える → ② 周期を測る。橋が求める2秒に近づけよう。';
+  if(state.bridgeHits>=3)return '3枚の橋板がつながった！ おもりの動きと右の歯車を比べてみよう。';
+  if(t-state.bridgePulseTime>=0&&t-state.bridgePulseTime<1.9)return '歯車が動いて橋板が1枚明るくなった！ 右側の変化に注目。';
+  const T=period(state.bridgeLength,10),z=Math.abs(Math.sin(2*Math.PI*(t-state.bridgeStart)/T));
+  return z>.75?'中央通過のチャンス！ 下の緑の合図も確認しよう。':'振り子が一番低い位置を通る瞬間と、右側の装置を見よう。';
+ }
+ if(m==='rhythm'){
+  if(state.rhythmHit>=4)return '揺れ幅が広がった！ 両端の目印と、緑色の軌道を比べよう。';
+  if(t-state.rhythmPulseTime>=0&&t-state.rhythmPulseTime<2)return '押す前より遠くまで振れている？ 緑の軌道と両端の目印に注目。';
+  return '真ん中を通る瞬間に押す。成功後は両端までの距離が大きくなるか見よう。';
+ }
+ if(m==='echoquest'){
+  const e=ECHO_MISSIONS[Math.min(state.echoRound,ECHO_MISSIONS.length-1)];
+  if(!state.echoScanned)return e.mode==='echo'?'まず発信してみよう。音はどこへ進み、どこで跳ね返る？':'稲光が発生する場所と観測者の位置を見よう。';
+  const q=((Math.max(0,t-state.echoScanStart)*.38)%1);
+  if(e.mode==='echo')return q<.5?'金色の波は岩壁へ向かっている。壁に届く瞬間を見よう。':'青緑の波は岩壁から帰ってきている。往復の道を観察しよう。';
+  return '雷の音は、落雷地点から観測者へ進む。音の通り道を見よう。';
+ }
+ return '';
+}
+let focusLastCheck=0;
+function refreshFocus(t){
+ const root=document.querySelector('[data-focus-console]');if(!root)return;
+ const msg=root.querySelector('[data-focus-message]');if(!msg)return;
+ const next=focusEnabled?currentFocus(t):'ガイドはOFFです。図と操作を自由に観察できます。';
+ if(msg.textContent!==next)msg.textContent=next;
+}
+
+function improveSceneVisibility(mode){
+ const small=window.matchMedia&&window.matchMedia('(max-width:700px)').matches;
+ if(!small)return;
+ if(!['beatbridge','rhythm','echoquest'].includes(mode))return;
+ const canvas=document.getElementById('gameCanvas');
+ if(canvas){canvas.width=560;canvas.height=470;}
+}
+function renderWorld(app){const s=stage();let control='';const pv=state.pValues,cv=state.compareValues,wv=state.waveValues,sv=state.stringValues;
+if(s.mode==='labdesign'){
+ const spec=LAB_MISSIONS[state.labRound];
+ control=`<div class="control-head">🧪 博士の実験室：原因を突き止めよう</div>
+ <div class="lab-tasks">${LAB_MISSIONS.map((m,i)=>`<span class="${i<state.labRound?'done':i===state.labRound?'current':''}">${i<state.labRound?'✓ ':''}実験${i+1} ${m.name}</span>`).join('')}</div>
+ <div class="workbench"><h3>${htmlEsc(spec.quest)}</h3><p>基準：長さ45cm／重さ20g／振れ幅10°。<b>調べる条件だけ</b>変えよう。</p>
+ <div class="experiment-options">${spec.choices.map((c,i)=>`<button data-labkit="${i}" class="${state.labChoice===i?'selected':''}" aria-pressed="${state.labChoice===i}"><span>${htmlEsc(c.label)}</span><small>${htmlEsc(c.detail)}</small></button>`).join('')}</div>
+ <div class="mission-actions"><button class="btn amber" id="labMeasure">🔬 10往復を測定</button></div>
+ ${state.labMeasured?`<div class="game-callout" role="status"><strong>観測結果</strong>　基準 ${f(period(45,10)*10)}秒 → 実験 ${f(period(spec.choices[state.labChoice].length,spec.choices[state.labChoice].amp)*10)}秒（10往復）</div><p>さて、1往復の周期はどうなった？</p><div class="choicegrid"><button class="choicebtn" data-labconclude="different">周期が変わった</button><button class="choicebtn" data-labconclude="same">ほぼ変わらない</button></div>`:''}</div>`;
+}else if(s.mode==='beatbridge'){
+ control=`<div class="control-head">🌉 止まったリズム橋を動かそう</div>
+ <div class="workbench"><p>橋の機械は振り子の「<b>1往復2秒</b>」のリズムで進む。糸の長さを合わせ、中央通過に合わせて3回スイッチを押そう。</p>
+ ${rangeField('bridgeLength','糸の長さ',60,130,1,state.bridgeLength,' cm')}
+ <div class="statrow"><div class="stat"><span>設計した周期</span><b id="bridgeT">${f(period(state.bridgeLength,10))}秒</b></div><div class="stat"><span>目標</span><b>2.00秒</b></div><div class="stat"><span>スイッチ成功</span><b id="bridgeHit">${state.bridgeHits} / 3</b></div></div>
+ <div class="bridge-beats">${[0,1,2].map(i=>`<span class="${i<state.bridgeHits?'done':''}">${i<state.bridgeHits?'✅':'⚙️'}</span>`).join('')}</div>
+ <div class="mission-actions"><button id="bridgeCalibrate" class="btn amber">🔧 周期を測って始動</button><button id="bridgePush" class="btn primary" ${state.bridgeReady?'':'disabled'}>⚡ 中央でスイッチを押す〔Space〕</button></div>
+ <p class="mini muted">${state.bridgeReady?'振り子の中央通過を見て、焦らず押そう。早押し連打では通れないよ。':'長さを変えてから「始動」を押そう。操作はタップかスペースキー。'}</p></div>`;
+}else if(s.mode==='wavecode'){
+ const target=SIGNAL_MISSIONS[state.signalRound];
+ control=`<div class="control-head">📻 壊れた通信機の暗号を直そう</div>
+ <div class="wave-rounds">${SIGNAL_MISSIONS.map((a,i)=>`<span class="${i<state.signalRound?'done':i===state.signalRound?'current':''}">${i<state.signalRound?'✓ ':''}信号${i+1}</span>`).join('')}</div>
+ <div class="workbench"><p>見本の波と同じ形を作って、止まった装置に信号を送信！<b>波の回数</b>と<b>上下の幅</b>に注目しよう。</p>
+ <div class="signal-compare"><div class="wave-preview"><strong>🟡 見本の信号</strong>${signalSVG(target.freq,target.amp)}<button id="playTarget" class="btn secondary">🔊 見本を聞く</button></div><div class="wave-preview"><strong>🔵 自分の信号</strong>${signalSVG(PITCH_CHOICES[state.signalPitch],AMP_CHOICES[state.signalAmp])}<button id="playMine" class="btn secondary">🔊 自分の音を聞く</button></div></div>
+ <p>① 波の回数（音の高さ）</p><div class="radio-parts">${PITCH_CHOICES.map((v,i)=>`<button data-pitch="${i}" class="${i===state.signalPitch?'selected':''}" aria-pressed="${i===state.signalPitch}">周波数 ${i+1}<small>${i===0?'ゆっくり':i===1?'中くらい':'速く'}</small></button>`).join('')}</div>
+ <p>② 波の高さ（音の大きさ）</p><div class="radio-parts">${AMP_CHOICES.map((v,i)=>`<button data-amp="${i}" class="${i===state.signalAmp?'selected':''}" aria-pressed="${i===state.signalAmp}">振幅 ${i+1}<small>${i===0?'小さめ':i===1?'中くらい':'大きめ'}</small></button>`).join('')}</div>
+ <button id="sendSignal" class="btn amber">📡 この波形で送信する！</button></div>`;
+}else if(s.mode==='echoquest'){
+ const e=ECHO_MISSIONS[state.echoRound];
+ control=`<div class="control-head">🧭 こだま峡谷：救助ルートを探そう</div>
+ <div class="route-progress">${ECHO_MISSIONS.map((a,i)=>`<span class="${i<state.echoRound?'done':i===state.echoRound?'current':''}">${i<state.echoRound?'✓ ':''}地点${i+1}</span>`).join('')}</div>
+ <div class="workbench"><h3>${htmlEsc(e.name)}</h3><p>${htmlEsc(e.story)}</p>
+ <div class="mission-actions"><button id="echoScan" class="btn amber">${e.mode==='echo'?'📣 やっほー！':'⚡ 稲光を観測'}（時間を測る）</button></div>
+ ${state.echoScanned?`<div class="game-callout">${e.mode==='echo'?'音を出してから反射音が戻るまで':'光ってから雷の音が聞こえるまで'} <strong>${e.time.toFixed(1)}秒</strong>。音速は約340m/秒。</div><p>救助信号を出すべき場所を選ぼう！</p><div class="canyon-routes">${e.choices.map((d,i)=>`<button data-echo-route="${i}" class="${state.echoChoice===i?'selected':''}" aria-pressed="${state.echoChoice===i}">地点${String.fromCharCode(65+i)}<small>${d} m先</small></button>`).join('')}</div><button id="echoRescue" class="btn primary">🚩 この場所へ救助隊を送る</button>`:'<p class="mini muted">先に時間を測ろう。答えは測定後に選べるよ。</p>'}
+ </div>`;
+}else if(s.mode==='pendulum'){control=`<div class="control-head">🎛️ 振り子を調整しよう　<span style="color:var(--amber)">目標周期 ${f(s.goal)} 秒</span></div><div class="control-grid">${rangeField('length','糸の長さ',10,140,1,pv.length,' cm')}${rangeField('mass','おもりの重さ',5,100,5,pv.mass,' g')}${rangeField('amp','振れ幅（角度）',5,30,1,pv.amp,'°')}</div><div class="statrow"><div class="stat"><span>今の周期</span><b id="read-period">${f(period(pv.length,pv.amp))}秒</b></div><div class="stat"><span>目標周期</span><b>${f(s.goal)}秒</b></div><div class="stat"><span>差</span><b id="read-diff">${f(Math.abs(period(pv.length,pv.amp)-s.goal))}秒</b></div></div>`;
+}else if(s.mode==='compare'){control=`<div class="control-head">🔍 比較実験：基準は 長さ45cm／重さ20g／角度10°</div><div class="control-grid">${rangeField('clength','糸の長さ',15,105,5,cv.length,' cm')}${rangeField('cmass','おもりの重さ',10,100,10,cv.mass,' g')}${rangeField('camp','振れ幅（角度）',5,30,1,cv.amp,'°')}</div><div class="statrow"><div class="stat"><span>基準の周期</span><b>${f(period(45,10))}秒</b></div><div class="stat"><span>変更後の周期</span><b id="read-comparison">${f(period(cv.length,cv.amp))}秒</b></div><div class="stat"><span>変更した条件</span><b id="read-changes">0つ</b></div></div>`;
+}else if(s.mode==='measure'){control=`<div class="control-head">⌚ ストップウォッチの「押すタイミングのずれ」を体験</div><p class="mini muted" style="margin:0 0 12px">測定値はシミュレーションです。10往復の合計時間を10で割った値と比べます。</p><div class="mission-actions"><button class="btn secondary" id="measure1">1往復をはかる</button><button class="btn secondary" id="measure10">10往復をはかる</button></div><div class="statrow"><div class="stat"><span>1往復から</span><b id="m1">—</b></div><div class="stat"><span>10往復から</span><b id="m10">—</b></div><div class="stat"><span>本来の周期</span><b>${f(period(60,12))}秒</b></div></div>`;
+}else if(s.mode==='rhythm'){control=`<div class="control-head">🎯 おもりが一番下を通るときにタイミングよく押そう！</div><p class="mini muted" style="margin:0 0 8px">真ん中に近いほど◎。4回成功でクリア。スペースキーも使えます。</p><div class="mission-actions"><button class="btn amber" id="pushSwing">ひと押し！〔Space〕</button><span class="pill">成功 <strong id="rhythm-progress">0</strong> / 4</span></div>`;
+}else if(s.mode==='wave'){control=`<div class="control-head">🎵 波を調整しよう　目標 ${s.goalHz}Hz／振幅 ${s.goalAmp}</div><div class="control-grid two">${rangeField('freq','周波数',100,1000,10,wv.freq,' Hz')}${rangeField('waveamp','振幅',10,100,5,wv.amp,'')}</div><div class="mission-actions"><button class="btn secondary" id="playSound">🔊 今の音を鳴らす</button></div>`;
+}else if(s.mode==='string'){control=`<div class="control-head">🎸 同じ素材の弦で、いちばん高い音を目指そう</div><div class="control-grid two">${rangeField('strlength','弦の長さ',20,80,5,sv.length,' cm')}${rangeField('tension','張る強さ（相対）',20,100,5,sv.tension,'')}${rangeField('thick','弦の太さ（相対）',1,5,1,sv.thick,'')}${rangeField('strength','はじく強さ',10,100,5,sv.strength,'')}</div><div class="statrow"><div class="stat"><span>高さの基準比</span><b id="str-ratio">1.00倍</b></div><div class="stat"><span>目標</span><b>1.50倍以上</b></div><div class="stat"><span>強さ</span><b id="str-volume">50</b></div></div>`;
+}else if(s.mode==='medium'){control=`<div class="control-head">🌌 音を伝える場所を選ぼう</div><div class="choicegrid" id="mediumButtons">${['air','water','vacuum'].map(k=>`<button class="choicebtn ${state.medium===k?'selected':''}" data-medium="${k}">${{air:'空気',water:'水',vacuum:'真空'}[k]}</button>`).join('')}</div><p class="mini muted" id="speed-read">空気の音速の目安：340m/s</p>`;
+}else if(s.mode==='echo'){let medium=s.goalMedium;let speed=medium==='air'?340:1500;control=`<div class="control-head">📡 ${medium==='air'?'空気（音速340m/s）':'水（音速1500m/s）'}での往復時間を合わせよう</div>${rangeField('distance','音を反射する場所までの距離',100,3500,10,state.distance,' m')}<div class="statrow"><div class="stat"><span>往復時間</span><b id="echoTime">${f(2*state.distance/speed)}秒</b></div><div class="stat"><span>目標</span><b>${f(s.goalTime)}秒</b></div><div class="stat"><span>距離</span><b id="echoDistance">${state.distance}m</b></div></div>`;
+
+ }else if(s.mode==='fall'){
+ const vac=state.fallTrials.includes('vacuum'),paper=state.fallTrials.includes('paper');
+ const isVac=state.fallMedium==='vacuum';
+ const condition=isVac?'大きさ・形・高さは同じ。重さだけが違う球を比べます。':'同じ紙を2枚用意。重さ・落とす高さは同じで、形だけが違います。';
+ const question=state.fallQuizStep===0
+   ?{q:'真空の中では、重さが違う2つの球はどう落ちた？',opts:['重い球が先','軽い球が先','同時に着地']}
+   :{q:'空気中の紙で落ち方が違ったのはなぜ？',opts:['丸めた紙の重さが増えたから','形が変わり、空気抵抗が変わったから','平らな紙に重力が働かないから']};
+ control=`<div class="control-head">🏁 科学探偵の落下実験</div>
+   <div class="game-callout">🔬 1回の実験で変える条件は、1つだけ。実験を2つとも終えて謎を解こう！</div>
+   <div class="step-track"><span class="step-dot ${vac?'done':''}">${vac?'✓':'①'} 真空・重さを比較</span><span class="step-dot ${paper?'done':''}">${paper?'✓':'②'} 空気・形を比較</span><span class="step-dot ${state.fallQuizStep===2?'done':''}">${state.fallQuizStep===2?'✓':'③'} 推理</span></div>
+   <div class="game-row"><button class="btn ${isVac?'amber':'secondary'}" id="fallVacuum" ${state.fallRunning?'disabled':''}>① 真空：重さを比べる</button><button class="btn ${!isVac?'amber':'secondary'}" id="fallPaper" ${vac&&!state.fallRunning?'':'disabled'}>② 空気：形を比べる</button></div>
+   <p class="mini muted">${isVac?'🔵 鉄球100g と木球10g（同じ大きさ）':'📄 平らな紙5g と丸めた紙5g（同じ紙を2枚）'}<br>${condition}</p>
+   <div class="game-row"><button class="btn primary" id="dropBalls" ${state.fallRunning?'disabled':''}>${state.fallRunning?'⏳ 落下を観察中…':'⚡ 同じ高さから同時に落とす'}</button></div>
+   ${vac?`<p class="mini" style="color:#a9f4d5">✓ 真空の観察：重さが違っても同時に落ちた。</p>`:''}
+   ${paper?`<p class="mini" style="color:#a9f4d5">✓ 空気中の観察：同じ重さの紙でも形によって違いが出た。</p>`:''}
+   ${vac&&paper&&state.fallQuizStep<2?`<p class="game-callout">🧠 推理 ${state.fallQuizStep+1}/2：${question.q}</p><div class="choicegrid">${question.opts.map((c,i)=>`<button class="choicebtn" data-fallguess="${i}">${c}</button>`).join('')}</div>`:''}
+   ${state.fallQuizStep===2?`<p class="game-callout">🏆 実験成功！ 重さの効果と空気抵抗の効果を分けて説明できた！</p>`:''}
+   <p class="mini muted">※実際の実験では空気抵抗の影響は材質・形状・断面積・速さなどで変わります。画面の動きは見やすさのために時間を調整したモデルです。</p>`;
+}else if(s.mode==='foucault'){
+ control=`<div class="control-head">🌏 北極のフーコーの振り子</div>
+   <p class="game-callout">振り子が揺れる方向は空間に対してほぼ一定。地面の矢印を<strong class="em">反対向き</strong>にするには、何時間進める？</p>
+   ${rangeField('earthHours','地球上で経過した時間',0,24,1,state.earthHours,' 時間')}
+   <div class="statrow"><div class="stat"><span>経過時間</span><b id="earthRead">${state.earthHours}時間</b></div><div class="stat"><span>地面の見かけの回転</span><b id="earthAngle">${state.earthHours*15}°</b></div><div class="stat"><span>目標</span><b>逆向き</b></div></div>
+   <p class="mini muted">※ここでは北極を想定した模式モデルです。実際の見かけの回転は緯度によって異なります。</p>`;
+}else if(s.mode==='duel'){
+ const match=duelSet();
+ control=`<div class="control-head">⚔️ 3ラウンドの振り子対決</div><div class="game-callout">ラウンド ${state.phase+1}/3：10往復を先に終えるのは？</div>
+   <div class="challenge-result"><div class="stat"><span>ふりこA</span><b>長さ ${match.A[0]}cm</b><span>重さ ${match.A[1]}g</span></div><div class="stat"><span>ふりこB</span><b>長さ ${match.B[0]}cm</b><span>重さ ${match.B[1]}g</span></div></div>
+   <div class="step-track">${[0,1,2].map(i=>`<div class="step-dot ${i<state.phase?'done':''}">${i<state.phase?'✓':'🏁'} ${i+1}戦</div>`).join('')}</div>
+   <div class="choicegrid">${[['A','ふりこA'],['B','ふりこB'],['tie','同時にゴール']].map(([id,lab])=>`<button class="choicebtn" data-duel="${id}">${lab}</button>`).join('')}</div>
+   <p class="mini muted">アニメーションで2つの振り子の速さを見比べよう。</p>`;
+}else if(s.mode==='melody'){
+  const set=melodySet();
+  control=`<div class="control-head">🎹 音のひみつの楽譜</div>
+    <div class="game-callout">第${state.phase+1}曲／3曲：${htmlEsc(set.ask)}</div>
+    <div class="step-track">${[0,1,2].map(i=>`<div class="step-dot ${i<state.phase?'done':''}">${i<state.phase?'✓':i===state.phase?'♪':'🔒'} ${i+1}</div>`).join('')}</div>
+    <p class="mini muted">各ボタンで音を再生できます。耳を使えないときも波の形から考えられます。</p>
+    <div class="melody-row">${set.notes.map((note,i)=>`<button class="note-card" data-note="${i}" aria-label="候補${i+1}を聞いて選ぶ"><strong>音 ${i+1}</strong>${waveSVG(note/160,14)}<span>🔊 音を聞く</span></button>`).join('')}</div>
+    <div class="mission-actions"><span class="pill" id="melodyCurrent">候補を選ぶと判定されます</span></div>`;
+}else if(s.mode==='ear'){
+  const names=['聴神経','耳小骨','脳','蝸牛','鼓膜'];
+  control=`<div class="control-head">🧩 音の情報の通り道をつなげよう</div>
+    <p class="mini muted">並んだ部品から次に通る場所を順番にタップ！</p>
+    <div class="step-track">${state.solvedPieces.map(x=>`<div class="step-dot done">✓ ${htmlEsc(x)}</div>`).join('')}<div class="step-dot">${state.solvedPieces.length+1}番目は？</div></div>
+    <div class="piece-grid">${names.map(name=>`<button class="piece" data-piece="${name}" ${state.solvedPieces.includes(name)?'disabled':''}>${name}</button>`).join('')}</div>
+    <button class="btn secondary" id="resetEar">↻ 順番をやりなおす</button>`;
+}else if(s.mode==='chamber'){
+  control=`<div class="control-head">🔔 空気を減らしてベルの音を比べよう</div>
+    <div class="game-callout">まず空気100％で鳴らす → ポンプで減圧 → もう一度鳴らして比較！</div>
+    <div class="statrow"><div class="stat"><span>空気の量（模式）</span><b id="pressureRead">${state.pressure}%</b></div><div class="stat"><span>最初の音</span><b id="normalRead">${state.heardNormal?'✓':'未'}</b></div><div class="stat"><span>減圧後の音</span><b id="thinRead">${state.heardThin?'✓':'未'}</b></div></div>
+    <div class="game-row"><button class="btn amber" id="ringBell">🔔 ベルを鳴らす</button><button class="btn secondary" id="pumpAir">💨 空気をぬく（−25％）</button></div>
+    <p class="mini muted">※完全な真空は作れません。音量変化は学習用の模式表現です。</p>`;
+}else if(s.mode==='flask'){
+  control=`<div class="control-head">🧪 失敗しない実験手順を組み立てよう</div>
+    <div class="game-callout" id="flaskPrompt">${['まず、フラスコ内を水蒸気で満たすには？','水蒸気があるうちに、次は何をする？','フラスコ内の気体を液体に戻すには？','最後に管の先を水につけて開くと？'][state.flaskStep]}</div>
+    <div class="step-track">${['加熱','密閉','冷却','水中で開く'].map((a,i)=>`<div class="step-dot ${i<state.flaskStep?'done':''}">${i<state.flaskStep?'✓ ':' '}${a}</div>`).join('')}</div>
+    <div class="piece-grid">${[['加熱',0],['密閉',1],['冷却',2],['水中で開く',3]].map(([name,i])=>`<button class="piece" data-flask="${i}" ${i<state.flaskStep?'disabled':''}>${name}</button>`).join('')}</div>
+    <p class="mini muted">安全のため、これは画面上だけの仮想実験です。実際の加熱・密閉操作は指導者の管理が必要です。</p>`;
+}else if(s.mode==='sonar'){
+  const set=sonarSet();
+  control=`<div class="control-head">🚢 海底ソナー：3つの海域を探そう</div>
+    <div class="game-callout">海域 ${state.phase+1}/3　音の往復時間は <strong class="em">${set.time.toFixed(1)} 秒</strong>。海底までの深さは？</div>
+    <p class="mini muted">音速は水中で約1500m/秒。正しい深さの海図を選んで「探査！」</p>
+    <div class="step-track">${[0,1,2].map(i=>`<div class="step-dot ${i<state.phase?'done':''}">${i<state.phase?'✓':'🌊'} ${i+1}海域</div>`).join('')}</div>
+    <div class="choicegrid">${set.depths.map((d,i)=>`<button class="choicebtn" data-sonar="${i}">${d.toLocaleString()} m</button>`).join('')}</div>
+    <div class="mission-actions"><button class="btn amber" id="pingSonar">📡 探査する！</button></div>`;
+}else if(s.mode==='acoustic'){
+  const materials=['かたい壁（0点）','カーテン（1点）','吸音パネル（2点）'];
+  control=`<div class="control-head">🎚️ 音楽室を設計しよう</div>
+    <div class="game-callout">反射の割合を <strong class="em">40％未満</strong>に。ただし工事の予算は <strong class="em">4点以内</strong>！</div>
+    <div class="room-grid">${state.room.map((v,i)=>`<label class="room-wall"><strong>${['左の壁','正面の壁','右の壁'][i]}</strong><select data-wall="${i}" aria-label="${['左の壁','正面の壁','右の壁'][i]}の材質">${materials.map((n,j)=>`<option value="${j}" ${j===v?'selected':''}>${n}</option>`).join('')}</select></label>`).join('')}</div>
+    <div class="challenge-result"><div class="stat"><span>反射の割合（モデル）</span><b id="roomReflect">${roomScore().reflect}%</b></div><div class="stat"><span>工事予算</span><b id="roomCost">${roomScore().cost} / 4</b></div></div>
+    <p class="mini muted">※反射率はこのゲームの単純化した架空の数値。現実の吸音性能とは異なります。</p>`;
+}else if(s.mode==='graph'){let questions=[['Aと同じ「音の大きさ」の波は？','B'],['Bと同じ「音の高さ」の波は？','D'],['Cと同じ「音の高さ」の波は？','E']];let prompt=questions[Math.min(state.graphStep,2)][0];control=`<div class="control-head">📈 1秒間の波を比べよう（全3問）</div><div class="graph-grid">${[['A',4,21],['B',7,21],['C',2,34],['D',7,12],['E',2,12]].map(([id,n,a])=>`<div class="wave-card">${id}${waveSVG(n,a)}</div>`).join('')}</div><p class="mini" id="graphPrompt" style="margin:14px 0 7px">${state.graphStep+1}問目：${prompt}</p><div class="graph-choice">${['A','B','C','D','E'].map(c=>`<button class="choicebtn" data-graph="${c}">${c}</button>`).join('')}</div>`;}else if(s.mode==='choice'){control=`<div class="control-head">💭 考えて選ぼう</div><div class="choicegrid">${s.choices.map((o,i)=>`<button class="choicebtn" data-choice="${i}">${htmlEsc(o)}</button>`).join('')}</div>`;}
+let primary=!['rhythm','measure','fall','duel','melody','ear','chamber','flask','sonar','labdesign','beatbridge','wavecode','echoquest'].includes(s.mode);
+app.innerHTML=`<div class="columns"><aside class="panel"><div class="missionlist">${stageMenu()}</div><div class="side-stats">授業では好きなステージから遊べます。<button class="btn secondary" id="backToMap" style="width:100%;margin-top:9px">🗺️ 冒険マップへ</button></div></aside><section class="panel"><div class="panelpad"><div class="section-kicker">STAGE ${String(DATA.stages.indexOf(s)+1).padStart(2,'0')} · ${s.zone==='pend'?'PENDULUM':'SOUND'}</div><div class="challenge-ribbon"><span class="challenge-tag ${['melody','ear','chamber','flask','sonar','acoustic','rhythm','labdesign','beatbridge','wavecode','echoquest'].includes(s.mode)?'activity':''}">${htmlEsc(stageModeName(s.mode))}</span><span class="muted">${s.zone==='sound'?'音の研究所を攻略中':'時の塔を攻略中'}</span></div><div class="headline"><h2 class="section-title">${htmlEsc(s.name)}</h2><span class="page">教材 ${htmlEsc(s.page)}</span></div><p class="brief">${htmlEsc(s.brief)}</p><select class="mobile-select" id="stageSelect" aria-label="ステージを切り替える">${DATA.stages.map((x,i)=>`<option value="${x.id}" ${x.id===s.id?'selected':''}>${i+1}. ${htmlEsc(x.name)}</option>`).join('')}</select>${['beatbridge','rhythm','echoquest'].includes(s.mode)?focusMarkup():''}${['beatbridge','rhythm','echoquest'].includes(s.mode)?'<div class="scene-label">🎞️ 動くイラスト <small>操作前後の変化を観察</small></div>':''}<div class="visual-frame ${['beatbridge','rhythm','echoquest'].includes(s.mode)?'scene-feature':''}"><canvas id="gameCanvas" width="900" height="295" role="img" aria-label="振り子または音の振動の動く図"></canvas></div><div class="controls">${control}${primary?`<div class="mission-actions"><button class="btn primary" id="runStage">⚡ しかけを動かす</button><button class="btn secondary" id="resetControls">やりなおす</button></div>`:''}</div><details class="tip"><summary>💡 ヒントを見る</summary><p>${htmlEsc(s.tip)}</p></details><div class="feedback" id="stageFeedback" role="status"></div><div id="questTransition"></div><details id="knowledgeReveal" class="new-knowledge" ${state.progress[s.id]?'open':''}><summary><strong>🔎 科学のひみつの宝箱（タップで開く）</strong></summary><p>${htmlEsc(s.learn)}</p></details><div class="mission-actions"><button class="btn secondary" id="goToQuiz">📚 対応するクイズを解く</button><button class="btn secondary" id="nextStage">次のステージ →</button></div></div></section></div>`;
+ improveSceneVisibility(s.mode);
+$$('[data-stage]').forEach(b=>b.onclick=()=>selectStage(b.dataset.stage));$('#stageSelect').onchange=e=>selectStage(e.target.value);const canv=$('#gameCanvas');if(window.innerWidth<700&&!['beatbridge','rhythm','echoquest'].includes(s.mode)){canv.width=600;canv.height=350;}$('#goToQuiz').onclick=()=>{state.quizFilter=DATA.stages.indexOf(s)<11?'pend':'sound';state.qi=0;state.answered=false;selectTab('quiz')};$('#nextStage').onclick=()=>{let idx=DATA.stages.indexOf(s);if(idx===10||idx===20){state.bossScreen=idx===10?'clock':'sound';selectTab('boss');}else selectStage(DATA.stages[Math.min(idx+1,DATA.stages.length-1)].id)};
+bindFocus();if($('#backToMap'))$('#backToMap').onclick=()=>selectTab('map'); if($('#resetControls'))$('#resetControls').onclick=()=>selectStage(s.id);
+if($('#runStage'))$('#runStage').onclick=runStage;
+const updateP=()=>{if($('#read-period'))$('#read-period').textContent=f(period(pv.length,pv.amp))+'秒';if($('#read-diff'))$('#read-diff').textContent=f(Math.abs(period(pv.length,pv.amp)-s.goal))+'秒';};
+const updateC=()=>{const changes=(cv.length!==45)+(cv.mass!==20)+(cv.amp!==10);$('#read-comparison').textContent=f(period(cv.length,cv.amp))+'秒';$('#read-changes').textContent=changes+'つ';};
+for(let [key,prop,unit] of [['length','length',' cm'],['mass','mass',' g'],['amp','amp','°']])attachRange(key,pv,prop,unit,updateP);
+for(let [key,prop,unit] of [['clength','length',' cm'],['cmass','mass',' g'],['camp','amp','°']])attachRange(key,cv,prop,unit,updateC);
+for(let [key,prop,unit] of [['freq','freq',' Hz'],['waveamp','amp','']])attachRange(key,wv,prop,unit);
+if($('#playSound'))$('#playSound').onclick=()=>tone(wv.freq,wv.amp/100);
+function updateStr(){const ratio=stringRatio(sv);$('#str-ratio').textContent=f(ratio)+'倍';$('#str-volume').textContent=sv.strength;}
+for(let [key,prop,unit] of [['strlength','length',' cm'],['tension','tension',''],['thick','thick',''],['strength','strength','']])attachRange(key,sv,prop,unit,updateStr);
+attachRange('distance',state,'distance',' m',()=>{let speed=s.goalMedium==='air'?340:1500;$('#echoTime').textContent=f(2*state.distance/speed)+'秒';$('#echoDistance').textContent=state.distance+'m';});
+$$('[data-choice]').forEach(b=>b.onclick=()=>{state.choice=Number(b.dataset.choice);$$('[data-choice]').forEach(x=>x.classList.toggle('selected',x===b))});
+$$('[data-graph]').forEach(b=>b.onclick=()=>{state.choice=b.dataset.graph;$$('[data-graph]').forEach(x=>x.classList.toggle('selected',x===b))});$$('[data-medium]').forEach(b=>b.onclick=()=>{state.medium=b.dataset.medium;$$('[data-medium]').forEach(x=>x.classList.toggle('selected',x===b));$('#speed-read').textContent=({'air':'空気の音速の目安：340m/s','water':'水中の音速の目安：1500m/s','vacuum':'真空では音が伝わらない。'})[state.medium];});
+$$('[data-labkit]').forEach(b=>b.onclick=()=>{state.labChoice=Number(b.dataset.labkit);state.labMeasured=false;renderWorld($('#app'))});
+if($('#labMeasure'))$('#labMeasure').onclick=measureLab;
+$$('[data-labconclude]').forEach(b=>b.onclick=()=>concludeLab(b.dataset.labconclude));
+attachRange('bridgeLength',state,'bridgeLength',' cm',()=>{$('#bridgeT').textContent=f(period(state.bridgeLength,10))+'秒';if(state.bridgeReady){state.bridgeReady=false;state.bridgeHits=0;$('#bridgePush').disabled=true;$('#bridgeHit').textContent='0 / 3';}});
+if($('#bridgeCalibrate'))$('#bridgeCalibrate').onclick=calibrateBridge;
+if($('#bridgePush'))$('#bridgePush').onclick=pushBridge;
+$$('[data-pitch]').forEach(b=>b.onclick=()=>{state.signalPitch=Number(b.dataset.pitch);renderWorld($('#app'))});
+$$('[data-amp]').forEach(b=>b.onclick=()=>{state.signalAmp=Number(b.dataset.amp);renderWorld($('#app'))});
+if($('#playTarget'))$('#playTarget').onclick=()=>{const m=SIGNAL_MISSIONS[state.signalRound];tone(m.freq,m.amp/100*.45)};
+if($('#playMine'))$('#playMine').onclick=()=>tone(PITCH_CHOICES[state.signalPitch],AMP_CHOICES[state.signalAmp]/100*.45);
+if($('#sendSignal'))$('#sendSignal').onclick=sendSignal;
+if($('#echoScan'))$('#echoScan').onclick=scanEcho;
+$$('[data-echo-route]').forEach(b=>b.onclick=()=>{state.echoChoice=Number(b.dataset.echoRoute);$$('[data-echo-route]').forEach(x=>x.classList.toggle('selected',x===b));});
+if($('#echoRescue'))$('#echoRescue').onclick=rescueEcho;
+if($('#measure1'))$('#measure1').onclick=()=>measure(1);
+if($('#measure10'))$('#measure10').onclick=()=>measure(10);
+if($('#pushSwing'))$('#pushSwing').onclick=pushSwing;
+if($('#fallPaper'))$('#fallPaper').onclick=()=>{state.fallMedium='paper';state.fallStart=-10;renderWorld($('#app'));};
+if($('#fallVacuum'))$('#fallVacuum').onclick=()=>{state.fallMedium='vacuum';state.fallStart=-10;renderWorld($('#app'));};
+if($('#dropBalls'))$('#dropBalls').onclick=dropBalls;
+$$('[data-fallguess]').forEach(b=>b.onclick=()=>guessFall(Number(b.dataset.fallguess)));
+$$('[data-duel]').forEach(b=>b.onclick=()=>pressDuel(b.dataset.duel));
+attachRange('earthHours',state,'earthHours',' 時間',()=>{$('#earthRead').textContent=state.earthHours+'時間';$('#earthAngle').textContent=state.earthHours*15+'°';});
+$$('[data-note]').forEach(b=>b.onclick=()=>pressMelody(Number(b.dataset.note)));
+$$('[data-piece]').forEach(b=>b.onclick=()=>pressEar(b.dataset.piece));
+$$('[data-flask]').forEach(b=>b.onclick=()=>pressFlask(Number(b.dataset.flask)));
+if($('#resetEar'))$('#resetEar').onclick=()=>{state.solvedPieces=[];renderWorld($('#app'));};
+if($('#pumpAir'))$('#pumpAir').onclick=pumpAir;
+if($('#ringBell'))$('#ringBell').onclick=ringBell;
+$$('[data-sonar]').forEach(b=>b.onclick=()=>{state.sonarChoice=Number(b.dataset.sonar);$$('[data-sonar]').forEach(x=>x.classList.toggle('selected',x===b));});
+if($('#pingSonar'))$('#pingSonar').onclick=pingSonar;
+$$('[data-wall]').forEach(b=>b.onchange=()=>{state.room[Number(b.dataset.wall)]=Number(b.value);$('#roomReflect').textContent=roomScore().reflect+'%';$('#roomCost').textContent=roomScore().cost+' / 4';});
+}
+
+
+const LAB_MISSIONS=[
+ {name:'長さ',quest:'長さが周期に関係するかを調べよう。どの装置を選ぶ？',choices:[
+  {label:'Aの装置',detail:'長さ60cm・重さ20g・10°',length:60,mass:20,amp:10,valid:true},
+  {label:'Bの装置',detail:'長さ60cm・重さ40g・10°',length:60,mass:40,amp:10,valid:false},
+  {label:'Cの装置',detail:'長さ45cm・重さ20g・10°',length:45,mass:20,amp:10,valid:false}],different:true},
+ {name:'重さ',quest:'重さだけが周期に関係するかを調べよう。',choices:[
+  {label:'Aの装置',detail:'長さ55cm・重さ40g・10°',length:55,mass:40,amp:10,valid:false},
+  {label:'Bの装置',detail:'長さ45cm・重さ40g・10°',length:45,mass:40,amp:10,valid:true},
+  {label:'Cの装置',detail:'長さ45cm・重さ20g・10°',length:45,mass:20,amp:10,valid:false}],different:false},
+ {name:'振れ幅',quest:'小さい振れ幅の違いで周期はどうなる？',choices:[
+  {label:'Aの装置',detail:'長さ45cm・重さ40g・15°',length:45,mass:40,amp:15,valid:false},
+  {label:'Bの装置',detail:'長さ50cm・重さ20g・15°',length:50,mass:20,amp:15,valid:false},
+  {label:'Cの装置',detail:'長さ45cm・重さ20g・15°',length:45,mass:20,amp:15,valid:true}],different:false}
+];
+function measureLab(){
+ if(state.labChoice===null){feedback(false,'装置を選ぼう','基準と比べるための装置を選択してね。');return;}
+ const m=LAB_MISSIONS[state.labRound],c=m.choices[state.labChoice];
+ if(!c.valid){state.labMistakes++;feedback(false,'その実験では原因が分からない','変えたい条件以外まで変わっていないか、基準と見比べよう。');return;}
+ state.labMeasured=true;renderWorld($('#app'));
+ feedback(true,'10往復を観察できた！','まずは基準と比較した時間を見て、周期の変化を判断しよう。');
+}
+function concludeLab(conclusion){
+ if(!state.labMeasured)return;
+ const m=LAB_MISSIONS[state.labRound];
+ if((conclusion==='different')!==m.different){state.labMistakes++;feedback(false,'観測記録をもう一度見てみよう','10往復の差から、周期が変わったか確かめよう。');return;}
+ state.labRound++;state.labChoice=null;state.labMeasured=false;
+ if(state.labRound>=LAB_MISSIONS.length){feedback(true,'🏅 博士の研究レポート完成！','条件を1つだけ変えた3つの実験で、周期の原因を解き明かした！');completeStage(state.labMistakes===0?3:state.labMistakes<=2?2:1);}
+ else{renderWorld($('#app'));feedback(true,'実験成功！',`条件をそろえて研究できた！　次は実験${state.labRound+1}へ。`);}
+}
+function calibrateBridge(){
+ const currentT=period(state.bridgeLength,10),delta=Math.abs(currentT-2.0);
+ if(delta>.06){state.bridgeMistakes++;feedback(false,'リズムが合わない',`今は${f(currentT)}秒。1往復2.00秒になる長さを探してみよう。`);return;}
+ state.bridgeReady=true;state.bridgeHits=0;state.bridgeStart=performance.now()/1000;state.bridgeLast=-20;state.bridgePulseTime=-100;
+ renderWorld($('#app'));feedback(true,'⚙️ 橋の歯車が動き出した！','振り子が中央を通る瞬間に、橋の機械のスイッチを3回操作しよう。');
+}
+function pushBridge(){
+ if(state.view!=='world'||stage().mode!=='beatbridge'||!state.bridgeReady||state.bridgeHits>=3)return;
+ const now=performance.now()/1000;
+ if(now-state.bridgeLast<0.65){feedback(false,'次の振りを待とう','同じ瞬間に連続では押せないよ。');return;}
+ state.bridgeLast=now;
+ const q=Math.abs(Math.sin(2*Math.PI*(now-state.bridgeStart)/period(state.bridgeLength,10)));
+ if(q<.75){state.bridgeMistakes++;feedback(false,'スイッチのタイミングが違うかも','おもりが左右の中央を通る瞬間を観察してみよう。');return;}
+ state.bridgeHits++;state.bridgePulseTime=now;
+ if(state.bridgeHits>=3){renderWorld($('#app'));feedback(true,'🌉 リズム橋が完成！','振り子の周期2秒のリズムで、橋の機械を動かせた！ 2秒に1往復なら0.5Hzだね。');completeStage(state.bridgeMistakes===0?3:2);}
+ else {renderWorld($('#app'));feedback(true,'⚙️ 歯車が1段進んだ！',`${state.bridgeHits} / 3回。次の中央通過もねらおう！`);}
+}
+const PITCH_CHOICES=[220,440,660],AMP_CHOICES=[30,55,80];
+const SIGNAL_MISSIONS=[{freq:440,amp:55},{freq:660,amp:30},{freq:220,amp:80}];
+function signalSVG(freq,amp){let dots=[];const cyc=freq/110, h=7+amp*.27;
+ for(let i=0;i<=200;i+=2){dots.push(`${i},${(38-Math.sin(i/200*cyc*2*Math.PI)*h).toFixed(1)}`)}
+ return `<svg viewBox="0 0 200 76" role="img" aria-label="周波数と振幅を表す波形"><line x1="0" x2="200" y1="38" y2="38" stroke="#7ea0b1"/><polyline fill="none" stroke="#8be8d9" stroke-width="2.8" points="${dots.join(' ')}"/></svg>`;
+}
+function sendSignal(){
+ const m=SIGNAL_MISSIONS[state.signalRound],freq=PITCH_CHOICES[state.signalPitch],amp=AMP_CHOICES[state.signalAmp];
+ if(freq!==m.freq||amp!==m.amp){state.signalMisses++;feedback(false,'受信機が反応しない',`波の数 ${freq===m.freq?'✓':'?'}・振幅 ${amp===m.amp?'✓':'?'}。見本と自分の波形を見比べよう！`);return;}
+ state.signalRound++;
+ if(state.signalRound>=SIGNAL_MISSIONS.length){feedback(true,'📻 3つの通信がつながった！','周波数と振幅の両方を自分で調整できた！');completeStage(state.signalMisses===0?3:state.signalMisses<=2?2:1);}
+ else{state.signalPitch=0;state.signalAmp=0;renderWorld($('#app'));feedback(true,'📡 通信成功！',`次は信号 ${state.signalRound+1} 。ちがう波形に挑戦！`);}
+}
+const ECHO_MISSIONS=[
+ {name:'谷の向こうからのやまびこ',mode:'echo',story:'「やっほー」の音が山で反射して戻ってきた。向こう岸の距離を調べよう。',time:2.0,choices:[170,340,680],answer:1},
+ {name:'雷の音が聞こえた！',mode:'thunder',story:'稲光を見てからゴロゴロと聞こえた。落雷地点までの距離を推定して、近づかず安全な場所へ避難しよう。',time:3.0,choices:[510,1020,1530],answer:1},
+ {name:'岩壁の奥の救助信号',mode:'echo',story:'岩壁に向けて音を出し、戻る時間から壁までの距離を見積もろう。',time:1.5,choices:[170,255,510],answer:1}
+];
+function scanEcho(){state.echoScanned=true;state.echoScanStart=performance.now()/1000;renderWorld($('#app'));feedback(true,'時間の測定に成功！','反射音なら音は往復。雷なら音が届くのは片道だよ。');}
+function rescueEcho(){
+ const e=ECHO_MISSIONS[state.echoRound];
+ if(!state.echoScanned||state.echoChoice===null){feedback(false,'場所を選んでね','時間を測定したら、正しい距離を示す場所を選ぼう。');return;}
+ if(state.echoChoice!==e.answer){state.echoMisses++;feedback(false,'別の場所のようだ',e.mode==='echo'?'音が戻るまでには往復しているよ。片道に直して考えよう。':'光が届く時間は無視できる。音は片道でどれだけ進んだかな？');return;}
+ state.echoRound++;state.echoScanned=false;state.echoChoice=null;
+ if(state.echoRound>=ECHO_MISSIONS.length){feedback(true,'🏔️ 峡谷の3地点を突破！','やまびこ＝往復、雷の光と音の差＝片道。使い分けて救助ルートを見つけた！');completeStage(state.echoMisses===0?3:state.echoMisses<=2?2:1);}
+ else{renderWorld($('#app'));feedback(true,'🧭 ルート発見！',`地点 ${state.echoRound} を通過。次のエリアへ進もう！`);}
+}
+
+const DUELS=[
+ {A:[40,10],B:[80,40],answer:'A'},
+ {A:[90,20],B:[30,90],answer:'B'},
+ {A:[55,10],B:[55,80],answer:'tie'}
+];
+function duelSet(){return DUELS[Math.min(state.phase,2)];}
+function pressDuel(answer){
+ const set=duelSet();
+ if(answer===set.answer){state.phase++;
+  if(state.phase>=3){feedback(true,'🏆 スピード大会優勝！','長さが同じなら、重さが変わっても振り子の周期は変わらない。');completeStage(3);}
+  else{renderWorld($('#app'));feedback(true,'🏁 正解！',`第${state.phase}ラウンド勝利。次の2つを見比べよう。`);}
+ }else feedback(false,'もう一度見てみよう','重さに惑わされず、糸の長さと周期に注目。');
+}
+function dropBalls(){
+ const trial=state.fallMedium;
+ if(state.fallRunning||(trial==='paper'&&!state.fallTrials.includes('vacuum')))return;
+ state.fallStart=performance.now()/1000;
+ state.fallRunning=true;
+ renderWorld($('#app'));
+ feedback(true,'👀 落ち方を観察しよう','2つの物体が着地するまで、動きをよく見てみよう。結果は着地してから表示されるよ。');
+ // 真空の球は約1.05秒、平らな紙は約3.94秒で着地するよう減速表示。
+ setTimeout(()=>{
+   if(state.sid!=='s08'||state.view!=='world'||!state.fallRunning||state.fallMedium!==trial)return;
+   state.fallRunning=false;
+   if(!state.fallTrials.includes(trial))state.fallTrials.push(trial);
+   renderWorld($('#app'));
+   if(trial==='vacuum')feedback(true,'🔬 実験①：同時に落下！','真空中：球は同じ大きさ、違う重さ。空気抵抗がなく、同じ加速度で落ちる。次は同じ重さの紙を空気中で比べよう。');
+   else feedback(true,'🔬 実験②：紙の形で落ち方が変わる！','同じ質量・同じ高さで、変えたのは紙の形だけ。次は観察結果から謎を解こう。');
+ },trial==='vacuum'?1150:4200);
+}
+function guessFall(guess){
+ if(!state.fallTrials.includes('vacuum')||!state.fallTrials.includes('paper')||state.fallQuizStep>=2)return;
+ const right=state.fallQuizStep===0?2:1;
+ if(guess===right){
+   state.fallQuizStep++;
+   renderWorld($('#app'));
+   if(state.fallQuizStep===2){feedback(true,'🏆 落下実験をクリア！','真空では重さに依存せず同じ加速度。空気中では形などによって抵抗が変わる。条件を分けて説明できたね！');completeStage(3);}
+   else feedback(true,'🔍 ひとつ目の謎を解決！','次は同じ重さの紙の実験を説明してみよう。');
+ }else feedback(false,'もう一度考えよう',state.fallQuizStep===0?'「空気がない」条件で、質量を変えたときの動きを思い出そう。':'紙を丸めても重さは同じ。形によって何が変わるだろう？');
+}
+const MELODIES=[
+ {ask:'「ラ」（440Hz）の1オクターブ上を選ぼう。',notes:[440,880,660],answer:1},
+ {ask:'前より低い音（220Hz）を選ぼう。',notes:[660,220,880],answer:1},
+ {ask:'真ん中の高さ「ラ」（440Hz）に戻そう。',notes:[880,660,440],answer:2}
+];
+const SONARS=[
+ {time:2.0,depths:[750,1500,2250],answer:1},
+ {time:3.2,depths:[1200,2400,3600],answer:1},
+ {time:4.0,depths:[1500,3000,6000],answer:1}
+];
+function melodySet(){return MELODIES[Math.min(state.phase,2)];}
+function sonarSet(){return SONARS[Math.min(state.phase,2)];}
+function roomScore(){const cost=state.room.reduce((a,b)=>a+b,0);const reflect=Math.round(state.room.reduce((a,b)=>a+[100,50,15][b],0)/3);return {cost,reflect};}
+function stageModeName(mode){return ({labdesign:'🧪 実験設計ミッション',beatbridge:'🌉 リズムアクション',wavecode:'📻 波形の復元パズル',echoquest:'🧭 音の探索アドベンチャー',fall:'🔬 条件制御の落下実験',foucault:'🌎 自転パズル',duel:'⚔️ 振り子対決',pendulum:'⏱ リズム調整',compare:'🔬 実験',measure:'⌚ 測定',rhythm:'🎯 タイミングアクション',wave:'🎵 音づくり',string:'🎸 楽器工房',melody:'🎹 音あてゲーム',ear:'🧩 順番パズル',chamber:'🔔 実験シミュレーション',flask:'🧪 手順パズル',echo:'📡 やまびこ探索',sonar:'🚢 ソナー探査',acoustic:'🏗️ 設計パズル',graph:'🕵️ 波形探偵',choice:'🧠 推理',medium:'🔊 音の比較'})[mode]||'科学ミッション';}
+function pressMelody(i){
+ if(state.phase>=3)return;
+ const set=melodySet();const note=set.notes[i];tone(note,.24);
+ const good=i===set.answer;
+ if(good){state.phase++;
+  if(state.phase>=3){feedback(true,'🎉 3つの楽譜を復元！','音の高さを聞き分けて、周波数と音階の関係を解き明かした！');completeStage(3);}
+  else{renderWorld($('#app'));feedback(true,`♪ ${state.phase}曲目クリア！`,'次の音を探そう。波の数がヒントになるよ。');}
+ }else feedback(false,'違う音のようだ',`選んだ音は${note}Hz。振動数と波の形を比べてみよう。`);
+}
+const EAR_PATH=['鼓膜','耳小骨','蝸牛','聴神経','脳'];
+function pressEar(name){
+ const expected=EAR_PATH[state.solvedPieces.length];
+ if(name===expected){state.solvedPieces.push(name);
+  if(state.solvedPieces.length>=EAR_PATH.length){renderWorld($('#app'));feedback(true,'🔔 音の情報が脳へ届いた！','鼓膜で振動を受け、耳小骨・蝸牛を通り、聴神経から脳に情報が届く。');completeStage(3);}
+  else{renderWorld($('#app'));feedback(true,'つながった！',`${name}まで届いた。次の部品を選ぼう。`);}
+ }else feedback(false,'通り道がつながらない',`${state.solvedPieces.length+1}番目に通る場所を選ぼう。`);
+}
+function pumpAir(){
+ if(!state.heardNormal){feedback(false,'最初の音を聞いてみよう','空気がある状態のベルを鳴らしてから、ポンプを使おう。');return;}
+ if(state.pressure<=0){feedback(false,'もう空気を抜けない','減圧後のベルを鳴らして、最初と比べよう。');return;}
+ state.pressure=Math.max(0,state.pressure-25);$('#pressureRead').textContent=state.pressure+'%';
+ feedback(true,'💨 空気が減った！',`空気の量はモデル上${state.pressure}％。もう一度ベルを鳴らしてみよう。`);
+}
+function ringBell(){
+ const pressure=state.pressure;
+ if(pressure===100)state.heardNormal=true;
+ if(pressure<=25)state.heardThin=true;
+ const volume=Math.max(0.0,pressure/100*.28);
+ if(volume>.004)tone(660,volume);
+ $('#normalRead').textContent=state.heardNormal?'✓':'未';$('#thinRead').textContent=state.heardThin?'✓':'未';
+ if(state.heardNormal&&state.heardThin){feedback(true,'🔕 2つの音を比べた！','空気を減らすほど音を伝える媒質が減る。完全な真空では音が伝わらない。');completeStage(3);}
+ else if(pressure===100)feedback(true,'🔔 よく聞こえる！','次はポンプで空気を減らしてみよう。');
+ else feedback(true,'🔉 音が変わった！',`減圧中のベルを観察したよ。${pressure>25?'さらに空気を減らそう。':'音量の違いを確かめよう。'}`);
+}
+function pressFlask(i){
+ if(i!==state.flaskStep){feedback(false,'順番が違うようだ',`今は${['水蒸気で満たす','水蒸気を逃さない','水蒸気を液体に戻す','外の水とつなぐ'][state.flaskStep]}必要がある。`);return;}
+ state.flaskStep++;
+ if(state.flaskStep>=4){renderWorld($('#app'));feedback(true,'💧 水がフラスコに入った！','水蒸気が冷えて凝縮→フラスコ内の圧力が低下→外の大気圧が水を押し込む。');completeStage(3);}
+ else{renderWorld($('#app'));feedback(true,'実験が進んだ！',`手順 ${state.flaskStep}/4 完了。次に必要な操作を考えよう。`);}
+}
+function pingSonar(){
+ if(state.sonarChoice===null){feedback(false,'海図を選ぼう','正しい深さを1つ選んでから、探査しよう。');return;}
+ const set=sonarSet();const guess=set.depths[state.sonarChoice];
+ if(state.sonarChoice===set.answer){state.phase++;state.sonarChoice=null;
+  if(state.phase>=3){feedback(true,'🌊 3海域の調査が完了！','ソナーは音の往復時間から水深を調べられる。往復した分を2で割るのが重要！');completeStage(3);}
+  else{renderWorld($('#app'));feedback(true,'📡 海底を発見！',`深さ${guess}mを確認。次の海域へ進もう！`);}
+ }else feedback(false,'海底から反射が返ってこない',`選んだ深さは${guess}m。水中の音速は1500m/sで、往復時間は${set.time.toFixed(1)}秒だよ。`);
+}
+
+// v0.9: mechanical illustrations; gear motion is a model of stage progress,
+// not a claim that a pendulum supplies a clock's driving energy.
+function drawGear(ctx,x,y,r,angle,lit=false){
+  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.shadowBlur=lit?17:2;
+  ctx.shadowColor=lit?'#86ffe7':'#395f83';
+  const teeth=12;ctx.beginPath();
+  for(let i=0;i<teeth*4;i++){
+    const theta=2*Math.PI*i/(teeth*4),ra=r*(i%4===1||i%4===2?1.12:.93);
+    if(i===0)ctx.moveTo(Math.cos(theta)*ra,Math.sin(theta)*ra);else ctx.lineTo(Math.cos(theta)*ra,Math.sin(theta)*ra);
+  }
+  ctx.closePath();ctx.fillStyle=lit?'#e6c477':'#57798c';ctx.strokeStyle=lit?'#fff3c7':'#a4bdcb';ctx.lineWidth=2;ctx.fill();ctx.stroke();
+  ctx.shadowBlur=0;ctx.fillStyle='#18394d';ctx.beginPath();ctx.arc(0,0,r*.56,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=lit?'#fff1bc':'#c0d4db';ctx.lineWidth=3;
+  for(let i=0;i<4;i++){let a=i*Math.PI/2;line(ctx,0,0,Math.cos(a)*r*.72,Math.sin(a)*r*.72,ctx.strokeStyle,3)}
+  ctx.beginPath();ctx.arc(0,0,r*.18,0,Math.PI*2);ctx.fillStyle=lit?'#a4ffe1':'#8aa5b8';ctx.fill();ctx.restore();
+}
+function drawPowerArc(ctx,x,y,t,age,maxRadius=37){
+  if(age<0||age>1.1)return;
+  const progress=age/1.1;ctx.save();ctx.beginPath();ctx.arc(x,y,10+maxRadius*progress,0,Math.PI*2);
+  ctx.strokeStyle=`rgba(140,255,223,${(1-progress)*.85})`;ctx.lineWidth=3*(1-progress)+.4;ctx.stroke();ctx.restore();
+}
+
+
+// v0.10 - custom vector illustrations built with canvas (no linked images).
+function reduceMotion(){return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)}
+function glowDisc(ctx,x,y,r,color,alpha=1){ctx.save();let g=ctx.createRadialGradient(x,y,1,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.restore()}
+function roundRectFill(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.5;ctx.stroke()}}
+function holoTag(ctx,text,x,y,{color='#a5f3e9',fill='#11374a',size=14}={}){ctx.save();ctx.font=`800 ${size}px sans-serif`;let width=ctx.measureText(text).width+24;roundRectFill(ctx,x,y,width,27,8,fill,color+'88');ctx.fillStyle=color;ctx.fillText(text,x+12,y+18);ctx.restore();return width}
+function markerCircle(ctx,x,y,r,t,{active=true,color='#fbd484'}={}){ctx.save();const p=reduceMotion()?0:.5+.5*Math.sin(t*5);ctx.strokeStyle=color;ctx.globalAlpha=active?.55+.35*p:.30;ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(x,y,r+3+p*5,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);ctx.restore()}
+function drawClockworkBackdrop(ctx,W,H,t){
+  // Dark stone tower arch and brass ribs -- atmosphere without covering gameplay.
+  ctx.save();const gx=ctx.createLinearGradient(0,0,0,H);gx.addColorStop(0,'#203e5c');gx.addColorStop(.45,'#19314d');gx.addColorStop(1,'#0b253c');ctx.fillStyle=gx;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#b5a47b38';ctx.lineWidth=5;ctx.beginPath();ctx.ellipse(W*.50,H*.67,W*.40,H*.94,0,Math.PI,Math.PI*2);ctx.stroke();
+  for(let k=0;k<4;k++){const x=20+k*(W-40)/3;ctx.fillStyle='#5171873a';ctx.fillRect(x,0,7,H);ctx.fillStyle='#b5a47b55';ctx.fillRect(x+1,0,1,H)}
+  for(let j=0;j<3;j++){let y=H*.27+j*H*.29;ctx.fillStyle='#48677d22';ctx.fillRect(0,y,W,5)}
+  ctx.restore();
+}
+function drawSteamRivets(ctx,x,y,w,h){ctx.save();ctx.strokeStyle='#b6cbd3';ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);for(let k=0;k<5;k++){let px=x+10+k*(w-20)/4;ctx.fillStyle='#e8ca8a';ctx.beginPath();ctx.arc(px,y+4,2.5,0,Math.PI*2);ctx.fill();}ctx.restore()}
+function drawFocusPointer(ctx,x,y,labelText,t,offsetX=21,offsetY=-45){
+ if(!focusEnabled)return;
+ ctx.save();const pulse=reduceMotion()?0:Math.sin(t*5)*3;const xx=x+offsetX,yy=y+offsetY+pulse;
+ line(ctx,xx,yy+29,x,y-12,'#fbd88a',2.5);
+ ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fillStyle='#fff1bf';ctx.fill();
+ holoTag(ctx,labelText,Math.min(ctx.canvas.width-205,Math.max(8,xx)),Math.max(6,yy),{color:'#ffe7a4',fill:'#453d32'});
+ ctx.restore();
+}
+
+// v0.11: larger, high-contrast, purpose-built portrait scenes. Same game state and physics.
+function mobileSceneBG(ctx,W,H,title){
+ const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#214866');g.addColorStop(1,'#102d43');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.save();ctx.lineWidth=2;ctx.strokeStyle='#72a6b345';for(let x=60;x<W;x+=115){line(ctx,x,12,x,H-25,'#72a6b345',2)}
+ ctx.textAlign='left';label(ctx,title,22,47,'#fff0b8',31);
+ line(ctx,20,62,W-20,62,'#8ac9cc',3);ctx.restore();
+}
+function mobileBob(ctx,x,y,r,bright=true){
+ if(bright)glowDisc(ctx,x,y,r*2.6,'#ffdc9a',.5);
+ const g=ctx.createRadialGradient(x-r/3,y-r/3,2,x,y,r);g.addColorStop(0,'#fff9dc');g.addColorStop(1,'#ed9f48');
+ ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff6cf';ctx.lineWidth=4;ctx.stroke();
+}
+function mobileRhythm(ctx,t,values){
+ const W=ctx.canvas.width,H=ctx.canvas.height;
+ mobileSceneBG(ctx,W,H,'共振ブランコ');
+ const T=period(values.length??60,values.amp??12),theta=(6+Math.min(4,state.rhythmHit)*4)*Math.PI/180;
+ const x0=W*.48,y0=116,L=215,a=theta*Math.cos(2*Math.PI*t/T);
+ // Short, neutral baseline is independent from the later achieved amplitude.
+ ctx.save();ctx.lineWidth=5;ctx.setLineDash([7,10]);ctx.strokeStyle='#88bed18e';ctx.beginPath();
+ for(let i=0;i<=48;i++){const aa=(-6+(12*i/48))*Math.PI/180;let x=x0+L*Math.sin(aa),y=y0+L*Math.cos(aa);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();ctx.setLineDash([]);
+ ctx.strokeStyle='#83ffd7';ctx.lineWidth=7;ctx.beginPath();
+ for(let i=0;i<=60;i++){const aa=-theta+(theta*2*i/60),x=x0+L*Math.sin(aa),y=y0+L*Math.cos(aa);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();
+ for(const aa of [-theta,theta]){const x=x0+L*Math.sin(aa),y=y0+L*Math.cos(aa);glowDisc(ctx,x,y,32,'#79ffde',.65);ctx.fillStyle='#baffdf';ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill()}
+ ctx.restore();
+ const bx=x0+L*Math.sin(a),by=y0+L*Math.cos(a);
+ ctx.fillStyle='#aed4e4';ctx.fillRect(x0-75,y0-12,150,15);line(ctx,x0,y0,bx,by,'#ffe0ad',8);mobileBob(ctx,bx,by,27);
+ const zone=Math.abs(Math.sin(2*Math.PI*t/T))>=.89;
+ if(zone&&focusEnabled)markerCircle(ctx,x0,y0+L,37,t,{color:'#aeffe0'});
+ label(ctx,'揺れ幅を見くらべよう',64,378,'#d9fff0',28);
+ roundRectFill(ctx,70,395,W-140,43,15,'#173f4f','#9ce3cd');
+ ctx.fillStyle='#65ecc1';ctx.fillRect(74,400,(W-148)*state.rhythmHit/4,33);
+ label(ctx,`成功  ${state.rhythmHit} / 4`,W/2-80,425,'#ffffff',24);
+ ctx.fillStyle=zone?'#9effb9':'#ffe5b5';label(ctx,zone?'● いま！ 中央を通った':'● 真ん中を待とう',76,90,ctx.fillStyle,22);
+}
+function mobileBridge(ctx,t){
+ const W=ctx.canvas.width,H=ctx.canvas.height;
+ mobileSceneBG(ctx,W,H,'2秒のリズム橋');
+ const T=period(state.bridgeLength,10),dt=state.bridgeReady?t-state.bridgeStart:t;
+ const phase=2*Math.PI*dt/T,x0=188,y0=112,L=198,a=.35*Math.cos(phase);
+ const bx=x0+L*Math.sin(a),by=y0+L*Math.cos(a);
+ ctx.strokeStyle='#86c1d399';ctx.lineWidth=3;ctx.setLineDash([7,8]);ctx.beginPath();ctx.arc(x0,y0,L,Math.PI/2-.35,Math.PI/2+.35);ctx.stroke();ctx.setLineDash([]);
+ ctx.fillStyle='#9dbdce';ctx.fillRect(x0-67,y0-12,134,13);line(ctx,x0,y0,bx,by,'#ffe8bc',7);mobileBob(ctx,bx,by,29);
+ const atCenter=state.bridgeReady&&Math.abs(Math.sin(phase))>.75;
+ if(atCenter&&focusEnabled)markerCircle(ctx,x0,y0+L,35,t,{color:'#a9ffdb'});
+ // Large, readable clockwork model on the right.
+ const age=t-state.bridgePulseTime,lit=age>=0&&age<1.3,spin=state.bridgeHits*.72+Math.max(0,Math.min(1,age))*.67;
+ glowDisc(ctx,428,203,88,lit?'#ffe3a1':'#6bdccc',lit?.55:.15);
+ drawGear(ctx,418,195,52,spin,lit||state.bridgeHits===3);
+ drawGear(ctx,496,209,34,-spin*52/34,lit||state.bridgeHits===3);
+ label(ctx,'歯車',405,290,'#f5eff2',25);
+ const y=363;roundRectFill(ctx,43,y,W-86,75,12,'#143448','#acd8db');
+ for(let i=0;i<3;i++){let bx=68+i*154;roundRectFill(ctx,bx,y+18,136,40,7,i<state.bridgeHits?'#83edbf':'#355c71',i<state.bridgeHits?'#d2ffe2':'#7593a6');}
+ label(ctx,`橋の修理  ${state.bridgeHits}/3`,165,349,'#fff1bb',25);
+ label(ctx,atCenter?'● いま！ 中央を通過':'● 中央の合図を待とう',37,87,atCenter?'#a6ffde':'#ffe3b7',24);
+}
+function mobileEcho(ctx,t){
+ const W=ctx.canvas.width,H=ctx.canvas.height;
+ mobileSceneBG(ctx,W,H,'こだま峡谷');
+ const task=ECHO_MISSIONS[Math.min(state.echoRound,ECHO_MISSIONS.length-1)];
+ const isEcho=task.mode==='echo';
+ const x1=90,x2=W-85,y=228;
+ ctx.fillStyle='#2f6078';ctx.beginPath();ctx.moveTo(0,305);ctx.lineTo(0,205);ctx.lineTo(95,180);ctx.lineTo(150,300);ctx.lineTo(210,254);ctx.lineTo(W-95,170);ctx.lineTo(W,178);ctx.lineTo(W,470);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#547d90';ctx.fillRect(x2-20,135,40,255);
+ ctx.fillStyle='#ffdaa0';ctx.beginPath();ctx.arc(x1,y,24,0,7);ctx.fill();
+ line(ctx,x1,y+24,x1,345,'#ffe4ac',10);ctx.fillStyle='#d1fef0';ctx.fillRect(x1-35,345,70,14);
+ ctx.strokeStyle='#c9f7f4a0';ctx.lineWidth=4;ctx.setLineDash([12,9]);line(ctx,x1+30,y,x2-20,y,'#c9f7f4a0',4);ctx.setLineDash([]);
+ label(ctx,isEcho?'岩壁で反射する音を見よう':'雷の音は片道だけ',46,92,'#f8eac1',26);
+ label(ctx,'観測者',37,392,'#fff',24);label(ctx,isEcho?'岩壁':'雷',W-115,392,'#fff',24);
+ if(state.echoScanned){
+  const q=Math.max(0,(t-state.echoScanStart)*.38)%1;
+  const returning=isEcho&&q>=.5;
+  const frac=isEcho?(q<.5?q*2:(1-q)*2):1-q;
+  const x=x1+(x2-x1)*frac;
+  const color=returning?'#8cffe3':'#ffdd8c';
+  glowDisc(ctx,x,y,90,color,.55);
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=7;
+  for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x,y,23+i*17,Math.PI*.35,Math.PI*1.65);ctx.stroke();}ctx.restore();
+  if(returning)label(ctx,'↩ 反射して帰る',43,435,'#a9ffea',30);
+  else label(ctx,isEcho?'→ 岩壁に向かう':'← 雷の音が届く',43,435,'#ffe4a0',30);
+ }else{label(ctx,'▶ 「音を発信」を押そう',43,435,'#ffe4a0',27);}
+}
+function mobileBossClock(ctx,t){
+ const W=ctx.canvas.width,H=ctx.canvas.height,c=clockBoss;
+ mobileSceneBG(ctx,W,H,'時計塔の最終修理');
+ const T=period(c.length,c.angle),dt=c.phase===1?t-c.startTime:t;
+ const x0=192,y0=112,L=207,a=c.angle*Math.PI/180*Math.cos(2*Math.PI*dt/T);
+ const bx=x0+L*Math.sin(a),by=y0+L*Math.cos(a);
+ ctx.fillStyle='#a4c3d0';ctx.fillRect(x0-65,y0-11,130,14);line(ctx,x0,y0,bx,by,'#ffe2a9',8);mobileBob(ctx,bx,by,30);
+ const hot=c.phase===1&&Math.abs(Math.sin(2*Math.PI*dt/T))>=.78;
+ if(hot&&focusEnabled)markerCircle(ctx,x0,y0+L,38,t,{color:'#b7ffe5'});
+ const age=t-(c.gearPulseTime??-100),moving=c.phase===2||(age>=0&&age<1.2);
+ const spin=c.phase===2?t*.55:c.hits*.62+Math.max(0,Math.min(1,age))*.55;
+ glowDisc(ctx,424,210,100,moving?'#fce4aa':'#91d9d3',moving?.5:.1);
+ drawGear(ctx,413,201,53,spin,moving);drawGear(ctx,494,225,35,-spin*53/35,moving);
+ label(ctx,'歯車',405,310,'#f8efe2',26);
+ roundRectFill(ctx,48,367,W-96,81,13,'#194257','#b7dddd');
+ label(ctx,c.phase===0?'① 10往復を測ろう':c.phase===1?'② 中央で押そう':'③ 修理完了！',75,404,'#fff1c4',29);
+ label(ctx,c.phase===1?`成功 ${c.hits}/3  ${hot?'● いま！':''}`:c.phase===0?`糸の長さ ${c.length}cm`:'時計塔が動き出した',75,433,'#caffec',24);
+}
+
+function drawScene(canvas,t,s){
+ if(!canvas)return;
+ const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+ if(!ctx)return;
+ if(W<700&&s.mode==='beatbridge'){mobileBridge(ctx,t);return;}
+ if(W<700&&s.mode==='echoquest'){mobileEcho(ctx,t);return;}
+ background(ctx,W,H,t);
+ const center=W/2;
+ // Interactive scenes in v0.6 were accidentally inserted in renderWorld(),
+ // leaving their canvases empty. Render them here, in the animation loop.
+ if(s.mode==='labdesign'){
+   const round=Math.min(state.labRound,LAB_MISSIONS.length-1);
+   const task=LAB_MISSIONS[round];
+   const selected=state.labChoice===null?null:task.choices[state.labChoice];
+   label(ctx,`実験 ${round+1}/3  ・  ${task.name}のちがいを調べよう`,22,34,'#e9fbff',19);
+   const base={length:45,mass:20,amp:10};
+   const x1=W*.29,x2=W*.71,py=70;
+   function apparatus(cx,v,title,color){
+      const long=68+v.length*1.05;
+      // School-level approximation: pendulum period is set by length, not bob mass.
+      const a=v.amp*Math.PI/180*Math.cos(2*Math.PI*t/period(v.length,v.amp));
+      const bx=cx+long*Math.sin(a),by=py+long*Math.cos(a);
+      ctx.fillStyle='#7896a9';ctx.fillRect(cx-48,py-8,96,9);
+      ctx.strokeStyle='#456980';ctx.lineWidth=2;ctx.setLineDash([5,7]);
+      ctx.beginPath();ctx.moveTo(cx,py);ctx.lineTo(cx,py+long);ctx.stroke();ctx.setLineDash([]);
+      line(ctx,cx,py,bx,by,'#e8ce9d',3);
+      const r=11+Math.sqrt(v.mass)*.55;
+      const g=ctx.createRadialGradient(bx-5,by-5,1,bx,by,r);
+      g.addColorStop(0,'#fff3ca');g.addColorStop(1,color);
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(bx,by,r,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='#fff4c0';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.textAlign='center';label(ctx,title,cx,H-43,'#e5f5ff',17);
+      label(ctx,`${v.length}cm  ・  ${v.mass}g`,cx,H-17,'#ffdca4',14);
+      ctx.textAlign='left';
+   }
+   apparatus(x1,base,'基準の振り子','#efad61');
+   if(selected){apparatus(x2,selected,'選んだ実験装置','#4fc5ac');}
+   else{
+      ctx.strokeStyle='#76bad3';ctx.lineWidth=3;ctx.setLineDash([9,7]);
+      ctx.strokeRect(x2-55,py+25,110,105);ctx.setLineDash([]);
+      ctx.textAlign='center';label(ctx,'?',x2,py+99,'#b7e8ef',56);
+      label(ctx,'装置を選ぼう',x2,H-34,'#e5f5ff',17);ctx.textAlign='left';
+   }
+   if(state.labMeasured){
+      ctx.fillStyle='#66debc';ctx.beginPath();ctx.arc(W-31,31,9,0,Math.PI*2);ctx.fill();
+   }
+ }else if(s.mode==='beatbridge'){
+   const T=period(state.bridgeLength,10);
+   const dt=state.bridgeReady?t-state.bridgeStart:t;
+   const phase=2*Math.PI*dt/T;
+   const px=center,py=56,L=Math.min(H-116,78+state.bridgeLength*.78);
+   const angle=.35*Math.cos(phase),bx=px+L*Math.sin(angle),by=py+L*Math.cos(angle);
+   const inZone=Math.abs(Math.sin(phase))>.75;
+   drawClockworkBackdrop(ctx,W,H,t);
+   holoTag(ctx,'リズム橋  /  2.00秒をつくろう',18,13,{color:'#ffe6b3'});
+   // Structure is powered by a modeled mechanism; the pendulum controls rhythm.
+   const rail=H-42;ctx.fillStyle='#2b536b';ctx.fillRect(W*.16,rail,W*.68,15);
+   for(let ix=0;ix<7;ix++){const xx=W*(.16+ix*.112);line(ctx,xx,rail,xx+10,rail-22,'#a5b6c3',3)}
+   // Distant mechanical architecture and a partially restored bridge.
+   const deckY=H-64, deckX=W*.22,deckW=W*.56;
+   ctx.fillStyle='#112e48';ctx.fillRect(deckX-20,deckY-35,deckW+40,53);
+   const beam=ctx.createLinearGradient(0,deckY-15,0,deckY+15);beam.addColorStop(0,'#b8c6ca');beam.addColorStop(.45,'#4e7282');beam.addColorStop(1,'#213e56');ctx.fillStyle=beam;ctx.fillRect(deckX-12,deckY-14,deckW+24,11);
+   drawSteamRivets(ctx,deckX-10,deckY-33,deckW+20,13);
+   for(let i=0;i<3;i++){
+      const gx=deckX+(i+.5)*deckW/3;
+      if(i<state.bridgeHits)glowDisc(ctx,gx,deckY-9,44,'#9bffb8a0',.5);
+      ctx.fillStyle=i<state.bridgeHits?'#83e7bd':'#25475d';
+      ctx.fillRect(gx-deckW/6+4,deckY-10,deckW/3-8,17);
+      ctx.strokeStyle='#91b9c7';ctx.lineWidth=2;ctx.strokeRect(gx-deckW/6+4,deckY-10,deckW/3-8,17);
+   }
+   for(let i=0;i<3;i++){
+     const gx=deckX+(i+.5)*deckW/3,gy=deckY-27;
+     ctx.beginPath();ctx.arc(gx,gy,9,0,Math.PI*2);ctx.fillStyle=i<state.bridgeHits?'#ffdb8b':'#466d87';ctx.fill();
+   }
+   ctx.fillStyle='#94adbb';ctx.fillRect(px-45,py-7,90,9);
+   ctx.setLineDash([5,5]);line(ctx,px,py,px,py+L,'#6e8ca4',2);ctx.setLineDash([]);
+   line(ctx,px,py,bx,by,'#ffdeac',4);
+   ctx.beginPath();ctx.arc(bx,by,17,0,Math.PI*2);ctx.fillStyle='#fbd08c';ctx.fill();
+   ctx.strokeStyle='#fff3d7';ctx.lineWidth=2;ctx.stroke();
+    // Clockwork engages when a successful center crossing is registered.
+    const gp=state.bridgePulseTime,age=t-gp;
+    const spin=state.bridgeHits*.72+(age>=0?Math.min(1,age/1.0)*.67:0);
+    const glow=age>=0&&age<1.25;
+    const gx=W*.80,gy=H*.52;
+    drawGear(ctx,gx,gy,28,spin,glow||state.bridgeHits===3);
+    drawGear(ctx,gx+52,gy+10,21,-spin*28/21,glow||state.bridgeHits===3);
+    drawPowerArc(ctx,gx,gy,t,age,50);
+    ctx.textAlign='center';label(ctx,'脱進モデル',gx+24,gy+65,'#dceef0',13);ctx.textAlign='left';
+    if(focusEnabled){if(glow){markerCircle(ctx,gx,gy,40,t,{color:'#ffe2a1'});drawFocusPointer(ctx,gx-5,gy,'歯車が1段進む',t,-183,-80)}
+    else if(state.bridgeReady){markerCircle(ctx,px,py+L,25,t,{color:'#a2f8d6'});}}
+
+   // This indicator uses the same central-crossing window as pushBridge().
+   ctx.beginPath();ctx.arc(W-60,66,16,0,Math.PI*2);
+   if(state.bridgeReady&&inZone&&focusEnabled)glowDisc(ctx,W-60,66,46,'#7bffda',.52);
+   ctx.fillStyle=state.bridgeReady?(inZone?'#76e6ba':'#547a90'):'#4a6477';ctx.fill();
+   if(focusEnabled&&state.bridgeReady&&inZone)holoTag(ctx,'押す瞬間！',W-194,91,{color:'#ffdf93',fill:'#294f4b'});
+   label(ctx,state.bridgeReady?(inZone?'いま！':'中央を待とう'):'周期を合わせよう',22,H-18,'#ffe0a6',17);
+   label(ctx,`${state.bridgeHits}/3`,W-105,H-18,'#8ceecf',21);
+ }else if(s.mode==='wavecode'){
+   const round=Math.min(state.signalRound,SIGNAL_MISSIONS.length-1);
+   const target=SIGNAL_MISSIONS[round];
+   label(ctx,`通信装置の波形を合わせよう  ${round+1}/3`,22,35,'#e9f9ff',19);
+   function scope(y,freq,amp,color,title){
+      const x=24,w=W-48,h=H*.28;
+      ctx.fillStyle='#092439';ctx.fillRect(x,y-h/2,w,h);
+      ctx.strokeStyle='#436780';ctx.lineWidth=1;ctx.strokeRect(x,y-h/2,w,h);
+      line(ctx,x,y,x+w,y,'#568298',1);
+      ctx.lineWidth=2.8;ctx.strokeStyle=color;ctx.beginPath();
+      const cycles=freq/110, height=Math.min(h*.4,amp*.3);
+      for(let i=0;i<=w;i+=3){const a=2*Math.PI*cycles*(i/w)-t*2.8;const v=y-Math.sin(a)*height;
+        if(i===0)ctx.moveTo(x+i,v);else ctx.lineTo(x+i,v);
+      }
+      ctx.stroke();
+      label(ctx,title,x+13,y-h/2+22,color,14);
+   }
+   scope(H*.35,target.freq,target.amp,'#f9d18e','見本');
+   scope(H*.74,PITCH_CHOICES[state.signalPitch],AMP_CHOICES[state.signalAmp],'#7de7e4','自分');
+   label(ctx,'波の数と上下の幅を比べてみよう',22,H-9,'#d7f3ff',15);
+ }else if(s.mode==='echoquest'){
+   const round=Math.min(state.echoRound,ECHO_MISSIONS.length-1);
+   const task=ECHO_MISSIONS[round];
+   const isEcho=task.mode==='echo';
+   // Landscape: layers, mist, cliff and distinct traveling/return colors.   const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#173c62');sky.addColorStop(.65,'#2d6372');sky.addColorStop(1,'#213b4f');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+   ctx.fillStyle='#5f91a83b';ctx.beginPath();ctx.arc(W*.72,H*.09,87,0,7);ctx.fill();
+   for(let k=0;k<3;k++){ctx.fillStyle=['#1c405e','#24506b','#315b72'][k];ctx.beginPath();ctx.moveTo(0,H*.65+k*19);for(let j=0;j<=W;j+=18)ctx.lineTo(j,H*(.43+k*.07)-22*Math.sin(j*.012+k));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();}
+   holoTag(ctx,isEcho?'こだま  /  行きと帰り':'雷  /  音の片道',18,13,{color:'#fce2a5'});
+   const groundY=H*.77;
+   // Mountains, near observer and far reflective cliff.
+   ctx.fillStyle='#365772';ctx.beginPath();ctx.moveTo(0,groundY);
+   for(let x=0;x<=W;x+=15){let y=groundY-35-25*Math.sin(x*.013)-14*Math.cos(x*.031);ctx.lineTo(x,y)}
+   ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();
+   const observerX=W*.18,farX=W*.81,rayY=H*.51;
+   ctx.fillStyle='#ffd39a';ctx.beginPath();ctx.arc(observerX,rayY,14,0,Math.PI*2);ctx.fill();
+   line(ctx,observerX,rayY+14,observerX,groundY-4,'#f4ca88',5);
+   // Observer's small field instrument and directional loudspeaker.
+   ctx.fillStyle='#8ce2ce';ctx.fillRect(observerX-27,groundY-8,54,7);
+   ctx.fillStyle='#d8bb8a';ctx.fillRect(observerX-3,rayY+25,7,30);
+   ctx.fillStyle='#f4d28b';ctx.beginPath();ctx.moveTo(observerX+12,rayY+6);ctx.lineTo(observerX+35,rayY-2);ctx.lineTo(observerX+35,rayY+14);ctx.closePath();ctx.fill();
+   ctx.strokeStyle='#f1dfaf';ctx.lineWidth=2;ctx.strokeRect(observerX+10,rayY+4,6,8);
+   ctx.textAlign='center';label(ctx,'観測者',observerX,groundY+27,'#e9f9ff',15);
+   if(isEcho){
+      glowDisc(ctx,farX,rayY,60,'#b3d8e0',.18);
+      ctx.fillStyle='#7d9faf';ctx.fillRect(farX-12,rayY-45,25,groundY-rayY+25);
+      ctx.strokeStyle='#e3f8fe';ctx.lineWidth=2;ctx.strokeRect(farX-12,rayY-45,25,groundY-rayY+25);
+      ctx.strokeStyle='#bad0d4aa';ctx.lineWidth=1.2;
+      for(let yy=rayY-31;yy<groundY;yy+=17){line(ctx,farX-10,yy,farX+10,yy+3,ctx.strokeStyle,1.2);}
+      glowDisc(ctx,farX,rayY,42,'#f4e9c5',.08);
+      label(ctx,'岩壁',farX,groundY+27,'#e9f9ff',15);
+   }else{
+      ctx.fillStyle='#69869c';
+      for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(farX+(i-1)*14,rayY-32,25,0,Math.PI*2);ctx.fill();}
+      ctx.strokeStyle='#ffdb90';ctx.lineWidth=5;ctx.beginPath();
+      ctx.moveTo(farX,rayY-20);ctx.lineTo(farX-12,rayY+8);ctx.lineTo(farX+4,rayY+3);ctx.lineTo(farX-9,groundY-16);ctx.stroke();
+      label(ctx,'落雷地点',farX,groundY+27,'#e9f9ff',15);
+   }
+   ctx.textAlign='left';
+   // Echo: outgoing and returning; thunder: one-way from the lightning to observer.
+    const q=state.echoScanStart>=0?((Math.max(0,t-state.echoScanStart)*.38)%1):0;
+    const fraction=isEcho?(q<.5?q*2:(1-q)*2):(1-q);
+   const waveX=observerX+(farX-observerX)*fraction;
+   line(ctx,observerX,rayY,farX,rayY,'#4e9aab88',2);
+   if(state.echoScanned){
+      const returning=isEcho&&q>=.5;
+      // Different tones make the out-and-back nature of echoes obvious.
+      glowDisc(ctx,waveX,rayY,48,returning?'#5ffbe6':'#ffcf75',.50);
+      for(let i=0;i<3;i++){
+        ctx.beginPath();ctx.arc(waveX,rayY,5+i*7,Math.PI*.2,Math.PI*1.8);
+        ctx.strokeStyle=returning?(i===0?'#c1fff1':'#81eade9a'):(i===0?'#ffdfa8':'#ffd08e91');ctx.lineWidth=2.8;ctx.stroke();
+      }
+       if(focusEnabled&&isEcho&&Math.abs(q-.5)<.06)markerCircle(ctx,farX,rayY,28,t,{color:'#ffe1a4'});
+       ctx.fillStyle=returning?'#92ffe4':'#ffdc9c';
+       ctx.beginPath();ctx.arc(waveX,rayY,8,0,Math.PI*2);ctx.fill();
+       if(focusEnabled)holoTag(ctx,returning?'復路：帰ってくる音':(isEcho?'往路：岩壁へ':'音は観測者へ'),W-233,52,{color:returning?'#b5ffe6':'#ffdc9e',size:13});
+   }
+   label(ctx,`地点 ${round+1}/3 ・ ${isEcho?'音は往復':'音は片道'}`,22,H-13,'#ffe1a4',17);
+ }else if(s.mode==='fall'){
+    const vac=state.fallMedium==='vacuum';
+    label(ctx,vac?'真空の実験：違うのは重さだけ':'空気中の実験：違うのは紙の形だけ',25,38,'#e9fcff',20);
+    const elapsed=state.fallStart<0?0:Math.max(0,(t-state.fallStart)*.75);
+    const top=95,bottom=H-72;
+    const height=3.0;
+    // 真空中は、質量に関係なく同じ重力加速度。空気抵抗を加える場合は、
+    // 同一質量の紙で形状に応じた断面積のみを変えた単純化モデルを使う。
+    function paperDistance(sec,area){const mass=.005,rho=1.2,cd=1.2,g=9.80665;
+      const k=.5*rho*cd*area/mass;
+      const z=Math.sqrt(g*k)*sec;
+      return Math.log(Math.cosh(z))/k;
+    }
+    const items=vac?[
+      {x:W*.36,name:'鉄球 100g',m:'iron',radius:18,distance:.5*9.80665*elapsed*elapsed},
+      {x:W*.66,name:'木球 10g',m:'wood',radius:18,distance:.5*9.80665*elapsed*elapsed}
+    ]:[
+      {x:W*.36,name:'平らな紙 5g',m:'flat',distance:paperDistance(elapsed,.0625)},
+      {x:W*.66,name:'丸めた紙 5g',m:'crumpled',distance:paperDistance(elapsed,.0008)}
+    ];
+    items.forEach(it=>{
+      const y=top+(bottom-top)*Math.min(1,it.distance/height),x=it.x;
+      line(ctx,x,top,x,bottom,'#5b8195',2);
+      if(it.m==='flat'){
+        ctx.fillStyle='#c5ecff';ctx.strokeStyle='#ffffff';ctx.lineWidth=2;
+        ctx.beginPath();ctx.moveTo(x-18,y-13);ctx.lineTo(x+18,y-17);ctx.lineTo(x+20,y+13);ctx.lineTo(x-17,y+16);ctx.closePath();ctx.fill();ctx.stroke();
+        line(ctx,x-10,y-4,x+10,y-6,'#87a8bf',1);
+      }else{
+        ctx.beginPath();ctx.arc(x,y,it.radius||13,0,Math.PI*2);
+        ctx.fillStyle=it.m==='iron'?'#f5c678':it.m==='wood'?'#8ce7cb':'#d0edf8';ctx.fill();
+        ctx.strokeStyle='#e8f7ff';ctx.lineWidth=2;ctx.stroke();
+        if(it.m==='crumpled'){
+          line(ctx,x-7,y-5,x+2,y+6,'#7ca6ba',1.6);line(ctx,x+1,y-7,x+7,y-3,'#7ca6ba',1.6);
+        }
+      }
+      label(ctx,it.name,x-55,H-40,'#e7f9ff',15);
+    });
+    label(ctx,vac?'空気抵抗なし・同じ高さ':'同じ質量・形だけを変える',25,H-12,'#ffe3aa',18);
+  }else if(s.mode==='foucault'){
+   label(ctx,'北極から見た床と振り子（模式）',25,37,'#e9fcff',20);
+   const cx=center,cy=H*.54,r=Math.min(105,H*.38);
+   ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.fillStyle='#153d59';ctx.fill();ctx.strokeStyle='#a3d5e1';ctx.lineWidth=3;ctx.stroke();
+   const angle=state.earthHours/24*Math.PI*2;
+   line(ctx,cx,cy,cx+r*.83*Math.cos(angle-Math.PI/2),cy+r*.83*Math.sin(angle-Math.PI/2),'#ffa970',7);
+   line(ctx,cx-r,cy,cx+r,cy,'#88e7d6',5);label(ctx,'振れる方向',cx+r+14,cy,'#88e7d6',13);
+   label(ctx,`経過 ${state.earthHours} 時間`,25,H-20,'#ffe6ac',21);
+ }else if(s.mode==='duel'){
+   const d=duelSet();label(ctx,'ふりこ A　VS　ふりこ B',25,39,'#e9fcff',20);
+   [d.A,d.B].forEach((v,i)=>{
+     const cx=W*(i===0?.33:.67),base=58,pxLength=70+v[0]*.72;
+     let theta=.23*Math.cos(2*Math.PI*t/period(v[0],10));
+     let x=cx+pxLength*Math.sin(theta),y=base+pxLength*Math.cos(theta);
+     line(ctx,cx,base,x,y,'#f7cd91',4);
+     ctx.beginPath();ctx.arc(x,y,15,0,7);ctx.fillStyle=i?'#9de4cd':'#ffc980';ctx.fill();
+     label(ctx,`ふりこ${i?'B':'A'}　${v[0]}cm`,cx-60,H-20,'#e6f8ff',17);
+   });
+ }else if(s.mode==='melody'){
+  label(ctx,'音のひみつの楽譜',25,37,'#e9fcff',20);
+  for(let i=0;i<3;i++){
+   let x=center-115+i*115,y=H*.58,done=i<state.phase;
+   ctx.beginPath();ctx.arc(x,y,31,0,Math.PI*2);ctx.fillStyle=done?'#45aa89':'#295879';ctx.fill();
+   label(ctx,done?'✓':'♪',x-12,y+10,'#fff7d3',29);
+   if(i<2)line(ctx,x+31,y,x+82,y,'#6f97b2',3);
+  }
+  label(ctx,`復元した楽譜 ${state.phase} / 3`,25,H-22,'#ffdd9d',18);
+ }else if(s.mode==='ear'){
+  label(ctx,'音の情報を脳に届けよう',25,37,'#ecfaff',20);
+  const path=['耳','鼓膜','耳小骨','蝸牛','脳'];
+  const start=80,space=(W-160)/(path.length-1);
+  path.forEach((v,i)=>{const x=start+i*space,y=H*.51;ctx.beginPath();ctx.arc(x,y,Math.min(29,space*.26),0,7);ctx.fillStyle=i<=state.solvedPieces.length?'#3eac92':'#284b68';ctx.fill();label(ctx,`${i<state.solvedPieces.length+1?'✓':'?'}`,x-10,y+7,'white',20);label(ctx,v,x-24,y+54,'#e5f5ff',13);if(i<4)line(ctx,x+30,y,x+space-30,y,'#76c4d0',3);});
+ }else if(s.mode==='chamber'){
+  label(ctx,'音の実験室：ベルの音はどうなる？',25,39,'#e9f9ff',20);
+  const x=W*.51,y=H*.52,r=Math.min(H*.34,112);ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle='#153d60';ctx.fill();ctx.strokeStyle='#70b7d1';ctx.lineWidth=4;ctx.stroke();
+  ctx.beginPath();ctx.arc(x,y-7,25,Math.PI,Math.PI*2);ctx.strokeStyle='#ffdd8c';ctx.lineWidth=8;ctx.stroke();
+  ctx.fillStyle='#f3ca6a';ctx.fillRect(x-25,y-7,50,9);ctx.beginPath();ctx.arc(x,y+8,7,0,7);ctx.fill();
+  for(let k=0;k<12;k++){let ang=k*2*Math.PI/12;let rad=r*.74;ctx.beginPath();ctx.arc(x+rad*Math.cos(ang),y+rad*Math.sin(ang),3,0,7);ctx.fillStyle=k<Math.ceil(state.pressure/100*12)?'#8cefe0':'#3d6a85';ctx.fill();}
+  label(ctx,`空気 ${state.pressure}%`,25,H-24,'#ffe3aa',22);
+ }else if(s.mode==='flask'){
+  label(ctx,'フラスコ仮想実験',25,39,'#e9f9ff',20);
+  const cx=center,cy=H*.53;ctx.beginPath();ctx.arc(cx,cy,76,Math.PI*1.85,Math.PI*1.15,true);ctx.strokeStyle='#84d9e8';ctx.lineWidth=6;ctx.stroke();line(ctx,cx-22,cy-68,cx-22,cy-105,'#84d9e8',5);line(ctx,cx+22,cy-68,cx+22,cy-105,'#84d9e8',5);
+  ctx.fillStyle=state.flaskStep>=4?'#66cde0':'#39657c';ctx.fillRect(cx-56,cy+38,112,state.flaskStep>=4?28:7);
+  label(ctx,`${['まだ準備前','水蒸気でいっぱい！','密閉できた！','冷やして圧力低下！','外から水が入った！'][state.flaskStep]}`,25,H-24,'#ffe7a7',20);
+  if(state.flaskStep>=1&&state.flaskStep<3)for(let i=0;i<7;i++){let x=cx-45+i*14,y=cy-10+13*Math.sin(t*2+i);ctx.beginPath();ctx.arc(x,y,4,0,7);ctx.fillStyle='#c0ebf6';ctx.fill();}
+ }else if(s.mode==='sonar'){
+  label(ctx,'🚢 船から海底へ音の探査波を送ろう',24,39,'#e8f8ff',20);
+  const seaY=83, bottom=H-38;
+  ctx.fillStyle='#12416b';ctx.fillRect(0,seaY,W,bottom-seaY);
+  ctx.beginPath();ctx.moveTo(0,bottom-45);for(let x=0;x<W;x+=12)ctx.lineTo(x,bottom-45+12*Math.sin(x/105)+6*Math.sin(x/36));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fillStyle='#455c69';ctx.fill();
+  ctx.fillStyle='#f5c076';ctx.beginPath();ctx.moveTo(center-75,seaY-10);ctx.lineTo(center+74,seaY-10);ctx.lineTo(center+56,seaY+13);ctx.lineTo(center-45,seaY+13);ctx.closePath();ctx.fill();
+  const phase=t%2/2;const yy=seaY+(bottom-seaY-50)*Math.sin(Math.PI*phase);line(ctx,center,seaY,center,yy,'#8cfbe1',3);ctx.beginPath();ctx.arc(center,yy,12,0,7);ctx.strokeStyle='#9de9db';ctx.stroke();label(ctx,`海域 ${Math.min(3,state.phase+1)}：往復 ${sonarSet().time.toFixed(1)} 秒`,24,H-12,'#ffe4a6',19);
+ }else if(s.mode==='acoustic'){
+  label(ctx,'音楽室の壁を改装しよう',25,38,'#e9f9ff',20);
+  const colors=['#74899b','#e3bd71','#7ed2b4'];const names=['かたい壁','カーテン','吸音パネル'];
+  state.room.forEach((m,i)=>{let x=80+i*(W-160)/3,y=82,w=(W-185)/3,h=Math.min(140,H-130);ctx.fillStyle=colors[m];ctx.fillRect(x,y,w,h);label(ctx,names[m],x+10,y+24,'#183045',14);});
+  label(ctx,`反射 ${roomScore().reflect}%　／　予算 ${roomScore().cost} / 4`,25,H-15,'#ffe4a8',20);
+ }
+}
+
+function stringRatio(v){return (40/v.length)*Math.sqrt(v.tension/50)*Math.sqrt(2/v.thick)}
+function feedback(ok,headline,description){const el=$('#stageFeedback');if(!el)return;el.className='feedback show '+(ok?'good':'bad');el.innerHTML=`<b>${ok?'✨ ': '🔁 '}${htmlEsc(headline)}</b><p>${htmlEsc(description)}</p>`;if(ok){effectAudio('good');if(performance.now()-fxLast>260){questEffect('good');fxLast=performance.now()}}else effectAudio('miss');}
+function completeStage(stars=2){let s=stage();if(!s)return;const firstInSession=!state.stageDoneNow;state.stageDoneNow=true;if(firstInSession){effectAudio('reward');questEffect('reward','ステージクリア！ ★' + '★'.repeat(Math.max(0,stars-1)));}const treasure=$('#knowledgeReveal');if(treasure)treasure.open=true;const prev=state.progress[s.id]||0;if(stars>prev){state.progress[s.id]=stars;save();}updateHUD();showQuestTransition();const list=$(`[data-stage="${s.id}"] .starmark`);if(list)list.textContent='★'.repeat(state.progress[s.id]);}
+function runStage(){const s=stage();if(!s)return;let ok=false,msg='',stars=2;
+if(s.mode==='pendulum'){let T=period(state.pValues.length,state.pValues.amp);let err=Math.abs(T-s.goal);ok=err<=0.07;stars=err<=0.035?3:2;msg=ok?`周期${f(T)}秒！目標との差は${f(err)}秒。扉が開いた！`:`周期は${f(T)}秒。目標との差は${f(err)}秒。もう少し調整しよう。`;
+}else if(s.mode==='compare'){let c=state.compareValues;let changes=(c.length!==45)+(c.mass!==20)+(c.amp!==10);let d=period(c.length,c.amp)-period(45,10);if(s.task==='onlyOne'){ok=changes===1;msg=ok?`変更は1条件だけ。これなら結果の原因を追える！`:`変更数は${changes}。調べたい条件だけを1つ変えよう。`}
+else if(s.task==='weight'){ok=changes===1&&c.mass!==20;msg=ok?`重さを変えても周期は${f(period(c.length,c.amp))}秒。基準の${f(period(45,10))}秒とほぼ同じ！`:'おもりの重さだけを変えて比較しよう。'}
+else if(s.task==='amplitude'){ok=changes===1&&c.amp!==10;msg=ok?`角度を変えても周期差は${f(Math.abs(d))}秒。小さい角度ならほぼ同じ！`:'振れ幅（角度）だけを変えて比べよう。'}
+}else if(s.mode==='wave'){let df=Math.abs(state.waveValues.freq-s.goalHz),da=Math.abs(state.waveValues.amp-s.goalAmp);ok=df<=20&&da<=10;stars=(df===0&&da===0)?3:2;msg=ok?`周波数${state.waveValues.freq}Hz、振幅${state.waveValues.amp}。音の鍵が開いた！`:`あと少し！周波数は目標まで${df}Hz、振幅は${da}違うよ。`;
+}else if(s.mode==='string'){let r=stringRatio(state.stringValues);ok=r>=1.5;stars=r>=2?3:2;msg=ok?`基準より${f(r)}倍の高さ！弦のしくみを使いこなした！`:`今は基準の${f(r)}倍。長さ・張り・太さを組み合わせよう。`;
+}else if(s.mode==='medium'){ok=state.medium===s.goalMedium;msg=ok?'音の通り道になる物質がないため、宇宙空間の真空では音が届かない！':'この場所では音が伝わるよ。物質がまったくない場所はどれ？';
+}else if(s.mode==='echo'){let speed=s.goalMedium==='air'?340:1500;const t=2*state.distance/speed;let dt=Math.abs(t-s.goalTime);ok=dt<=0.065;stars=dt<=0.015?3:2;msg=ok?`距離${state.distance}m、往復${f(t)}秒！反射音が戻った！`:`反射音が戻るまで${f(t)}秒。目標${f(s.goalTime)}秒に合わせよう。`;}
+else if(s.mode==='foucault'){ok=state.earthHours===12;stars=ok?3:2;msg=ok?'12時間で地面の矢印が180°回転！地球の自転を振り子の見かけの向きから確かめた。':'今の経過時間では矢印は逆向きにならない。時計を進めてみよう。';}else if(s.mode==='acoustic'){const r=roomScore();ok=r.reflect<40&&r.cost<=4;stars=ok&&r.reflect<=38?3:2;msg=ok?`反射の割合${r.reflect}%・予算${r.cost}点！限られた予算で静かな部屋ができた。`:`反射の割合${r.reflect}%（40％未満が必要）・予算${r.cost}点（4点以内）。材質を組み合わせよう。`;}else if(s.mode==='graph'){let targets=['B','D','E'];let at=state.graphStep;ok=state.choice===targets[at];if(ok){state.graphStep++;msg=state.graphStep===3?'3問全部正解！波形グラフの秘密を発見した！':`${state.graphStep}問正解。次の波の比較に進もう！`;if(state.graphStep<3){let prompts=['Aと同じ「音の大きさ」の波は？','Bと同じ「音の高さ」の波は？','Cと同じ「音の高さ」の波は？'];$('#graphPrompt').textContent=`${state.graphStep+1}問目：${prompts[state.graphStep]}`;$$('[data-graph]').forEach(b=>b.classList.remove('selected'));state.choice=null;}else stars=3;}else msg=state.choice===null?'A〜Eから1つ選んでね。':'もう一度波の回数や振幅を比べよう。';if(ok&&state.graphStep<3){feedback(true,'1問クリア',msg);return;}ok=ok&&state.graphStep===3;}else if(s.mode==='choice'){ok=state.choice===s.correct;msg=state.choice===null?'選択肢を1つ選んでね。':ok?s.learn:'違うようだ。ヒントを使ってもう一度考えてみよう。';}
+feedback(ok,ok?'ミッション成功！ '+ '★'.repeat(stars):'あと一歩！',msg);if(ok)completeStage(stars);
+}
+function measure(n){const trueT=period(60,12);const jitter=(Math.random()-.5)*0.28;const result=trueT+jitter/n;const display=f(result)+'秒';if(n===1){state.measureOne=result;$('#m1').textContent=display}else{state.measureTen=result;$('#m10').textContent=display};if(state.measureOne!==null&&state.measureTen!==null){const e1=Math.abs(state.measureOne-trueT),e10=Math.abs(state.measureTen-trueT);feedback(true,'測定完了！',`今回の誤差：1往復は${f(e1)}秒、10往復平均は${f(e10)}秒。測る回数を増やして比べることが大切。個別の測定ではばらつきもあるよ。`);completeStage(3)}else feedback(true,'記録ができた','もう一方の測定方法も試してみよう。');}
+function pushSwing(){if(state.view!=='world'||stage().mode!=='rhythm')return;const now=performance.now()/1000;const T=period(60,12),phase=2*Math.PI*now/T;const center=Math.abs(Math.sin(phase));if(now-state.rhythmLast<0.40){feedback(false,'連続では押せない','次の振動でタイミングをねらって！');return;}state.rhythmLast=now;if(center>=0.89){state.rhythmHit++;state.rhythmPulseTime=now;$('#rhythm-progress').textContent=state.rhythmHit;feedback(true,'ナイスタイミング！',`成功 ${state.rhythmHit}/4。周期に合った押し方で、ブランコは大きく揺れる！`);if(state.rhythmHit>=4){feedback(true,'共振ブランコ クリア！','固有のリズムに合わせて押すと、揺れを大きくできた！ 画面は振れ幅の増加を強調した模式図だよ。');completeStage(3)}}else feedback(false,'タイミングがちがう','おもりが真ん中を通るタイミングをねらおう。');}
+window.addEventListener('keydown',e=>{if(e.code==='Space'&&state.view==='world'&&!['INPUT','BUTTON','SELECT'].includes(document.activeElement?.tagName)){if(stage().mode==='rhythm'){e.preventDefault();pushSwing();}else if(stage().mode==='beatbridge'){e.preventDefault();pushBridge();}}});
+let audioContext=null;
+function tone(freq,vol=.5){try{let AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!audioContext)audioContext=new AC();if(audioContext.state==='suspended')audioContext.resume();const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=freq;const t=audioContext.currentTime;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(Math.max(.003,Math.min(.13,.13*vol)),t+.03);gain.gain.exponentialRampToValueAtTime(.0001,t+.5);osc.connect(gain);gain.connect(audioContext.destination);osc.start(t);osc.stop(t+.53)}catch(e){}}
+function renderLab(app){app.innerHTML=`<div class="panel panelpad"><div class="section-kicker">DISCOVERY LAB</div><h2 class="section-title">自由研究ラボ</h2><p class="muted">クリア条件なし。数値を動かして発見しよう。ここで見つけた法則を冒険に持ち帰ろう。</p></div><div class="spacer"></div><div class="lab-grid"><section class="panel lab-card"><h3>🕰️ 振り子研究室</h3><p>長さ・重さ・角度を動かすと、周期と周波数はどうなるかな？</p><div class="visual-frame"><canvas id="labPendCanvas" width="900" height="295"></canvas></div><div class="control-grid">${rangeField('lablength','糸の長さ',10,140,1,state.labSetup.length,' cm')}${rangeField('labmass','重さ',5,100,5,state.labSetup.mass,' g')}${rangeField('labamp','振れ角',5,40,1,state.labSetup.amp,'°')}</div><div class="statrow"><div class="stat"><span>周期 T</span><b id="labPeriod"></b></div><div class="stat"><span>周波数 f</span><b id="labFreq"></b></div><div class="stat"><span>1秒振り子との長さの差</span><b id="labLength"></b></div></div><div class="note">単振り子の近似値です。長さは支点からおもりの重心まで。大角度には簡易補正を入れています。空気抵抗は描画に反映していません。</div></section><section class="panel lab-card"><h3>🎶 音の研究室</h3><p>周波数と振幅を変えて、波の形と音の印象を確かめよう。</p><div class="visual-frame"><canvas id="labWaveCanvas" width="900" height="295"></canvas></div><div class="control-grid two">${rangeField('labfreq','周波数',100,1000,10,state.labWave.freq,' Hz')}${rangeField('labwaveamp','振幅',10,100,5,state.labWave.amp,'')}</div><div class="mission-actions"><button class="btn primary" id="labPlay">🔊 音を聞く</button></div><div class="note">周波数を上げると音が高くなり、振幅を上げると一般に音が大きくなります。再生音量には安全のため上限を設けています。</div></section></div>`;
+function update(){let T=period(state.labSetup.length,state.labSetup.amp);$('#labPeriod').textContent=f(T)+'秒';$('#labFreq').textContent=f(1/T)+'Hz';$('#labLength').textContent=f(Math.abs(state.labSetup.length-24.84))+'cm';}
+for(let [key,prop,unit] of [['lablength','length',' cm'],['labmass','mass',' g'],['labamp','amp','°']])attachRange(key,state.labSetup,prop,unit,update);for(let [key,prop,unit] of [['labfreq','freq',' Hz'],['labwaveamp','amp','']])attachRange(key,state.labWave,prop,unit);$('#labPlay').onclick=()=>tone(state.labWave.freq,state.labWave.amp/100);if(window.innerWidth<700){for(let id of ['labPendCanvas','labWaveCanvas']){$('#'+id).width=600;$('#'+id).height=350;}}update();}
+
+/* v0.4: two integrated science boss challenges. No questions or original stages removed. */
+const SOUND_ROOMS=[
+ {name:'反射する回廊',source:[0,3],target:[5,1],mirrors:[[3,3],[3,1]],absorbers:[[4,3],[0,1]],start:['\\','\\'],tip:'反射板は、音の進む方向を曲げられる。ゴールへの道筋を指でたどってみよう。'},
+ {name:'吸音の落とし穴',source:[0,1],target:[5,3],mirrors:[[2,1],[2,3]],absorbers:[[4,1],[0,3]],start:['/','/'],tip:'向きを変えずに直進すると吸音材に当たる。通る道を変える工夫が必要。'},
+ {name:'3枚の反射板',source:[0,4],target:[4,3],mirrors:[[1,4],[1,0],[4,0]],absorbers:[[5,4],[3,4],[5,0]],start:['\\','\\','/'],tip:'3枚の反射板を使うと、少し遠回りしても信号を届けられる。'}
+];
+let clockBoss={phase:0,length:60,mass:20,angle:12,tests:0,lastMeasure:null,lastError:null,hits:0,misses:0,startTime:0,lastPush:-100,feedback:'まずは10往復の時間を調べ、1往復が1.00秒になる糸の長さを探そう。',positive:false,gearPulseTime:-100};
+let soundBoss={room:0,orientations:[...SOUND_ROOMS[0].start],shots:0,path:[],traceStarted:0,feedback:'反射板をタップで回転。発信して受信機まで音を届けよう。',positive:false,roundDone:false};
+function bossBestLabel(key){const x=state.bossRecord[key];return x?'最高 ★'.repeat(0)+'★'.repeat(x):'未クリア';}
+function renderBoss(app){
+ const clockDone=state.bossRecord.clock||0,soundDone=state.bossRecord.sound||0;
+ app.innerHTML=`<div class="panel panelpad"><div class="section-kicker">FINAL CHALLENGE · 理科を使って攻略する</div><h2 class="section-title">🏰 ボスチャレンジ</h2><p class="muted">いつもの「答えを選ぶ」問題ではない。実験で発見した法則を組み合わせ、塔と研究所の仕掛けを動かそう。何度でも挑戦できるよ。</p><div class="boss-home"><button id="bossClockTab" class="boss-tile ${state.bossScreen==='clock'?'active':''}"><em>第一のボス · P.1〜8・13〜14</em><strong>⏰ 時計塔の最終修理</strong><span>1秒振り子を作り、3回連続のタイミングアクションで時計を再起動。</span><em>${clockDone?'最高 '+ '★'.repeat(clockDone):'まだクリアしていない'}</em></button><button id="bossSoundTab" class="boss-tile ${state.bossScreen==='sound'?'active':''}"><em>第二のボス · P.21〜23</em><strong>📡 音の反射迷宮</strong><span>反射板を回して音の道を組み立て、3つの部屋を突破。</span><em>${soundDone?'最高 '+ '★'.repeat(soundDone):'まだクリアしていない'}</em></button></div></div><div class="spacer"></div><div id="bossDetail"></div>`;
+ $('#bossClockTab').onclick=()=>{state.bossScreen='clock';renderBoss(app)};
+ $('#bossSoundTab').onclick=()=>{state.bossScreen='sound';renderBoss(app)};
+ if(state.bossScreen==='clock')renderClockBoss();else renderSoundBoss();
+}
+function bossRecord(key,stars){effectAudio('boss');questEffect('boss',key==='clock'?'時計塔が復活！':'通信が回復！');const old=state.bossRecord[key]||0;if(stars>old){state.bossRecord[key]=stars;save();updateHUD();}}
+function clockGuess(){
+ const c=clockBoss;c.tests++;
+ const actual=period(c.length,c.angle);
+ // Simulated stopwatch, total of ten swings; slight total-time error.
+ const total=10*actual+(((c.tests*7)%11)-5)*.012;
+ const measured=total/10;
+ c.lastMeasure=measured;c.lastError=Math.abs(measured-1);
+ if(c.lastError<=.032){c.phase=1;c.startTime=performance.now()/1000;c.lastPush=-100;c.feedback=`試運転成功！10往復 ${total.toFixed(2)}秒、1往復の平均 ${measured.toFixed(2)}秒。次は中央でタイミングよく3回押そう。`;c.positive=true;}
+ else {c.feedback=`10往復で ${total.toFixed(2)}秒。1往復の平均は ${measured.toFixed(2)}秒。目標1.00秒まで ${c.lastError.toFixed(2)}秒の差。糸の長さを工夫して再挑戦！`;c.positive=false;}
+ renderBoss($('#app'));
+}
+function pushBossClock(){
+ const c=clockBoss;if(c.phase!==1)return;
+ const now=performance.now()/1000;
+ const elapsed=now-c.startTime;
+ const T=period(c.length,c.angle);
+ const phase=2*Math.PI*elapsed/T;
+ // Center crossing: the bob is nearly at its lowest position.
+ const center=Math.abs(Math.sin(phase));
+ if(now-c.lastPush<.36){c.feedback='同じ通過では連続して押せない！次の往復を待とう。';c.positive=false;}
+ else {c.lastPush=now;if(center>=.78){c.hits++;c.gearPulseTime=now;c.feedback=`ナイスタイミング！ 時計の歯車が ${c.hits}/3 個動いた。`;c.positive=true;
+   if(c.hits>=3){c.phase=2;const stars=c.tests<=2&&c.misses<=1?3:c.tests<=5&&c.misses<=4?2:1;bossRecord('clock',stars);c.feedback=`時の塔が復活！今回の評価は${'★'.repeat(stars)}。周期を調整し、中央を通過する瞬間に力を加えた。`;}}
+ else {c.misses++;c.hits=0;c.feedback='タイミングがずれた！歯車の連続作動が0/3に戻った。次は中央を通る瞬間を見よう。';c.positive=false;}}
+ renderBoss($('#app'));
+ if(c.phase===1&&c.positive){effectAudio('good');questEffect('good')}else if(c.phase===1){effectAudio('miss');}
+}
+function restartClockBoss(){clockBoss={phase:0,length:60,mass:20,angle:12,tests:0,lastMeasure:null,lastError:null,hits:0,misses:0,startTime:0,lastPush:-100,feedback:'もう一度1秒振り子の修理から挑戦しよう。',positive:false,gearPulseTime:-100};renderBoss($('#app'));}
+function renderClockBoss(){
+ const c=clockBoss;let body='';
+ if(c.phase===0){
+ body=`<div class="boss-callout">🎯 目標：1往復<strong>1.00秒</strong>の振り子をつくろう。まず10往復をはかり、部品を調整！</div>
+  <div class="control-grid">${rangeField('bossLen','糸の長さ',15,90,1,c.length,' cm')}${rangeField('bossMass','おもりの重さ',10,100,10,c.mass,' g')}${rangeField('bossAngle','最初の振れ角',5,25,1,c.angle,'°')}</div>
+  <div class="boss-hud"><div class="boss-chip"><span>試した回数</span><b>${c.tests}回</b></div><div class="boss-chip"><span>10往復の平均</span><b>${c.lastMeasure!==null?c.lastMeasure.toFixed(2)+'秒':'???'}</b></div></div>
+  <div class="mission-actions"><button class="btn primary" id="clockTest">⏱ 10往復を測る（模擬実験）</button></div>
+  <p class="mini muted">10往復分の時間を短時間で表示する学習用シミュレーションです。観察するだけでは正確な数値が出ないようにしています。</p>`;
+ }else if(c.phase===1){body=`<div class="boss-callout">⚡ 次はリズムアクション！おもりが中央を通過するタイミングで力を加え、歯車を3回連続で動かそう。</div>
+  <div class="boss-hud"><div class="boss-chip"><span>歯車の作動</span><b>${c.hits}/3</b></div><div class="boss-chip"><span>タイミングミス</span><b>${c.misses}</b></div><div class="boss-chip"><span>試運転</span><b>${c.tests}回</b></div></div>
+  <div class="mission-actions"><button class="btn amber" id="clockPush">✋ タイミングよく押す！〔Space〕</button></div><p class="mini muted">画面中央のおもりが真ん中に来た瞬間を狙おう。押すたびに新しい振動のタイミングを確かめられる。</p>`;
+ }else {body=`<div class="boss-result"><h3>🏆 時の塔が復活！</h3><p>${c.feedback}</p><p>周期は主に糸の長さで決まること、繰り返し測定する意味、周期に合わせた操作で歯車の脱進を再現したよ。振り子は時計の動力ではなく、進むリズムを調整する役割だよ。</p></div><button class="btn amber" id="clockRestart">↻ もっと少ない試行で再挑戦</button><button class="btn primary" id="clockToMap" style="margin-left:9px">🗺️ 次のエリアを見る →</button>`;}
+ $('#bossDetail').innerHTML=`<div class="boss-main"><section class="panel boss-work"><div class="boss-header"><div><div class="section-kicker">CLOCK TOWER · FINAL</div><h3 style="margin:4px 0">⏰ 時間を取り戻せ！</h3></div><span class="pill">最高 ${'★'.repeat(state.bossRecord.clock||0)||'未達成'}</span></div><div class="boss-phase"><span class="${c.phase===0?'active':'done'}">① 1秒振り子を発明</span><span class="${c.phase===1?'active':c.phase>1?'done':''}">② リズムで歯車起動</span><span class="${c.phase===2?'active':''}">③ クリア</span></div>${focusMarkup()}<div class="scene-label">🎞️ 動く時計塔 <small>振り子と歯車の関係</small></div><div class="boss-graphic scene-feature"><canvas id="bossClockCanvas" width="900" height="265" aria-label="時計塔の振り子。中央の光は押すタイミングの目安"></canvas></div>${body}<div class="boss-feedback ${c.positive?'positive':c.tests||c.misses?'negative':''}" role="status">${htmlEsc(c.feedback)}</div></section><aside class="panel boss-notes"><h4>🔎 修理に役立つ理科の知識</h4><p>振り子の1往復にかかる時間を「周期」という。重さを変えても、同じ長さ・小さな振れ角なら周期はほぼ変わらない。</p><details class="tip"><summary>ヒントをひらく</summary><p>速く振れるようにしたいなら糸を短く。10往復の時間を10で割って比較してみよう。</p></details><p>※振れ角が大きいほど厳密には周期も少し長くなる。本ゲームは小さな角度での振り子モデルを用いている。</p><h4>教材との対応</h4><p>P.1〜8「周期・条件制御・誤差」／P.13〜14「共振」</p><p class="mini">このボスでは、操作に慣れたら何度でも自己記録を更新できます。</p></aside></div>`;
+ if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){const cv=$('#bossClockCanvas');if(cv){cv.width=560;cv.height=470;}}
+ bindFocus();if($('#clockTest'))$('#clockTest').onclick=clockGuess;
+ if($('#clockPush'))$('#clockPush').onclick=pushBossClock;
+ if($('#clockRestart'))$('#clockRestart').onclick=restartClockBoss; if($('#clockToMap'))$('#clockToMap').onclick=()=>selectTab('map');
+ for(const [key,prop,unit] of [['bossLen','length',' cm'],['bossMass','mass',' g'],['bossAngle','angle','°']])attachRange(key,c,prop,unit);
+}
+function drawBossClock(canvas,t){
+ if(!canvas)return;const c=clockBoss,ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+ if(W<700){mobileBossClock(ctx,t);return;}
+ drawClockworkBackdrop(ctx,W,H,t);const T=period(c.length,c.angle),x=W*.52,y=29,L=70+c.length*1.15;
+ const elapsed=c.phase===1?t-c.startTime:t;const a=c.angle*Math.PI/180*Math.cos(2*Math.PI*elapsed/T);
+ const bx=x+L*Math.sin(a),by=y+L*Math.cos(a);
+ const brass=ctx.createLinearGradient(x-90,0,x+90,0);brass.addColorStop(0,'#536b83');brass.addColorStop(.5,'#f9dea8');brass.addColorStop(1,'#48677b');
+ ctx.fillStyle=brass;roundRectFill(ctx,x-83,y-10,166,15,5,brass,'#f3d8a4');
+ for(let k=0;k<3;k++){let xx=x-66+k*66;ctx.beginPath();ctx.arc(xx,y-2,2.5,0,7);ctx.fillStyle='#243b4f';ctx.fill();}
+ line(ctx,x,y,x,y+L,'#7899ab99',2);
+ line(ctx,x,y,bx,by,'#ffdfac',5);
+ const r=13+Math.sqrt(c.mass)*.7;ctx.beginPath();ctx.arc(bx,by,r,0,7);ctx.fillStyle='#ffce7b';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#f7f0ca';ctx.stroke();
+ const center=Math.abs(Math.sin(2*Math.PI*elapsed/T));const hot=c.phase===1&&center>=.78;
+ ctx.fillStyle=hot?'#9af8cc':'#4a7999';ctx.beginPath();ctx.arc(x,y+L,8,0,7);ctx.fill();
+ const gearAge=t-(c.gearPulseTime??-100),isMoving=c.phase===2||gearAge>=0&&gearAge<1.0;
+ const spin=c.phase===2?t*.55:c.hits*.62+Math.max(0,Math.min(1,gearAge))*0.55;
+ const g1x=W*.77,g1y=H*.49;
+ // Gearbox halo is triggered by actual successful inputs, not a looping decoration.
+ glowDisc(ctx,g1x+26,g1y,80,'#c8a261',.10+(isMoving?.27:0));
+ drawGear(ctx,g1x,g1y,31,spin,isMoving);
+ drawGear(ctx,g1x+57,g1y+13,23,-spin*31/23,isMoving);
+ drawPowerArc(ctx,g1x,g1y,t,gearAge,48);
+ ctx.strokeStyle='#adbdc8';ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(g1x-45,g1y-56,153,115,14);ctx.stroke();
+ if(focusEnabled){
+  if(c.phase===1&&hot)markerCircle(ctx,x,y+L,22,t,{color:'#96ffcf'});
+  else if(isMoving){markerCircle(ctx,g1x,g1y,41,t,{color:'#ffdf99'});}
+  if(c.phase===1&&hot&&W>=700)holoTag(ctx,'中央で押す！',x-90,y+L+34,{color:'#ffe4a1'});
+  if(isMoving&&W>=700)holoTag(ctx,'歯車が動いた',g1x-55,g1y+67,{color:'#d8ffe1'});
+ }
+ ctx.fillStyle='#d6e9ed';ctx.font='bold 14px sans-serif';ctx.fillText('歯車・脱進機の模型',W*.67,H-34);
+ ctx.fillStyle='#bdd2e4';ctx.font='12px sans-serif';ctx.fillText('※ 振り子は駆動力ではなく進むリズムを調整',W*.57,H-14);
+ ctx.font='bold 20px sans-serif';ctx.fillStyle='#f0f8ff';ctx.fillText(W<700?(c.phase===0?'10往復を測ろう':'中央通過で押そう'):(c.phase===0?'長さや重さを選び、10往復を測ろう':'おもりが中央を通る瞬間に押そう'),22,38);
+ ctx.fillStyle=hot?'#a5f8c9':'#ffd189';ctx.font='bold 17px sans-serif';ctx.fillText(c.phase===1?(hot?'いま！':'タイミングを見よう'):('糸 '+c.length+'cm'),W-230,75);
+ if(c.phase===0){ctx.font='bold 15px sans-serif';ctx.fillStyle='#b8dbe7';ctx.fillText('目標 1.00秒　現在の周期は試運転で確認',22,H-13)}
+ else if(c.phase===1){ctx.font='bold 16px sans-serif';ctx.fillStyle='#b8e8e0';ctx.fillText('成功 '+c.hits+'/3',22,H-13)}
+}
+function currentSoundRoom(){return SOUND_ROOMS[Math.min(soundBoss.room,SOUND_ROOMS.length-1)]}
+function toggleSoundMirror(i){if(soundBoss.roundDone)return;soundBoss.orientations[i]=soundBoss.orientations[i]==='/'?'\\':'/';soundBoss.path=[];soundBoss.traceStarted=0;soundBoss.feedback='反射板を動かした。発信して音の進み方を確かめよう。';soundBoss.positive=false;renderBoss($('#app'));}
+function traceSound(){
+ const data=currentSoundRoom();let [x,y]=data.source,dx=1,dy=0;let path=[[x,y]];
+ for(let n=0;n<50;n++){
+  x+=dx;y+=dy;if(x<0||x>=6||y<0||y>=5)return {ok:false,path,reason:'音が通路の外へ進んだ。反射板の向きを変えてみよう。'};
+  path.push([x,y]);if(x===data.target[0]&&y===data.target[1])return {ok:true,path,reason:'受信機に音が届いた！'};
+  if(data.absorbers.some(a=>a[0]===x&&a[1]===y))return {ok:false,path,reason:'吸音材で音が弱まり、受信機には届かなかった。'};
+  const mi=data.mirrors.findIndex(a=>a[0]===x&&a[1]===y);
+  if(mi>=0){const dir=soundBoss.orientations[mi];if(dir==='/'){const xx=-dy,yy=-dx;dx=xx;dy=yy}else{const xx=dy,yy=dx;dx=xx;dy=yy;}}
+ }
+ return {ok:false,path,reason:'音の進む道が長すぎる。反射板を確認してみよう。'};
+}
+function soundShoot(){if(soundBoss.roundDone)return;const s=soundBoss;s.shots++;const result=traceSound();s.path=result.path;s.traceStarted=performance.now();s.positive=result.ok;s.feedback=result.reason;
+ if(result.ok){s.roundDone=true;}
+ renderBoss($('#app'));
+ if(result.ok){effectAudio('good');questEffect('reward','通信成功！')}else effectAudio('miss');
+}
+function soundNext(){const s=soundBoss;if(!s.roundDone)return;
+ if(s.room<SOUND_ROOMS.length-1){s.room++;s.orientations=[...currentSoundRoom().start];s.path=[];s.traceStarted=0;s.roundDone=false;s.feedback='新しい部屋に到着！音を届ける道を考えよう。';s.positive=false;}
+ else {s.room=SOUND_ROOMS.length;const stars=s.shots<=3?3:s.shots<=6?2:1;bossRecord('sound',stars);s.feedback=`全3部屋を突破！今回の評価は${'★'.repeat(stars)}。反射と吸音を使い分けたね。`;s.positive=true;}
+ renderBoss($('#app'));
+}
+function restartSoundBoss(){soundBoss={room:0,orientations:[...SOUND_ROOMS[0].start],shots:0,path:[],traceStarted:0,feedback:'新しい挑戦！3部屋連続のクリアを目指そう。',positive:false,roundDone:false};renderBoss($('#app'));}
+function renderSoundBoss(){
+ const s=soundBoss,done=s.room>=SOUND_ROOMS.length;
+ if(done){$('#bossDetail').innerHTML=`<div class="panel panelpad"><div class="boss-result"><h3>🏆 研究所の通信回復！</h3><p>${htmlEsc(s.feedback)}</p><p>音の反射を利用して届く道を作った。吸音材に当たると受信できない場合もあったね。</p></div><button class="btn amber" id="soundRestart">↻ もう一度3部屋に挑戦</button><button class="btn primary" id="soundToMap" style="margin-left:9px">🗺️ 冒険の結果を見る →</button><p class="mini muted">教材 P.21〜23：音の伝わり方・反射・吸音</p></div>`;$('#soundRestart').onclick=restartSoundBoss;$('#soundToMap').onclick=()=>selectTab('map');return;}
+ const data=currentSoundRoom(),visited=new Set(s.path.map(([x,y])=>`${x},${y}`));let tiles='';
+ for(let y=0;y<5;y++)for(let x=0;x<6;x++){
+  const is=(pos)=>pos[0]===x&&pos[1]===y;
+  let klass='signal-tile',name='',txt='',click='',disabled='disabled',hint='';
+  if(is(data.source)){klass+=' source';txt='📣';name='発信機';}
+  else if(is(data.target)){klass+=' target';txt='📻';name='受信機';}
+  else if(data.absorbers.some(is)){klass+=' absorber';txt='▥';name='吸音材';}
+  else{const idx=data.mirrors.findIndex(is);if(idx>=0){klass+=' mirror';txt=s.orientations[idx]==='/'?'╱':'╲';name=`反射板${idx+1}・タップで回転`;click=`data-mirror="${idx}"`;disabled=s.roundDone?'disabled':'';} }
+  const traceIndex=s.path.findIndex(([xx,yy])=>xx===x&&yy===y);
+  if(traceIndex>=0)klass+=' traced';
+  const delay=traceIndex<0?0:traceIndex*145;
+  tiles+=`<button class="${klass}" style="--trace-delay:${delay}ms" data-trace-step="${traceIndex}" aria-label="${htmlEsc(name||'通路')}" ${click} ${disabled}>${txt}</button>`;
+ }
+ $('#bossDetail').innerHTML=`<div class="boss-main"><section class="panel boss-work"><div class="boss-header"><div><div class="section-kicker">SOUND LAB · FINAL</div><h3 style="margin:4px 0">📡 音の反射迷宮</h3></div><span class="pill">最高 ${'★'.repeat(state.bossRecord.sound||0)||'未達成'}</span></div>
+  <div class="boss-phase">${SOUND_ROOMS.map((r,i)=>`<span class="${i<s.room?'done':i===s.room?'active':''}">${i<s.room?'✓':i+1} ${htmlEsc(r.name)}</span>`).join('')}</div>
+  <div class="boss-room-title">ROOM ${s.room+1}/3　${htmlEsc(data.name)}</div><p class="boss-caption">発信機📣 → 反射板を回して受信機📻 へ。発信すると通った道を順番に光らせるよ（音の道筋の模式図）。</p>
+  <div class="signal-board" role="group" aria-label="音の反射迷宮 6列5行">${tiles}</div><div class="wave-legend"><span>🟢 点灯：信号が通った道</span><span>▥：吸音材で弱まる</span></div>
+  <div class="boss-hud"><div class="boss-chip"><span>合計の発信回数</span><b>${s.shots}</b></div><div class="boss-chip"><span>クリアした部屋</span><b>${s.room}/3</b></div></div>
+  <div class="mission-actions">${s.roundDone?`<button id="soundNext" class="btn amber">${s.room===2?'🏆 ボスをクリア！':'次の部屋へ →'}</button>`:`<button id="soundShoot" class="btn primary">📡 音を発信する！</button>`}<button id="soundReset" class="btn secondary">↻ 最初から挑戦</button></div><div class="boss-feedback ${s.positive?'positive':s.shots?'negative':''}" role="status">${htmlEsc(s.feedback)}</div></section>
+  <aside class="panel boss-notes"><h4>🔎 音の通り道を考える</h4><p>音は振動が伝わる現象で、壁などで反射する。反射板の向きを変えると、進む道を変えられるよ。</p><details class="tip"><summary>ヒントをひらく</summary><p>${htmlEsc(data.tip)}</p></details><h4>このゲームの模型について</h4><p>実際の音は空間に広がり、回り込みや干渉も起きます。ここでは<strong>一方向に絞った音の信号が反射する道筋</strong>を、上下左右に単純化しています。</p><p>▥に当たった音は完全に消えるのではなく、ゲーム内では弱まって受信できなくなる設定です。材質や周波数によって吸音の程度は異なります。</p><h4>教材との対応</h4><p>P.21〜23「音の伝わり方・反射・吸音」</p></aside></div>`;
+ for(const b of document.querySelectorAll('[data-mirror]'))b.onclick=()=>toggleSoundMirror(Number(b.dataset.mirror));
+ if($('#soundShoot'))$('#soundShoot').onclick=soundShoot;
+ if($('#soundNext'))$('#soundNext').onclick=soundNext;
+ $('#soundReset').onclick=restartSoundBoss;
+}
+window.addEventListener('keydown',e=>{if(e.code==='Space'&&state.view==='boss'&&state.bossScreen==='clock'&&clockBoss.phase===1&&!['INPUT','BUTTON','SELECT'].includes(document.activeElement?.tagName)){e.preventDefault();pushBossClock();}});
+
+
+// ====== v0.5 物語・冒険マップ・科学のカギ ======
+const AREAS=[
+ {name:'時計塔の入口',icon:'⏰',start:0,end:5,seal:[3,5,14],pages:'P.1〜8',intro:'時の街の時計がぜんぶ止まった。ふりこの法則を見つけ、歯車に命を吹きこもう！',endline:'振り子の周期を調整できた！地下の回廊から不思議なリズムが聞こえる。'},
+ {name:'リズムの回廊',icon:'🎶',start:6,end:10,seal:[17,26,28],pages:'P.8〜14',intro:'音もなく揺れる巨大な振り子。周期と共振の力を集め、時計塔の核を修理しよう。',endline:'揺れの秘密がつながった！最後は時計塔のボスを動かすだけだ。',boss:'clock'},
+ {name:'音の研究所',icon:'🔔',start:11,end:16,seal:[29,31,39],pages:'P.15〜20',intro:'時計が動き出すと、今度は研究所の音が消えてしまった。音の正体を探しに行こう。',endline:'音がどのように生まれ、伝わるのか見えてきた！こだまの海へ向かおう。'},
+ {name:'こだまの海',icon:'🌊',start:17,end:20,seal:[41,44,46],pages:'P.21〜23',intro:'海の向こうの研究基地と通信できない！反射と音速を使って音の道を取り戻そう。',endline:'最後の通信装置を直そう。音の反射迷宮が待っている！',boss:'sound'}
+];
+const ACHIEVEMENTS=[
+ ['🌱','はじめの一歩','初めてステージをクリア',()=>pCount()>=1],
+ ['🔧','時計の修理人','エリア1の6ステージをクリア',()=>areaProgress(0)===6],
+ ['🧭','探究者','科学のカギを1個獲得',()=>AREAS.some((_,i)=>hasSeal(i))],
+ ['⏰','時計塔の守り人','時計塔ボスをクリア',()=>!!state.bossRecord.clock],
+ ['🎹','音の探偵','音の研究所6ステージをクリア',()=>areaProgress(2)===6],
+ ['📡','反射の達人','音の迷宮ボスをクリア',()=>!!state.bossRecord.sound],
+ ['📚','知識のコレクター','49問のクイズをすべて正解',()=>qCount()===49],
+ ['🏆','理科の冒険王','21ステージ＋2ボスをクリア',()=>pCount()===21&&!!state.bossRecord.clock&&!!state.bossRecord.sound]
+];
+function areaProgress(i){const a=AREAS[i];return DATA.stages.slice(a.start,a.end+1).filter(s=>!!state.progress[s.id]).length}
+function hasSeal(i){return AREAS[i].seal.every(n=>!!state.quizCorrect[n])}
+function getNextGoal(){
+ // Steer students along a story, but do not lock lessons for classroom use.
+ for(let i=0;i<AREAS.length;i++){
+  const a=AREAS[i];for(let k=a.start;k<=a.end;k++)if(!state.progress[DATA.stages[k].id])return {kind:'stage',index:k,area:i,name:DATA.stages[k].name};
+  if(a.boss&&!state.bossRecord[a.boss])return {kind:'boss',area:i,name:a.boss==='clock'?'時計塔の最終修理':'音の反射迷宮',boss:a.boss};
+ }
+ return {kind:'complete',area:3,name:'全エリアクリア！'};
+}
+function goGoal(g){if(g.kind==='stage'){selectStage(DATA.stages[g.index].id);selectTab('world')}
+ else if(g.kind==='boss'){state.bossScreen=g.boss;selectTab('boss')}
+ else selectTab('map')}
+function showQuestTransition(){
+ const el=$('#questTransition');if(!el)return;const g=getNextGoal();
+ const idx=DATA.stages.findIndex(s=>s.id===state.sid),area=AREAS.findIndex(a=>idx>=a.start&&idx<=a.end);
+ const finishedArea=area>=0&&areaProgress(area)===(AREAS[area].end-AREAS[area].start+1);
+ const line=finishedArea?AREAS[area].endline:'新しい発見を手に入れた。次の仕掛けでも使ってみよう！';
+ el.innerHTML=`<div class="next-quest"><strong>✨ チクタ「${htmlEsc(line)}」</strong><p>次の目的：${htmlEsc(g.name)}。あとから好きなステージに戻って遊べるよ。</p><button id="nextGoalButton" class="btn amber">${g.kind==='complete'?'🗺️ 冒険の記録を見る':'▶ 次の冒険へ'}</button><button id="backMapButton" class="btn secondary">🗺️ マップ</button></div>`;
+ $('#nextGoalButton').onclick=()=>goGoal(g);$('#backMapButton').onclick=()=>selectTab('map');
+}
+function renderMap(app){
+ const g=getNextGoal(),lit=!!state.bossRecord.clock,radio=!!state.bossRecord.sound;
+ const spoken=g.kind==='complete'?'時計も通信も元どおり！君は理科の力で時の街を救った！':
+  (g.kind==='boss'&&g.boss==='clock'?'時の塔はあと少し！修理の仕上げに挑戦だ！':
+  g.kind==='boss'?'通信を元に戻すために、音の反射迷宮に挑もう！':AREAS[g.area].intro);
+ let cards=AREAS.map((a,i)=>{
+ const done=areaProgress(i),total=a.end-a.start+1,focused=g.area===i&&g.kind!=='complete';
+ const dots=DATA.stages.slice(a.start,a.end+1).map((st,j)=>{const n=a.start+j,ok=!!state.progress[st.id],next=g.kind==='stage'&&g.index===n;return `<button class="stage-dot ${ok?'done':next?'next':''}" data-map-stage="${st.id}" title="${htmlEsc(st.name)}" aria-label="ステージ${n+1} ${htmlEsc(st.name)}${ok?' クリア済み':''}">${ok?'★':String(n+1)}</button>`}).join('');
+ const bossButton=a.boss?`<div class="area-boss"><b>${state.bossRecord[a.boss]?'🏆 '+'★'.repeat(state.bossRecord[a.boss]):'👑 ボスチャレンジ'}</b><button class="btn secondary" data-map-boss="${a.boss}">${state.bossRecord[a.boss]?'もう一度挑戦':'ボスに挑戦 →'}</button></div>`:'';
+ return `<section class="area-card ${focused?'focus':''} ${done===total?'finished':''}"><div class="area-head"><div><div class="section-kicker">AREA ${i+1} · ${htmlEsc(a.pages)}</div><h3>${a.icon} ${htmlEsc(a.name)}</h3></div><span class="area-progress">${done}/${total} クリア</span></div><p>${htmlEsc(a.intro)}</p><div class="area-track"><span style="width:${Math.round(100*done/total)}%"></span></div><div class="stage-dots">${dots}</div><div class="chapter-actions"><button class="btn secondary" data-map-first="${i}">${done===total?'ステージを選び直す':'▶ このエリアで遊ぶ'}</button><button class="btn secondary" data-map-seal="${i}">${hasSeal(i)?'💎 科学のカギ獲得':'🔑 科学のカギ'}</button></div>${bossButton}</section>`}).join('');
+ const awards=ACHIEVEMENTS.map(([icon,name,description,pred])=>`<div class="badge ${pred()?'':'locked'}"><div class="medal">${pred()?icon:'🔒'}</div><strong>${htmlEsc(name)}</strong><small>${htmlEsc(description)}</small></div>`).join('');
+ app.innerHTML=`<div class="story-hero"><div class="story-head"><div><div class="section-kicker">EPISODE 01 · 時の街の大冒険</div><h2>${radio?'時の街に、音と時間が戻った！':lit?'時計塔が復活！次は音を取り戻そう。':'止まった時の塔を、科学で動かせ。'}</h2><div class="story-dialog"><span class="avatar">🤖</span><div><strong>案内ロボ・チクタ</strong><p>${htmlEsc(spoken)}</p></div></div><p>21ステージを巡る冒険。答えを覚えるだけでは開かない仕掛けが待っている。教材の復習も49問あるよ。</p><div class="story-actions"><button id="goRecommended" class="btn amber">${g.kind==='complete'?'🏆 全エリアクリア！':'▶ 次の目的：'+htmlEsc(g.name)}</button><button id="goFree" class="btn secondary">🎛️ ステージを自由に選ぶ</button></div></div><div class="story-visual" aria-hidden="true"><div class="tower-art ${lit?'powered':''}"><div class="tower-roof"></div><div class="tower-body"><div class="tower-face">${lit?'✓':'◷'}</div><div class="tower-window"><span class="tower-lamp"></span></div></div></div></div></div></div>
+ <div class="panel panelpad"><div class="section-kicker">WORLD MAP</div><h2 class="section-title">🗺️ 4つのエリアを冒険しよう</h2><p class="muted mini">色のついた番号はクリア済み。黄色い番号は次のおすすめ。授業の進度に合わせ、どこからでも遊べます。科学のカギは各エリア3問の復習チャレンジです。</p><div class="area-grid">${cards}</div></div>
+ <div class="spacer"></div><div class="panel panelpad"><div class="section-kicker">COLLECTION</div><h2 class="section-title">🏅 冒険の実績 <span class="mini muted">${ACHIEVEMENTS.filter(a=>a[3]()).length}/${ACHIEVEMENTS.length}</span></h2><p class="muted mini">条件を満たすとメダルが開放。連続ログインや課金などの仕組みはありません。</p><div class="badge-grid">${awards}</div></div>`;
+ $('#goRecommended').onclick=()=>goGoal(g);$('#goFree').onclick=()=>selectTab('world');
+ $$('[data-map-stage]').forEach(b=>b.onclick=()=>{selectStage(b.dataset.mapStage);selectTab('world')});
+ $$('[data-map-first]').forEach(b=>b.onclick=()=>{let i=Number(b.dataset.mapFirst),a=AREAS[i],k=DATA.stages.findIndex((s,n)=>n>=a.start&&n<=a.end&&!state.progress[s.id]);selectStage(DATA.stages[k>=0?k:a.start].id);selectTab('world')});
+ $$('[data-map-boss]').forEach(b=>b.onclick=()=>{state.bossScreen=b.dataset.mapBoss;selectTab('boss')});
+ $$('[data-map-seal]').forEach(b=>{b.onclick=()=>{state.sealChapter=Number(b.dataset.mapSeal);state.sealIndex=0;state.sealAnswered=false;state.sealChoice=null;selectTab('seal')}});
+}
+function renderSeal(app){
+ const a=AREAS[state.sealChapter],numbers=a.seal,done=numbers.filter(n=>state.quizCorrect[n]).length;
+ let idx=state.sealIndex;idx=Math.max(0,Math.min(numbers.length-1,idx));state.sealIndex=idx;
+ const q=DATA.questions.find(q=>q.n===numbers[idx]);
+ if(done===numbers.length){
+ app.innerHTML=`<div class="seal-shell panel panelpad"><div class="seal-crest">💎</div><div class="section-kicker">KNOWLEDGE SEAL · AREA ${state.sealChapter+1}</div><h2 class="section-title">科学のカギ、獲得！</h2><p>「${htmlEsc(a.name)}」に必要な3つの知識を確認できたね！このカギは次のステージを強制的に開閉するものではなく、理解度を確かめる勲章だよ。</p><div class="mission-actions"><button id="sealBack" class="btn amber">🗺️ 冒険マップへ</button><button id="sealMore" class="btn secondary">📚 49問に挑戦</button></div></div>`;
+ $('#sealBack').onclick=()=>selectTab('map');$('#sealMore').onclick=()=>selectTab('quiz');return;
+ }
+ const result=state.sealAnswered?`<div class="seal-message" role="status"><b>${state.sealChoice===q.correct?'✨ 正解！':'🔍 もう少し！'}</b><p>${htmlEsc(q.explain)}</p></div>`:'';
+ app.innerHTML=`<div class="seal-shell"><section class="panel panelpad"><div class="section-kicker">KNOWLEDGE SEAL · AREA ${state.sealChapter+1}</div><h2 class="section-title">🔑 科学のカギ：${htmlEsc(a.name)}</h2><p class="seal-task">${htmlEsc(a.pages)}からキーワード・科学的な考え方を3問確認。ステージに戻って何度でも挑戦できるよ。</p><div class="statrow"><div class="stat"><span>正解済み</span><b>${done}/3問</b></div><div class="stat"><span>今の問題</span><b>${idx+1}/3</b></div><div class="stat"><span>挑戦する問題</span><b>まとめ ${q.n}番</b></div></div><h3 class="seal-question">${htmlEsc(q.q)}</h3><div class="seal-options">${q.options.map((x,i)=>`<button data-seal-choice="${i}" ${state.sealAnswered?'disabled':''} class="${state.sealAnswered?(i===q.correct?'correct':i===state.sealChoice?'incorrect':''):''}">${String.fromCharCode(65+i)}. ${htmlEsc(x)}</button>`).join('')}</div>${result}<div class="mission-actions" style="margin-top:15px"><button class="btn secondary" id="sealBack">← マップにもどる</button><button class="btn primary" id="sealNext">${idx===2?'最初の問題にもどる ↻':'次の問題 →'}</button></div></section></div>`;
+ $$('[data-seal-choice]').forEach(b=>b.onclick=()=>{if(state.sealAnswered)return;const value=Number(b.dataset.sealChoice);state.sealAnswered=true;state.sealChoice=value;if(value===q.correct){state.quizCorrect[q.n]=1;save();updateHUD();effectAudio('good');questEffect('good')}else effectAudio('miss');renderSeal(app)});
+ $('#sealBack').onclick=()=>selectTab('map');$('#sealNext').onclick=()=>{state.sealIndex=(idx+1)%3;state.sealAnswered=false;state.sealChoice=null;renderSeal(app)};
+}
+
+function quizList(){return DATA.questions.filter(q=>state.quizFilter==='all'||(state.quizFilter==='keyword'&&q.kind==='keyword')||(state.quizFilter==='calc'&&q.kind==='calc')||(state.quizFilter==='pend'&&q.n<=28)||(state.quizFilter==='sound'&&q.n>=29));}
+function renderQuiz(app){const pool=quizList();if(state.qi>=pool.length)state.qi=0;const q=pool[state.qi];let filters=[['all','総まとめ49問'],['keyword','キーワード'],['calc','計算'],['pend','振り子編'],['sound','音・振動編']];app.innerHTML=`<div class="quiz-shell"><div class="panel panelpad"><div class="section-kicker">KNOWLEDGE VAULT</div><h2 class="section-title">ことばの宝物庫</h2><p class="muted mini">教材P.24〜32の「まとめ」1〜49番に対応する復習問題です。問い方・一部の図表はゲーム向けに作り直しています。</p><div class="quizfilter">${filters.map(([id,name])=>`<button class="filter ${state.quizFilter===id?'active':''}" data-filter="${id}">${name}</button>`).join('')}</div><div class="statrow"><div class="stat"><span>このコース</span><b>${pool.length}問</b></div><div class="stat"><span>解いた問題</span><b>${pool.filter(q=>state.quizCorrect[q.n]).length}問</b></div><div class="stat"><span>今回の位置</span><b>${state.qi+1}/${pool.length}</b></div></div></div><div class="spacer"></div><section class="panel quizbox"><div class="qnum">まとめ ${q.n} 番　｜ 教材 ${htmlEsc(q.page)}　｜ ${state.qi+1}/${pool.length}</div><h3>${htmlEsc(q.q)}</h3><div class="answers">${q.options.map((o,i)=>`<button class="answer" data-answer="${i}" ${state.answered?'disabled':''}><span class="letter">${String.fromCharCode(65+i)}</span><span>${htmlEsc(o)}</span></button>`).join('')}</div><div id="quizResult" class="quiz-results" style="display:none" role="status"></div><div class="quiz-control"><span class="quiz-msg">${state.quizCorrect[q.n]?'★ この問題は前に正解済み':'正解した問題は端末に記録されます'}</span><div class="mission-actions" style="margin:0"><button class="btn secondary" id="qPrev">← 前の問題</button><button class="btn primary" id="qNext">次の問題 →</button></div></div></section><div class="note" style="margin-top:15px">先生向け：49問は資料の設問番号と対応しています。答えを暗記するだけにならないよう、操作ステージの前後で取り組むのがおすすめです。</div></div>`;
+$$('[data-filter]').forEach(b=>b.onclick=()=>{state.quizFilter=b.dataset.filter;state.qi=0;state.answered=false;state.selectedAnswer=null;renderQuiz(app)});$$('[data-answer]').forEach(b=>b.onclick=()=>answerQuiz(Number(b.dataset.answer)));$('#qPrev').onclick=()=>{state.qi=(state.qi-1+pool.length)%pool.length;state.answered=false;state.selectedAnswer=null;renderQuiz(app)};$('#qNext').onclick=()=>{state.qi=(state.qi+1)%pool.length;state.answered=false;state.selectedAnswer=null;renderQuiz(app)};
+}
+function answerQuiz(answer){if(state.answered)return;state.answered=true;const q=quizList()[state.qi];const ok=q.correct===answer;$$('[data-answer]').forEach(b=>{b.disabled=true;const a=Number(b.dataset.answer);if(a===q.correct)b.classList.add('right');if(a===answer&&!ok)b.classList.add('wrong');});const box=$('#quizResult');box.style.display='block';box.innerHTML=`<b>${ok?'✨ 正解！ 宝物を手に入れた！':'🔍 惜しい！ 正しい知識を発見しよう'}</b><p class="mini" style="margin:8px 0 0">${htmlEsc(q.explain)}</p>`;if(ok&&!state.quizCorrect[q.n]){state.quizCorrect[q.n]=1;save();updateHUD();}effectAudio(ok?'good':'miss');if(ok)questEffect('good');}
+function renderTeacher(app){app.innerHTML=`<div class="panel panelpad"><div class="section-kicker">TEACHER GUIDE · CONTENT COVERAGE</div><h2 class="section-title">教材32ページ × ゲーム対応表</h2><p class="muted mini">アップロードされた『振り子と振動』P.1〜32をもとにした授業用の設計です。P.24〜32のまとめ49問を、番号ごとにゲーム向けに言い換えたクイズとして収録しています。</p></div><div class="spacer"></div><div class="teacher-grid"><section class="panel panelpad"><h3 style="margin-top:0">🔍 単元の対応状況</h3><div style="overflow-x:auto"><table class="coverage"><thead><tr><th>資料ページ</th><th>学習内容</th><th>対応先</th></tr></thead><tbody>${DATA.coverage.map(a=>`<tr><td>${htmlEsc(a[0])}</td><td>${htmlEsc(a[1])}</td><td>${htmlEsc(a[2])}</td></tr>`).join('')}</tbody></table></div><p class="mini muted">※「網羅」は学習テーマ・復習設問の対応を意味します。教材中の図のピクセル単位の再現や、すべての実験器具の再現は今後の開発項目です。ボスチャレンジは別枠の追加活動です。</p></section><aside class="panel panelpad"><h3 style="margin-top:0">🧭 授業での使い分け</h3><ul class="bullet"><li><b>導入：</b> s01で1秒振り子に挑戦。s02で条件制御の3種類の実験を設計しよう。</li><li><b>予想・実験：</b> s02〜s06／自由研究ラボで条件制御を体験。</li><li><b>定着：</b> 振り子編の設問と計算問題で知識を整理。</li><li><b>発展：</b> s07で2秒リズム橋を動かし、s12で波形を復元。s18は反射音の往復と雷の片道を区別する。</li><li><b>総合：</b> 冒険マップの4エリアで進行を確認。科学のカギは各エリア3問、ボスチャレンジは複数の知識を組み合わせて攻略。</li><li><b>振り返り：</b> まとめ49問と新しいステージで確認。</li></ul><h3>🧪 科学的な注意</h3><ul class="bullet"><li>資料は「振れ幅で周期が変わらない」と説明していますが、厳密には大きい振れ角で周期が長くなります。本ゲームは小角度近似を基本にしています。</li><li>落下実験は「真空で球の質量だけを変える」「空気中で紙の形だけを変える」の2種類に分離しています。質量と空気抵抗を一度に変えない設計です。</li><li>自由落下で質量に関係なく同じ加速度になるのは、空気抵抗を無視する場合です。</li><li>教材の「真空づくり」は正確には減圧であり、完全な真空ではありません。</li><li>柔らかい材料が音をすべて止めるわけではありません。吸音の効果は材質や周波数で変わります。</li><li>弦のモデルは振り子とは別の原理。太さ・張力などを別々に考えます。</li></ul><h3>💾 記録の扱い</h3><p class="mini muted">ボスチャレンジの記録も含め進捗はlocalStorageに保存。サーバーへの送信・生徒名の収集はありません。共有端末では記録が共通になるため、授業前に消去できます。</p><h3>💾 冒険記録のバックアップ</h3><p class="mini muted">別のHTMLファイルへ移る際、ブラウザによっては記録が自動共有されません。記録ファイルを保存し、新しい版で読み込めます。</p><div class="mission-actions"><button id="exportData" class="btn primary">⬇ 記録を書き出す</button><label class="btn secondary" style="display:inline-block;cursor:pointer">⬆ 記録を読み込む<input type="file" id="importDataFile" accept="application/json,.json" style="display:none"></label></div><button id="resetData" class="btn secondary" style="width:100%">この端末の学習記録を消去</button></aside></div>`;$('#exportData').onclick=()=>{const obj={format:'furiko-quest-save',version:1,progress:state.progress,quizCorrect:state.quizCorrect,bossRecord:state.bossRecord};const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='furiko-quest-save.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+ $('#importDataFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.format!=='furiko-quest-save'||obj.version!==1)throw Error('対応する記録ファイルではありません');if(!window.confirm('現在のこの端末のクリア記録を、読み込んだ記録で置き換えますか？'))return;const stages=new Set(DATA.stages.map(s=>s.id)),qnos=new Set(DATA.questions.map(q=>String(q.n)));const valid=x=>x&&typeof x==='object'&&!Array.isArray(x);if(!valid(obj.progress)||!valid(obj.quizCorrect)||!valid(obj.bossRecord))throw Error('記録の内容を確認できません');state.progress={};state.quizCorrect={};state.bossRecord={};for(const [k,v] of Object.entries(obj.progress))if(stages.has(k)&&[1,2,3].includes(v))state.progress[k]=v;for(const [k,v] of Object.entries(obj.quizCorrect))if(qnos.has(k)&&v===1)state.quizCorrect[k]=1;for(const [k,v] of Object.entries(obj.bossRecord))if(['clock','sound'].includes(k)&&[1,2,3].includes(v))state.bossRecord[k]=v;save();renderTeacher($('#app'));updateHUD();window.alert('記録を読み込みました。')}catch(err){window.alert('記録を読み込めませんでした：'+err.message)}};
+ $('#resetData').onclick=()=>{if(window.confirm('この端末の21ステージ、49問、ボス2つ、冒険の実績の記録を消去しますか？')){state.progress={};state.quizCorrect={};state.bossRecord={};save();updateHUD();renderTeacher(app)}};}
+const R=()=>Math.PI/180;
+function label(ctx,text,x,y,color='#e7f8ff',size=15){ctx.fillStyle=color;ctx.font=`700 ${size}px sans-serif`;ctx.fillText(text,x,y)}
+function line(ctx,x1,y1,x2,y2,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+function background(ctx,W,H,t){ctx.clearRect(0,0,W,H);let grd=ctx.createLinearGradient(0,0,W,H);grd.addColorStop(0,'#0c2a42');grd.addColorStop(1,'#192c49');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#5483a31e';ctx.lineWidth=1;for(let i=0;i<W;i+=44){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}for(let j=0;j<H;j+=44){ctx.beginPath();ctx.moveTo(0,j);ctx.lineTo(W,j);ctx.stroke()}for(let k=0;k<12;k++){let x=(k*101+27)%W, y=(k*63+24)%H;ctx.fillStyle=k%3?'#92ccdb50':'#ffcb7766';ctx.fillRect(x,y,2,2);}}
+function drawPendulum(canvas,t,values,mode='pendulum',target=null){if(!canvas)return;let ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;if(mode==='rhythm'&&W<700){mobileRhythm(ctx,t,values);return;}if(mode==='rhythm')drawClockworkBackdrop(ctx,W,H,t);else background(ctx,W,H,t);let length=values.length??60,amp=values.amp??12,mass=values.mass??20;const Lpix=72+length*.89,cy=36,cx=W*.45,T=period(length,amp);
+ const displayAmplitude=mode==='rhythm'?6+Math.min(4,state.rhythmHit)*4:amp;
+ const angle=displayAmplitude*R()*Math.cos(2*Math.PI*t/T);
+ if(mode==='rhythm'){
+  ctx.save();const arcR=Lpix;const minA=-displayAmplitude*R(),maxA=displayAmplitude*R();
+  ctx.beginPath();for(let k=0;k<=32;k++){let a=minA+(maxA-minA)*k/32;let xx=cx+arcR*Math.sin(a),yy=cy+arcR*Math.cos(a);if(k===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy)}
+  ctx.strokeStyle='#87f2cfbd';ctx.setLineDash([7,6]);ctx.lineWidth=3.8;ctx.stroke();ctx.setLineDash([]);
+  for(const a of [minA,maxA]){let xx=cx+arcR*Math.sin(a),yy=cy+arcR*Math.cos(a);glowDisc(ctx,xx,yy,22,'#91ffde',.27);ctx.beginPath();ctx.arc(xx,yy,6,0,7);ctx.fillStyle='#9efad7';ctx.fill();}
+  ctx.restore();
+ }
+ ctx.beginPath();ctx.ellipse(cx,cy,38,10,0,0,Math.PI*2);ctx.fillStyle='#7894b3';ctx.fill();ctx.fillStyle='#a8dfea';ctx.fillRect(cx-33,cy-5,66,8);let x=cx+Lpix*Math.sin(angle),y=cy+Lpix*Math.cos(angle);ctx.setLineDash([4,5]);ctx.strokeStyle='#6793a775';ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy+Lpix);ctx.stroke();ctx.setLineDash([]);line(ctx,cx,cy,x,y,'#ffdfac',4);let radius=11+Math.sqrt(mass)*.55;let ball=ctx.createRadialGradient(x-5,y-6,1,x,y,radius);ball.addColorStop(0,'#fff4bf');ball.addColorStop(.5,'#e9b86b');ball.addColorStop(1,'#ae6c3e');if(mode==='rhythm')glowDisc(ctx,x,y,radius*2.4,'#fbe8a1',.19+.07*Math.min(state.rhythmHit,4));ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.fillStyle=ball;ctx.fill();ctx.strokeStyle='#fff5c8';ctx.lineWidth=1.8;ctx.stroke();ctx.fillStyle='#d8e5f9';label(ctx,mode==='rhythm'&&W<700?'共振：揺れの幅を観察':mode==='lab'?'自由研究：振り子を観察':'振り子のシミュレーション',24,34,'#eaf2ff',19);label(ctx,`周期 ${f(T)} 秒`,24,72,'#ffcf7e',22);label(ctx,`重さ ${mass}g  ·  長さ ${length}cm`,24,103,'#c5d9ee',15);if(target!==null)label(ctx,`目標 ${f(target)} 秒`,W-205,38,'#8cead1',18);const baseline=H-32;line(ctx,22,baseline,W-24,baseline,'#618fa777',2);for(let i=0;i<=4;i++){let px=25+i*(W-50)/4;line(ctx,px,baseline-5,px,baseline+6,'#618fa7',2)}label(ctx,'往復のリズムを観察しよう',W-260,H-8,'#9cbdd1',12);if(mode==='rhythm'){
+  const inZone=Math.abs(Math.sin(2*Math.PI*t/T))>=.89;
+  ctx.fillStyle=inZone?'#96ebc6':'#f2a78b';ctx.beginPath();ctx.arc(cx,baseline,7,0,7);ctx.fill();
+  const mx=W-177,my=125;label(ctx,'揺れの成長',mx,my-17,'#e1f6ff',16);
+  ctx.fillStyle='#1a3b50';ctx.fillRect(mx,my,138,21);
+  ctx.fillStyle='#71e8c0';ctx.fillRect(mx,my,138*Math.min(4,state.rhythmHit)/4,21);
+  ctx.strokeStyle='#9ac7cd';ctx.lineWidth=2;ctx.strokeRect(mx,my,138,21);
+  label(ctx,`成功 ${state.rhythmHit} / 4`,mx,my+44,'#ffe5aa',16);
+  label(ctx,'揺れの幅が大きくなる',mx-10,my+73,'#c3e5ef',13);
+  const age=t-state.rhythmPulseTime;
+  drawPowerArc(ctx,x,y,t,age,38);
+  if(focusEnabled){
+   if(age>=0&&age<1.3){markerCircle(ctx,x,y,26,t,{color:'#ffeab1'});
+    if(W>680)drawFocusPointer(ctx,x,y,'振れ幅が広がる',t,33,-78);}
+   else if(inZone)glowDisc(ctx,cx,cy+Lpix,25,'#7effca',.6);
+  }
+  label(ctx,W<700?(inZone?'● いま押す！':'● 中央を待つ'):inZone?'● 今がチャンス！':'● 真ん中の合図を待とう',W-(W<700?225:264),68,inZone?'#9cffd3':'#f8daaa',16);
+ }}
+function drawWave(canvas,t,values){if(!canvas)return;const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;background(ctx,W,H,t);let freq=values.freq??440,amp=values.amp??50;label(ctx,'音の波形（表示は周波数に合わせた模式図）',26,36,'#e7f6ff',18);label(ctx,`${freq} Hz`,28,73,'#ffcf7e',24);label(ctx,`振幅 ${amp}`,W-180,72,'#8cead1',20);line(ctx,20,H/2+30,W-20,H/2+30,'#5684a3',2);let cycles=1+freq/135,ampl=amp*.83;ctx.strokeStyle='#71e8e1';ctx.lineWidth=4;ctx.beginPath();for(let i=15;i<W-15;i+=2){let phase=(i-15)/(W-30)*cycles*2*Math.PI-t*3,y=H/2+30-ampl*Math.sin(phase);if(i===15)ctx.moveTo(i,y);else ctx.lineTo(i,y)}ctx.stroke();label(ctx,'周波数 ↑ → 音が高い　　　振幅 ↑ → 音が大きい',26,H-14,'#aec8dc',13)}
+function drawEcho(canvas,t,distance,medium){if(!canvas)return;let ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;background(ctx,W,H,t);let sx=115,wx=W-150,cy=H*.52;ctx.fillStyle='#a8cbe6';ctx.fillRect(wx,48,19,H-78);for(let i=0;i<5;i++){line(ctx,wx,60+i*40,wx+19,48+i*40,'#fff7d877',2)}ctx.fillStyle='#f5c37f';ctx.beginPath();ctx.arc(sx,cy,22,0,7);ctx.fill();label(ctx,'音源',sx-28,cy+45,'#dcecf6',15);label(ctx,medium==='air'?'やまびこ山':'海底',wx-12,39,'#dcecf6',15);let p=(t*.36)%1;let px=sx+(wx-sx)*(p<.5?p*2:(1-p)*2);ctx.beginPath();ctx.arc(px,cy,11,0,7);ctx.fillStyle='#63e7de';ctx.fill();line(ctx,sx,cy,wx,cy,'#69cfc080',2);label(ctx,`反射面まで ${distance}m`,W/2-95,H-24,'#ffcf7e',20)}
+let lastRender=0;
+function animate(ms){const t=ms/1000;try{if(ms-focusLastCheck>150){refreshFocus(t);focusLastCheck=ms;}if(state.view==='world'){const s=stage();const canvas=$('#gameCanvas');if(canvas){if(['pendulum','compare','measure','rhythm','choice','medium'].includes(s.mode)){const vals=s.mode==='compare'?state.compareValues:(s.mode==='pendulum'?state.pValues:{length:60,mass:20,amp:12});drawPendulum(canvas,t,vals,s.mode,s.mode==='pendulum'?s.goal:null);}else if(s.mode==='graph')drawWave(canvas,t,{freq:400,amp:50});else if(s.mode==='wave')drawWave(canvas,t,state.waveValues);else if(s.mode==='string')drawWave(canvas,t,{freq:440*Math.min(3,stringRatio(state.stringValues)),amp:state.stringValues.strength});else if(s.mode==='echo')drawEcho(canvas,t,state.distance,s.goalMedium);else if(['fall','foucault','duel','melody','ear','chamber','flask','sonar','acoustic','labdesign','beatbridge','wavecode','echoquest'].includes(s.mode))drawScene(canvas,t,s);}}
+else if(state.view==='lab'){drawPendulum($('#labPendCanvas'),t,state.labSetup,'lab');drawWave($('#labWaveCanvas'),t,state.labWave);}else if(state.view==='boss'&&state.bossScreen==='clock'){drawBossClock($('#bossClockCanvas'),t);}}
+catch(e){if(ms-lastRender>5000){console.error('描画エラー',e);lastRender=ms}}requestAnimationFrame(animate)}
+render();requestAnimationFrame(animate);
+</script>
+</body></html>
