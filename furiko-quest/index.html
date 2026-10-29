@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<!-- Furiko Quest v0.20: direct-touch QA fix, contextual pendulum control, decor differentiation -->
-
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>フリコ・クエスト｜振り子と振動</title>
+<title>フリコ・クエスト v0.20｜天空時計塔</title>
 <style>
 :root{--bg:#0b1528;--panel:#111e36;--panel2:#182a46;--ink:#f2f6ff;--sub:#b0c6e6;--line:#344862;--cyan:#64dfeb;--amber:#ffcb77;--green:#86e3a7;--pink:#f7a6c0;--round:22px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;background:radial-gradient(circle at 80% -100px,#1b4770 0,transparent 31%),radial-gradient(circle at 9% 18%,#2d244b 0,transparent 38%),var(--bg);line-height:1.6;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--cyan)}
@@ -997,9 +995,9 @@ function mobileEcho(ctx,t){
   const q=Math.max(0,(t-state.echoScanStart)*.38)%1;
   const returning=isEcho&&q>=.5;
   const frac=isEcho?(q<.5?q*2:(1-q)*2):1-q;
-  const x=x1+(x2-x1)*frac;  const color=returning?'#8cffe3':'#ffdd8c';
-  glowDisc(ctx,x,y,90,color,.55);
-  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=7;
+  const x=x1+(x2-x1)*frac;
+  const color=returning?'#8cffe3':'#ffdd8c';
+  glowDisc(ctx,x,y,90,color,.55);  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=7;
   for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x,y,23+i*17,Math.PI*.35,Math.PI*1.65);ctx.stroke();}ctx.restore();
   if(returning)label(ctx,'↩ 反射して帰る',43,435,'#a9ffea',30);
   else label(ctx,isEcho?'→ 岩壁に向かう':'← 雷の音が届く',43,435,'#ffe4a0',30);
@@ -1996,9 +1994,9 @@ mobileBridge=function(c,t){v014Bridge(c,t);
  if(state.bridgeReady){
    const hot=Math.abs(Math.sin(phase))>.75;
    c.save();c.globalAlpha=hot?.86:.29;c.fillStyle=hot?'#aaf9de':'#e4c98b';
-   rounded(c,30,321,86,23,6,hot?'#17574d':'#263a44');text(c,hot?'いま！':'待機中',40,338,15,hot?'#d3ffed':'#e8d7bc');c.restore(); }
- metalDust(c,t,26,88,506,268,15,'#f2d8a2');
-};
+   rounded(c,30,321,86,23,6,hot?'#17574d':'#263a44');text(c,hot?'いま！':'待機中',40,338,15,hot?'#d3ffed':'#e8d7bc');c.restore();
+ }
+ metalDust(c,t,26,88,506,268,15,'#f2d8a2');};
 const v014Rhythm=mobileRhythm;
 mobileRhythm=function(c,t,v){v014Rhythm(c,t,v);
  const hits=Math.max(0,Math.min(4,state.rhythmHit||0));
@@ -2995,9 +2993,9 @@ art.src = [
   'MXbeC4dnzyIzBe6OSULmeIozsye6jQycfI2JEfkLwMVodRpQ38pJM3MM5ANmQvIQ9JcPGkXBZv1U41TcOPl3GqomY3WLwTm9cbNZs1DET+d2',
   'soZHUhHb+WmeIJ2Uk7FCW+sREadZRPzagedm16CwNfkKct9qMQnAPiw6yxND7mDONbKip3x1RxrkI1Wa4aYBZn7ib0NiEfXF+z8I63gUYh12',
   'Iqs8a5wp4LiIDECAM1grtu8KiZkR1WkuSkbmvnb89Q8rZxdO6lOyXyfMWQxdMm3ZGMDcP6f6OhA6hDXpHb4zoKv1kxOSk7RAwYcotrYBcU18',
-  'fEyngQ2DrlxzAshmSHIXSkFRoRE9Sa+4brR9+ZCBy3p9Ts/CQjIkx31aTTsUWHEOiiJDffbOPHGDNy3NGhFBVU5fc8iMhhtG8opEAXPFNHT3',  'rnF4agMGA/mVpleWLv19bFmXDIM2+Rr4MbxFidbgfjsEpxlUPW8nU45OvgFTxpQxPUA7DnsN+v3SunIszEi/fbOLpi7eu7rJzEzW/hD3KNas',
-  '8365iYLmTyb1yn1V85nG0KPGky4iUTonq3hVtCT9pA8899gPbkXKOktV1kbFx5Z/iBhVfQUVMz3I0zoeYBa0oTIe++1Ict/lx7yBvpnw4D5c',
-  'mwA8BotPOuUH7HkYHn25WCeNmE6eUhsAwOUWN1b3/58nYEvy1I5NerzUDHk6G7l8ASEHfvf44Rnwe/txnF5Ngxa6zDwcGJKvRA3j+CVdycql',
+  'fEyngQ2DrlxzAshmSHIXSkFRoRE9Sa+4brR9+ZCBy3p9Ts/CQjIkx31aTTsUWHEOiiJDffbOPHGDNy3NGhFBVU5fc8iMhhtG8opEAXPFNHT3',
+  'rnF4agMGA/mVpleWLv19bFmXDIM2+Rr4MbxFidbgfjsEpxlUPW8nU45OvgFTxpQxPUA7DnsN+v3SunIszEi/fbOLpi7eu7rJzEzW/hD3KNas',
+  '8365iYLmTyb1yn1V85nG0KPGky4iUTonq3hVtCT9pA8899gPbkXKOktV1kbFx5Z/iBhVfQUVMz3I0zoeYBa0oTIe++1Ict/lx7yBvpnw4D5c',  'mwA8BotPOuUH7HkYHn25WCeNmE6eUhsAwOUWN1b3/58nYEvy1I5NerzUDHk6G7l8ASEHfvf44Rnwe/txnF5Ngxa6zDwcGJKvRA3j+CVdycql',
   'dCr0k6SL/kt8on5FIMx+uBjlOd/k2On2ry4LryMnILQAA5cK8WXIBrYQEs2/9+wulMVHhEU0Ub84pNlJCl3brbxg7sToFkXao6x1TXWQiq4Z',
   'CfFgxTpIxUFi4xOGLTOQufsyVIgQ9JnRIaieFWiifZVObLM8wTxNplKA+vMzU625cj9+NNvh23sQBMVEuXaT8n115LNTDJkgKMMhhbproewL',
   '7FbRqKXwqJvW7lqMrIP/klx/SAAbdMySZPQ+5iOK6adlJ5rzEn2o1Uh+0XMzcHVuiTRoMqlPSxeGd5y4KBRoeuUqL27A9Q0o2GlzYTD7UIBA',
@@ -3994,9 +3992,9 @@ art.src = [
   'mzIlBYE4V2yZVxcL72inYI3E43xDLX32zQ0JKJj5r+Nd4WzF3Z2+Km+/UgUS3BV9ydOeJa6pgPcFx9qvCvWvOUsw93niCMgNHU2PIRzdmstB',
   'CnmqXlzQaYGBdzIzbGlVuAGwM8n7n2oArdYtkBgYp/jOKNQ9J1pnh9emzzIKrAtJkz23BZH+1RMPcMnsyFEKYXpHkdcYx9KnyxB3vs5Zzj2n',
   '+0aj1SmjqK2CMjR8f+U2lvS0CWx8Zei2apclIeduQZuH5EcRSHiWstPfwxJ5bTtV1HSK4e/g4GYuDqCIcrE5bBAAk+utN2ly7rlLpMBtT22H',
-  'kI2WGtlpflKri45i/NfwjOjudcZEboI6VmILw/zsN/bEPeru6uVKRF7PzYWFPcbSfOcxe4kSkyhF4/EL+XjhOSyuLIT/iZjnlABA6N8X9s9m',  '0QZ7DvL61djXl52FRkxjPBCrU0vGkekOz8oLNZID9AKIaSahtj8KrYMAwdONDPfo1wIED7MhNqi/uh+cCo+q5WGcvdu4Gu5OGN2paH8hOS1j',
-  'qA/XJb2kBuZptTsjca82xYIDlt7RNmvqLhOZkp6nSoyQxsT6w2j0V7GomQV0nEF5JVTX64GBtsAkLLubwIZnnn06XVw0PplGA20VhS9kcX74',
-  'uquzKmixtP0/sveeo8PhbHIeFa4Kh0OyGRfrsT4yAFKWuZFphc/392soFpzAClJ5KdhrfDAz2RkeeahaBP7Rk49CLTCVy16tRfN9wErwV09L',
+  'kI2WGtlpflKri45i/NfwjOjudcZEboI6VmILw/zsN/bEPeru6uVKRF7PzYWFPcbSfOcxe4kSkyhF4/EL+XjhOSyuLIT/iZjnlABA6N8X9s9m',
+  '0QZ7DvL61djXl52FRkxjPBCrU0vGkekOz8oLNZID9AKIaSahtj8KrYMAwdONDPfo1wIED7MhNqi/uh+cCo+q5WGcvdu4Gu5OGN2paH8hOS1j',
+  'qA/XJb2kBuZptTsjca82xYIDlt7RNmvqLhOZkp6nSoyQxsT6w2j0V7GomQV0nEF5JVTX64GBtsAkLLubwIZnnn06XVw0PplGA20VhS9kcX74',  'uquzKmixtP0/sveeo8PhbHIeFa4Kh0OyGRfrsT4yAFKWuZFphc/392soFpzAClJ5KdhrfDAz2RkeeahaBP7Rk49CLTCVy16tRfN9wErwV09L',
   'hn343t3pel3sqTxGY3K0KR+nVC9ixzocOf0I6sk6fqA/2NyOtxhiqV178sypNH3JUD0/qK3wgFakOocieBqQtW4n6OvRoF5ZPA9xCVGakVmQ',
   'aftYHV7eP7wHaeVKpDx8t7ZAV6OZmpMK34qaqKj1UXN66RmPSFCPJVssUYbKlP3EKiksHa9JaSuDmtMAK2abqc6T07VrAULwiySLdaQU5VOm',
   'RpsB+2PgEem/ULClpyio9SaTDRxz1D7lF80EmhY55kAv/EKBghXBuSBobRjZM8AxkxuBYmv33Dkc+AnsAyf0hC4MNb/3gr0Zmyuglkaupvva',
@@ -4993,9 +4991,9 @@ function head(c,category,title){
  txt(c,category,52,37,12,'#ecc994');txt(c,title,52,65,24,'#fff5e6');
 }
 function foot(c,primary,secondary,success=false){
- round(c,18,392,524,61,12,'rgba(5,22,34,.89)',success?'#9bffe1':'rgba(255,223,168,.68)',1.5); txt(c,primary,34,411,18,success?'#b9ffe9':'#ffe6b3');
- txt(c,secondary,34,436,14,'#e5f5ff');
-}
+ round(c,18,392,524,61,12,'rgba(5,22,34,.89)',success?'#9bffe1':'rgba(255,223,168,.68)',1.5);
+ txt(c,primary,34,411,18,success?'#b9ffe9':'#ffe6b3');
+ txt(c,secondary,34,436,14,'#e5f5ff');}
 function pend(c,t,x,y,L,a,showArc=true,baseline=null){
   if(showArc){
    c.save();c.strokeStyle='rgba(255,229,181,.57)';c.lineWidth=2;c.setLineDash([5,8]);c.beginPath();c.arc(x,y,L,Math.PI/2-a,Math.PI/2+a);c.stroke();c.setLineDash([]);c.restore();
@@ -5046,8 +5044,7 @@ function tower(c,t,kind){
    if(zone)bloom(c,211,330,90,'#b1ffe0',.52);
    foot(c,`タイミング ${state.rhythmHit}/4`,zone?'● 中央通過！ 押すタイミング':'● 振れ幅の増加を見つけよう',zone);
   }else{
-   // Match the illustrated string length to the scientific slider (pivot to bob centre).
-   pend(c,phase,175,114,boss?(140+bb.length*.74):(130+state.bridgeLength*.86),a,true,null);
+   pend(c,phase,175,114,165+(state.bridgeLength-60)*.6,a,true,null);
    const age=boss?t-(bb.gearPulseTime??-100):t-state.bridgePulseTime;
    movement(c,(boss?(bb.phase===2?t*.52:bb.hits*.68):state.bridgeHits*.66)+Math.max(0,Math.min(1,age))*.4,449,199,lit);
    if(!boss)bridge(c,state.bridgeHits);
@@ -5355,9 +5352,9 @@ body[data-scene="map"] .story-hero{
  background-size:cover,cover!important;
 }
 body[data-scene="world"] .stage-viewport:before{
- background-image:linear-gradient(180deg,#041224b5 0%,#091b2a59 35%,#07182a8c 75%,#040d1beb),var(--v020-science)!important;
+ background-image:linear-gradient(180deg,#041224ba 0%,#081b2c7a 35%,#07182ac1 75%,#040d1bed),var(--v020-walkways)!important;
  background-size:cover,auto 205%!important;
- background-position:center,calc(50% + var(--stage-cam-x,0px)) calc(52% + var(--stage-cam-y,0px))!important;
+ background-position:center,calc(12% + var(--stage-cam-x,0px)) calc(52% + var(--stage-cam-y,0px))!important;
  background-repeat:no-repeat!important;
  transition:background-position .45s ease-out;
 }
@@ -5368,7 +5365,8 @@ body[data-scene="world"] .stage-scene .visual-frame{
  box-shadow:0 18px 64px #010c19a8,0 0 0 1px #e6c9873b,inset 0 0 28px #74c6e112!important;
  backdrop-filter:blur(5px);
 }
-body[data-scene="world"] .stage-scene canvas{touch-action:none;cursor:grab;}
+body[data-scene="world"] .stage-scene canvas{touch-action:none;cursor:default;}
+body[data-scene="world"] .stage-scene canvas.v020-grabbing{touch-action:none;cursor:grabbing;}
 body[data-scene="world"] .stage-scene canvas:active{cursor:grabbing}
 body[data-scene="world"] .stage-viewport .v020-ambience{position:absolute;inset:0;pointer-events:none;z-index:1;
  background:radial-gradient(ellipse at 20% 15%,#ffe4a71b 0%,transparent 32%),radial-gradient(ellipse at 82% 62%,#7dc8ff12,transparent 36%);
@@ -5392,8 +5390,8 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
  body[data-scene="world"] .stage-viewport:before{background-size:cover,auto 205%!important}
  body[data-scene="world"] .stage-scene{padding-bottom:145px!important;padding-top:170px!important}
  body[data-scene="world"] .stage-scene .visual-frame{width:min(100%,480px)!important;}
- .v020-world-label{font-size:10px;top:13px;right:10px}
- .v020-direct-panel{bottom:-42px;font-size:10px;max-width:calc(100vw - 35px);padding:5px 8px}
+ .v020-world-label{font-size:10px;top:13px;right:10px;max-width:53%;text-align:center}
+ .v020-direct-panel{bottom:-47px;font-size:10px;max-width:calc(100vw - 30px);padding:7px 9px}
  .v020-direct-panel .v020-drag-label{display:none}
  .v020-pan-controls{right:11px;bottom:153px}
  .v020-pan-controls .v020-pan-tip{display:none}
@@ -5428,76 +5426,73 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
   }
   const viewport=scene.closest('.stage-viewport');
   if(viewport&&!viewport.querySelector('.v020-ambience')){const amb=document.createElement('div');amb.className='v020-ambience';viewport.prepend(amb)}
+  const stageId=app.querySelector('#stageSelect')?.value || '';
+  // Only stages with a physical, adjustable pendulum show direct controls.
+  // Other mini-games retain their original tap and control semantics.
+  const rangeId=stageId==='s07'?'bridgeLength':stageId==='s01'?'length':null;
+  const selectedRange=rangeId?app.querySelector('#rng-'+rangeId):null;
   let d=scene.querySelector('.v020-direct-panel');
-  if(!d){d=document.createElement('div');d.className='v020-direct-panel';d.innerHTML='<span class="v020-drag-label">↕ 光るおもりを上下に</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';scene.append(d);
+  if(!d){
+   d=document.createElement('div');d.className='v020-direct-panel';
+   d.innerHTML='<span class="v020-drag-label">振り子をつかんで上下に</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';
+   scene.append(d);
    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    const slider=app.querySelector('#rng-length, #rng-bridgeLength');if(!slider)return;
-    const dir=b.dataset.v020==='short'?-1:1;updateLength(slider,Number(slider.value)+dir*5);
+    const key=app.querySelector('#stageSelect')?.value==='s07'?'bridgeLength':'length';
+    const el=app.querySelector('#rng-'+key);if(!el)return;
+    updateLength(el,Number(el.value)+(b.dataset.v020==='short'?-5:5));
    }));
   }
-  const slider=app.querySelector('#rng-length, #rng-bridgeLength');
-  d.hidden=!slider;
-  if(slider){
-   d.querySelector('output').textContent=slider.value+'cm';
-   if(!slider.dataset.v020Sync){slider.dataset.v020Sync='1';slider.addEventListener('input',()=>{
-    const output=app.querySelector('.v020-direct-panel output');if(output)output.textContent=slider.value+'cm';
-   });}
+  d.hidden=!selectedRange;
+  if(selectedRange)d.querySelector('output').textContent=selectedRange.value+'cm';
+  // Position test: only the moving bob or the connecting rod can be grabbed.
+  // Decorative scenery, text, and empty canvas are NOT interactive.
+  function hitPendulum(e){
+   const key=app.querySelector('#stageSelect')?.value;
+   const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return false;
+   const scale=Math.min(r.width/canvas.width,r.height/canvas.height);
+   const x=(e.clientX-r.left-(r.width-canvas.width*scale)/2)/scale;
+   const y=(e.clientY-r.top-(r.height-canvas.height*scale)/2)/scale;
+   let cx,cy,bx,by,tolerance;
+   if(key==='s01'){
+    const len=Number(app.querySelector('#rng-length')?.value||60);
+    const a=(state.pValues?.amp||12)*Math.PI/180*Math.cos(2*Math.PI*(performance.now()/1000)/period(len,state.pValues?.amp||12));
+    const L=72+len*.89;cx=canvas.width*.45;cy=36;bx=cx+L*Math.sin(a);by=cy+L*Math.cos(a);tolerance=Math.max(22,canvas.width*.040);
+   }else if(key==='s07'){
+    const kx=canvas.width/560,ky=canvas.height/470;
+    const len=Number(app.querySelector('#rng-bridgeLength')?.value||70);
+    const T=period(len,10),t=state.bridgeReady?(performance.now()/1000-state.bridgeStart):performance.now()/1000;
+    const ang=.35*Math.cos((2*Math.PI*t/T));
+    const L=165+(len-60)*.6;cx=175*kx;cy=114*ky;bx=(175+L*Math.sin(ang))*kx;by=(114+L*Math.cos(ang))*ky;tolerance=Math.max(27,canvas.width*.052);
+   }else return false;
+   const ux=bx-cx,uy=by-cy,vx=x-cx,vy=y-cy,denom=ux*ux+uy*uy;
+   if(!denom)return false;
+   const t=Math.max(.18,Math.min(1,(vx*ux+vy*uy)/denom));
+   return Math.hypot(x-(cx+t*ux),y-(cy+t*uy))<=tolerance;
   }
-  // A bob-sized grab target, not a canvas-wide hidden control. Supports both regular pendulums and the bridge.
-  let halo=scene.querySelector('.v020-grab-halo');
-  if(!halo){
-   halo=document.createElement('button');halo.type='button';halo.className='v020-grab-halo';
-   halo.innerHTML='<span aria-hidden="true">↕</span>';halo.setAttribute('aria-label','振り子のおもりを上下にドラッグして糸の長さを調整');
-   halo.title='おもりを上下にドラッグ';scene.append(halo);
-  }
-  halo.hidden=!slider;
-  // Rendered coordinates come from the same values, period and angle used by the existing physics engine.
-  const bobPosition=()=>{
-   const W=canvas.width,H=canvas.height,t=performance.now()/1000;
-   if(slider?.id==='rng-bridgeLength'){
-    const length=Number(slider.value),T=period(length,10);
-    const dt=state.bridgeReady?t-state.bridgeStart:t;
-    const a=.35*Math.cos(2*Math.PI*dt/T);
-    const L=130+length*.86;
-    return {x:(175+L*Math.sin(a))*W/560,y:(114+L*Math.cos(a))*H/470};
-   }
-   const length=Number(slider?.value||60),angle=Number(state.pValues?.amp||12);
-   const L=72+length*.89,a=angle*Math.PI/180*Math.cos(2*Math.PI*t/period(length,angle));
-   return {x:W*.45+L*Math.sin(a),y:36+L*Math.cos(a)};
-  };
-  if(!halo.dataset.v020Active){
-   halo.dataset.v020Active='1';let drag=null;
-   halo.addEventListener('pointerdown',e=>{
-    const sl=app.querySelector('#rng-length, #rng-bridgeLength');if(!sl||e.button>0)return;
-    e.preventDefault();e.stopPropagation();
-    drag={y:e.clientY,start:Number(sl.value),id:e.pointerId};halo.classList.add('dragging');
-    try{halo.setPointerCapture(e.pointerId)}catch(_){}
+  if(!canvas.dataset.v020Direct){
+   canvas.dataset.v020Direct='1';let drag=null;
+   canvas.addEventListener('pointerdown',e=>{
+    if(e.button>0||!hitPendulum(e))return;
+    const key=app.querySelector('#stageSelect')?.value==='s07'?'bridgeLength':'length';
+    const el=app.querySelector('#rng-'+key);if(!el)return;
+    e.preventDefault();drag={pointer:e.pointerId,y:e.clientY,start:Number(el.value),key};
+    canvas.classList.add('v020-grabbing');
+    try{canvas.setPointerCapture(e.pointerId)}catch{}
    });
-   halo.addEventListener('pointermove',e=>{
-    if(!drag||drag.id!==e.pointerId)return;
-    e.preventDefault();const sl=app.querySelector('#rng-length, #rng-bridgeLength');if(!sl)return;
-    const rect=canvas.getBoundingClientRect();
-    const ratio=canvas.height/Math.max(rect.height,1);
-    const change=Math.round((e.clientY-drag.y)*ratio/3.1);
-    updateLength(sl,drag.start+change);
+   canvas.addEventListener('pointermove',e=>{
+    if(!drag||drag.pointer!==e.pointerId)return;
+    const el=app.querySelector('#rng-'+drag.key);if(!el)return;
+    e.preventDefault();
+    // Increase length when dragging the bob down; scale gesture to screen size.
+    const change=Math.round((e.clientY-drag.y)/Math.max(2,canvas.getBoundingClientRect().height/135));
+    updateLength(el,drag.start+change);
    });
-   for(const name of ['pointerup','pointercancel','lostpointercapture'])halo.addEventListener(name,()=>{drag=null;halo.classList.remove('dragging')});
+   const finish=e=>{if(drag&&e.pointerId!==undefined&&e.pointerId!==drag.pointer)return;drag=null;canvas.classList.remove('v020-grabbing')};
+   ['pointerup','pointercancel','lostpointercapture'].forEach(event=>canvas.addEventListener(event,finish));
   }
-  // The canvas itself is observational. Only the visible handle or +/- buttons change length.
-  canvas.style.touchAction='pan-y';canvas.style.cursor='default';
-  if(!canvas.dataset.v020Direct){canvas.dataset.v020Direct='1';}
-  if(!halo.dataset.v020Tracking){
-   halo.dataset.v020Tracking='1';let frame=0;
-   const follow=()=>{
-    if(!halo.isConnected)return;
-    if(slider && !halo.hidden && ++frame%2===0){
-     const point=bobPosition(),rect=canvas.getBoundingClientRect(),parent=scene.getBoundingClientRect();
-     halo.style.left=(rect.left-parent.left+point.x*rect.width/canvas.width)+'px';
-     halo.style.top=(rect.top-parent.top+point.y*rect.height/canvas.height)+'px';
-    }
-    requestAnimationFrame(follow);
-   };requestAnimationFrame(follow);
-  }
+  // The label never implies that a noninteractive science illustration can be dragged.
+  const label=scene.querySelector('.v020-world-label');
+  if(label)label.textContent=selectedRange?'✦ 動くおもりをドラッグ':'✧ 装置を観察';
   if(viewport&&!viewport.querySelector('.v020-pan-controls')){
    const bar=document.createElement('div');bar.className='v020-pan-controls';
    bar.innerHTML='<span class="v020-pan-tip">視点</span><button type="button" data-pan="-1" aria-label="左側を見渡す">◀</button><button type="button" data-pan="0" aria-label="正面を見る">◎</button><button type="button" data-pan="1" aria-label="右側を見渡す">▶</button>';
@@ -5518,33 +5513,15 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
 })();
 </script>
 
-
-<style id="real-device-visual-v020">
-/* Stage backdrops are scenery, not simulated devices. Crop below the decorative static pendulum. */
-body[data-scene="world"] .stage-viewport:before{
- background-position:center,center bottom!important;
- background-size:cover,cover!important;
- filter:saturate(.90) brightness(.78)!important;
-}
-@media(max-width:760px){body[data-scene="world"] .stage-viewport:before{
- background-size:cover,auto 212%!important;
- background-position:center, 10% 100%!important;
-}}
-.v020-grab-halo{position:absolute;z-index:19;width:62px;height:62px;
- display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);
- border:2px dashed #fff1b8;outline:1px solid #1d4150a5;outline-offset:-6px;
- border-radius:50%;background:radial-gradient(circle,#e1fda511 14%,#ffdfaa18 50%,#121b2b22 74%);
- box-shadow:0 0 19px #ffe8a455, inset 0 0 12px #ffd9963b;
- color:#fff4cc;font-size:18px;font-weight:bold;text-shadow:0 2px 4px #000;
- cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;
- transition:box-shadow .15s,background .15s;
-}
-.v020-grab-halo[hidden]{display:none!important}
-.v020-grab-halo.dragging{cursor:grabbing;box-shadow:0 0 31px 8px #ffdc8a9c;
- background:radial-gradient(circle,#ffe5a644,#ffd68c1b 64%,#0000 85%)}
-.v020-grab-halo:focus-visible{outline:3px solid #b7ffe7;outline-offset:3px}
-@media(max-width:760px){.v020-grab-halo{width:58px;height:58px;font-size:18px}}
-@media(prefers-reduced-motion:reduce){.v020-grab-halo{transition:none}}
+<style id="v020-hotspot-qa">
+/* Keep the scientific model in front of the scenic artwork. */
+body[data-scene="world"] .stage-viewport:before{background-color:#061422;filter:saturate(.90) brightness(.80)}
+body[data-scene="world"] .stage-scene .visual-frame{outline:1px solid #cbece82e;outline-offset:2px}
+body[data-scene="world"] .stage-scene .visual-frame.scene-feature{overflow:visible!important;}
+body[data-scene="world"] .stage-scene .v020-direct-panel{z-index:25;box-shadow:0 9px 24px #000c,0 0 0 1px #ffdf9077;}
+.v020-direct-panel button{touch-action:manipulation}
+.v020-direct-panel output{font-variant-numeric:tabular-nums}
+@media(max-width:760px){body[data-scene="world"] .stage-viewport:before{background-position:center,left center!important}}
 </style>
 
 </body></html>
