@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>フリコ・クエスト v0.20｜天空時計塔</title>
+<title>フリコ・クエスト｜振り子と振動</title>
 <style>
 :root{--bg:#0b1528;--panel:#111e36;--panel2:#182a46;--ink:#f2f6ff;--sub:#b0c6e6;--line:#344862;--cyan:#64dfeb;--amber:#ffcb77;--green:#86e3a7;--pink:#f7a6c0;--round:22px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;background:radial-gradient(circle at 80% -100px,#1b4770 0,transparent 31%),radial-gradient(circle at 9% 18%,#2d244b 0,transparent 38%),var(--bg);line-height:1.6;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--cyan)}
@@ -394,7 +394,7 @@ body[data-scene="world"] .stage-scene canvas{mask-image:linear-gradient(to right
   <p class="preview-alert"><strong>操作できないとき：</strong>HTMLファイルのプレビューではなく、JavaScriptを動かせるSafariなどのブラウザで開いてください。これまでの21ステージとクイズはファイル内に収録されています。</p>
   <p class="preview-hint">この案内が表示されたままなら、ゲーム本体のスクリプトが実行されていません。</p>
 </section>
-</main><footer class="footer">授業用の試作版 v0.18（ビジュアル・観察演出強化）。効果音は初期設定でOFF。波形・音の実験では再生ボタンから試聴できます。振り子は単振り子近似（大きな角度では補正）、音速は教材に示された代表値を使っています。音の反射迷宮は進路を単純化した模式図です。</footer>
+</main><footer class="footer">授業用の試作版 v0.20（ビジュアル・観察演出強化）。効果音は初期設定でOFF。波形・音の実験では再生ボタンから試聴できます。振り子は単振り子近似（大きな角度では補正）、音速は教材に示された代表値を使っています。音の反射迷宮は進路を単純化した模式図です。</footer>
 </div>
 <noscript><p style="padding:24px;background:#fff3cc;color:#202020">JavaScriptが無効です。ブラウザでJavaScriptを有効にして開いてください。</p></noscript>
 <div id="questFxLayer" class="fx-host" aria-hidden="true"></div>
@@ -1558,7 +1558,7 @@ const R=()=>Math.PI/180;
 function label(ctx,text,x,y,color='#e7f8ff',size=15){ctx.fillStyle=color;ctx.font=`700 ${size}px sans-serif`;ctx.fillText(text,x,y)}
 function line(ctx,x1,y1,x2,y2,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
 function background(ctx,W,H,t){ctx.clearRect(0,0,W,H);let grd=ctx.createLinearGradient(0,0,W,H);grd.addColorStop(0,'#0c2a42');grd.addColorStop(1,'#192c49');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#5483a31e';ctx.lineWidth=1;for(let i=0;i<W;i+=44){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}for(let j=0;j<H;j+=44){ctx.beginPath();ctx.moveTo(0,j);ctx.lineTo(W,j);ctx.stroke()}for(let k=0;k<12;k++){let x=(k*101+27)%W, y=(k*63+24)%H;ctx.fillStyle=k%3?'#92ccdb50':'#ffcb7766';ctx.fillRect(x,y,2,2);}}
-function drawPendulum(canvas,t,values,mode='pendulum',target=null){if(!canvas)return;let ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;if(mode==='rhythm'&&W<700){mobileRhythm(ctx,t,values);return;}if(mode==='rhythm')drawClockworkBackdrop(ctx,W,H,t);else background(ctx,W,H,t);let length=values.length??60,amp=values.amp??12,mass=values.mass??20;const Lpix=72+length*.89,cy=36,cx=W*.45,T=period(length,amp);
+function drawPendulum(canvas,t,values,mode='pendulum',target=null){if(!canvas)return;let ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;if(mode==='rhythm'&&W<700){mobileRhythm(ctx,t,values);return;}if(mode==='rhythm')drawClockworkBackdrop(ctx,W,H,t);else background(ctx,W,H,t);let length=values.length??60,amp=values.amp??12,mass=values.mass??20;const tall=(mode==='pendulum'&&H>=500),Lpix=tall?118+length*1.5:72+length*.89,cy=tall?70:36,cx=W*.45,T=period(length,amp);
  const displayAmplitude=mode==='rhythm'?6+Math.min(4,state.rhythmHit)*4:amp;
  const angle=displayAmplitude*R()*Math.cos(2*Math.PI*t/T);
  if(mode==='rhythm'){
@@ -5044,7 +5044,7 @@ function tower(c,t,kind){
    if(zone)bloom(c,211,330,90,'#b1ffe0',.52);
    foot(c,`タイミング ${state.rhythmHit}/4`,zone?'● 中央通過！ 押すタイミング':'● 振れ幅の増加を見つけよう',zone);
   }else{
-   pend(c,phase,175,114,165+(state.bridgeLength-60)*.6,a,true,null);
+   pend(c,phase,175,114,220,a,true,null);
    const age=boss?t-(bb.gearPulseTime??-100):t-state.bridgePulseTime;
    movement(c,(boss?(bb.phase===2?t*.52:bb.hits*.68):state.bridgeHits*.66)+Math.max(0,Math.min(1,age))*.4,449,199,lit);
    if(!boss)bridge(c,state.bridgeHits);
@@ -5352,9 +5352,11 @@ body[data-scene="map"] .story-hero{
  background-size:cover,cover!important;
 }
 body[data-scene="world"] .stage-viewport:before{
- background-image:linear-gradient(180deg,#041224ba 0%,#081b2c7a 35%,#07182ac1 75%,#040d1bed),var(--v020-walkways)!important;
- background-size:cover,auto 205%!important;
- background-position:center,calc(12% + var(--stage-cam-x,0px)) calc(52% + var(--stage-cam-y,0px))!important;
+ /* Use the LOWER-LEFT architectural view, away from the painted pendulum.
+    The working pendulum must be the only scientific instrument in focus. */
+ background-image:linear-gradient(180deg,#041224d5 0%,#091b2a70 35%,#07182a95 75%,#040d1beb),var(--v020-walkways)!important;
+ background-size:cover,auto 195%!important;
+ background-position:center,calc(0% + var(--stage-cam-x,0px)) calc(100% + var(--stage-cam-y,0px))!important;
  background-repeat:no-repeat!important;
  transition:background-position .45s ease-out;
 }
@@ -5365,8 +5367,7 @@ body[data-scene="world"] .stage-scene .visual-frame{
  box-shadow:0 18px 64px #010c19a8,0 0 0 1px #e6c9873b,inset 0 0 28px #74c6e112!important;
  backdrop-filter:blur(5px);
 }
-body[data-scene="world"] .stage-scene canvas{touch-action:none;cursor:default;}
-body[data-scene="world"] .stage-scene canvas.v020-grabbing{touch-action:none;cursor:grabbing;}
+body[data-scene="world"] .stage-scene canvas{touch-action:none;cursor:grab;}
 body[data-scene="world"] .stage-scene canvas:active{cursor:grabbing}
 body[data-scene="world"] .stage-viewport .v020-ambience{position:absolute;inset:0;pointer-events:none;z-index:1;
  background:radial-gradient(ellipse at 20% 15%,#ffe4a71b 0%,transparent 32%),radial-gradient(ellipse at 82% 62%,#7dc8ff12,transparent 36%);
@@ -5387,16 +5388,23 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
 .hero .v020-world-label{left:10px;right:auto}
 @media(max-width:760px){
  .hero.chronicle-hero{background-position:center,calc(50% + var(--cam-x,0px)) calc(47% + var(--cam-y,0px))!important;}
- body[data-scene="world"] .stage-viewport:before{background-size:cover,auto 205%!important}
+ body[data-scene="world"] .stage-viewport:before{background-size:cover,auto 195%!important}
  body[data-scene="world"] .stage-scene{padding-bottom:145px!important;padding-top:170px!important}
  body[data-scene="world"] .stage-scene .visual-frame{width:min(100%,480px)!important;}
- .v020-world-label{font-size:10px;top:13px;right:10px;max-width:53%;text-align:center}
- .v020-direct-panel{bottom:-47px;font-size:10px;max-width:calc(100vw - 30px);padding:7px 9px}
+ .v020-world-label{font-size:10px;top:13px;right:10px}
+ .v020-direct-panel{bottom:-42px;font-size:10px;max-width:calc(100vw - 35px);padding:5px 8px}
  .v020-direct-panel .v020-drag-label{display:none}
  .v020-pan-controls{right:11px;bottom:153px}
  .v020-pan-controls .v020-pan-tip{display:none}
 }
 @media(prefers-reduced-motion:reduce){.v020-ambience{animation:none!important}.hero.chronicle-hero{transition:none!important}}
+
+/* v0.20 finishing pass — object-first interaction and a clearly separate scenic plate */
+body[data-scene="world"] .stage-scene .visual-frame { border:1px solid #f0d39c8c!important;box-shadow:0 22px 68px #030a1bdd,0 0 0 2px #091d2bd9,inset 0 0 52px #297c9b24!important; }
+body[data-scene="world"] #gameCanvas.v020-grabbing {cursor:grabbing;filter:drop-shadow(0 0 22px #ffdf9277)!important;}
+body[data-scene="world"] #gameCanvas:focus-visible {outline:3px solid #ffdc8f;outline-offset:4px}
+body[data-scene="world"] .v020-direct-panel{box-shadow:0 4px 25px #020b18df,0 0 0 1px #f8d99972}
+@media(max-width:760px){body[data-scene="world"] .stage-scene{padding-top:170px!important;padding-bottom:142px!important;} body[data-scene="world"] .stage-scene .visual-frame{width:min(100%,520px)!important} body[data-scene="world"] .v020-direct-panel{bottom:-40px}}
 </style>
 
 <script id="cinematic-interaction-v020">
@@ -5426,73 +5434,49 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
   }
   const viewport=scene.closest('.stage-viewport');
   if(viewport&&!viewport.querySelector('.v020-ambience')){const amb=document.createElement('div');amb.className='v020-ambience';viewport.prepend(amb)}
-  const stageId=app.querySelector('#stageSelect')?.value || '';
-  // Only stages with a physical, adjustable pendulum show direct controls.
-  // Other mini-games retain their original tap and control semantics.
-  const rangeId=stageId==='s07'?'bridgeLength':stageId==='s01'?'length':null;
-  const selectedRange=rangeId?app.querySelector('#rng-'+rangeId):null;
   let d=scene.querySelector('.v020-direct-panel');
-  if(!d){
-   d=document.createElement('div');d.className='v020-direct-panel';
-   d.innerHTML='<span class="v020-drag-label">振り子をつかんで上下に</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';
-   scene.append(d);
+  if(!d){d=document.createElement('div');d.className='v020-direct-panel';d.innerHTML='<span class="v020-drag-label">↕ 指で振り子を上下に</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';scene.append(d);
    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    const key=app.querySelector('#stageSelect')?.value==='s07'?'bridgeLength':'length';
-    const el=app.querySelector('#rng-'+key);if(!el)return;
-    updateLength(el,Number(el.value)+(b.dataset.v020==='short'?-5:5));
+    const slider=app.querySelector('#rng-length');if(!slider)return;
+    const dir=b.dataset.v020==='short'?-1:1;updateLength(slider,Number(slider.value)+dir*5);
    }));
   }
-  d.hidden=!selectedRange;
-  if(selectedRange)d.querySelector('output').textContent=selectedRange.value+'cm';
-  // Position test: only the moving bob or the connecting rod can be grabbed.
-  // Decorative scenery, text, and empty canvas are NOT interactive.
-  function hitPendulum(e){
-   const key=app.querySelector('#stageSelect')?.value;
-   const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return false;
-   const scale=Math.min(r.width/canvas.width,r.height/canvas.height);
-   const x=(e.clientX-r.left-(r.width-canvas.width*scale)/2)/scale;
-   const y=(e.clientY-r.top-(r.height-canvas.height*scale)/2)/scale;
-   let cx,cy,bx,by,tolerance;
-   if(key==='s01'){
-    const len=Number(app.querySelector('#rng-length')?.value||60);
-    const a=(state.pValues?.amp||12)*Math.PI/180*Math.cos(2*Math.PI*(performance.now()/1000)/period(len,state.pValues?.amp||12));
-    const L=72+len*.89;cx=canvas.width*.45;cy=36;bx=cx+L*Math.sin(a);by=cy+L*Math.cos(a);tolerance=Math.max(22,canvas.width*.040);
-   }else if(key==='s07'){
-    const kx=canvas.width/560,ky=canvas.height/470;
-    const len=Number(app.querySelector('#rng-bridgeLength')?.value||70);
-    const T=period(len,10),t=state.bridgeReady?(performance.now()/1000-state.bridgeStart):performance.now()/1000;
-    const ang=.35*Math.cos((2*Math.PI*t/T));
-    const L=165+(len-60)*.6;cx=175*kx;cy=114*ky;bx=(175+L*Math.sin(ang))*kx;by=(114+L*Math.cos(ang))*ky;tolerance=Math.max(27,canvas.width*.052);
-   }else return false;
-   const ux=bx-cx,uy=by-cy,vx=x-cx,vy=y-cy,denom=ux*ux+uy*uy;
-   if(!denom)return false;
-   const t=Math.max(.18,Math.min(1,(vx*ux+vy*uy)/denom));
-   return Math.hypot(x-(cx+t*ux),y-(cy+t*uy))<=tolerance;
+  const slider=app.querySelector('#rng-length');
+  d.hidden=!slider;
+  if(slider){
+   d.querySelector('output').textContent=slider.value+'cm';
+   d.querySelector('.v020-drag-label').textContent='↕ おもりに触れて長さを調整';
+   // Increase the actual drawing surface on phones; this is not a CSS-stretched drawing.
+   if(matchMedia('(max-width:760px)').matches && canvas.height<500)canvas.height=520;
   }
-  if(!canvas.dataset.v020Direct){
-   canvas.dataset.v020Direct='1';let drag=null;
-   canvas.addEventListener('pointerdown',e=>{
-    if(e.button>0||!hitPendulum(e))return;
-    const key=app.querySelector('#stageSelect')?.value==='s07'?'bridgeLength':'length';
-    const el=app.querySelector('#rng-'+key);if(!el)return;
-    e.preventDefault();drag={pointer:e.pointerId,y:e.clientY,start:Number(el.value),key};
+  // Install only on the current canvas; other experiments preserve their own controls.
+  if(!canvas.dataset.v020Direct){canvas.dataset.v020Direct='1';
+   let drag=null;
+   function hitBob(e,sl){
+    const r=canvas.getBoundingClientRect(),px=(e.clientX-r.left)*canvas.width/r.width,py=(e.clientY-r.top)*canvas.height/r.height;
+    const L=Number(sl.value),amp=Number(app.querySelector('#rng-amp')?.value??12);
+    const T=2*Math.PI*Math.sqrt((L/100)/9.81),phase=2*Math.PI*(performance.now()/1000)/T;
+    const a=amp*Math.PI/180*Math.cos(phase),lp=canvas.height>=500?118+L*1.5:72+L*.89;
+    const bx=canvas.width*.45+lp*Math.sin(a),by=(canvas.height>=500?70:36)+lp*Math.cos(a);
+    // 35 CSS-pixel touch radius around the MOVING bob, not the whole picture.
+    const radius=35*canvas.width/Math.max(1,r.width);
+    return Math.hypot(px-bx,py-by)<=radius;
+   }
+   canvas.addEventListener('pointerdown',e=>{const sl=app.querySelector('#rng-length');
+    if(!sl||e.button>0||!hitBob(e,sl))return;
+    drag={id:e.pointerId,y:e.clientY,start:Number(sl.value)};
     canvas.classList.add('v020-grabbing');
-    try{canvas.setPointerCapture(e.pointerId)}catch{}
-   });
-   canvas.addEventListener('pointermove',e=>{
-    if(!drag||drag.pointer!==e.pointerId)return;
-    const el=app.querySelector('#rng-'+drag.key);if(!el)return;
+    try{canvas.setPointerCapture(e.pointerId)}catch{};
     e.preventDefault();
-    // Increase length when dragging the bob down; scale gesture to screen size.
-    const change=Math.round((e.clientY-drag.y)/Math.max(2,canvas.getBoundingClientRect().height/135));
-    updateLength(el,drag.start+change);
    });
-   const finish=e=>{if(drag&&e.pointerId!==undefined&&e.pointerId!==drag.pointer)return;drag=null;canvas.classList.remove('v020-grabbing')};
-   ['pointerup','pointercancel','lostpointercapture'].forEach(event=>canvas.addEventListener(event,finish));
+   canvas.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;
+    const sl=app.querySelector('#rng-length');if(!sl)return;
+    const change=Math.round((e.clientY-drag.y)/2.1);
+    updateLength(sl,drag.start+change);
+    e.preventDefault();
+   });
+   for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,()=>{drag=null;canvas.classList.remove('v020-grabbing')});
   }
-  // The label never implies that a noninteractive science illustration can be dragged.
-  const label=scene.querySelector('.v020-world-label');
-  if(label)label.textContent=selectedRange?'✦ 動くおもりをドラッグ':'✧ 装置を観察';
   if(viewport&&!viewport.querySelector('.v020-pan-controls')){
    const bar=document.createElement('div');bar.className='v020-pan-controls';
    bar.innerHTML='<span class="v020-pan-tip">視点</span><button type="button" data-pan="-1" aria-label="左側を見渡す">◀</button><button type="button" data-pan="0" aria-label="正面を見る">◎</button><button type="button" data-pan="1" aria-label="右側を見渡す">▶</button>';
@@ -5512,16 +5496,5 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
  refresh();
 })();
 </script>
-
-<style id="v020-hotspot-qa">
-/* Keep the scientific model in front of the scenic artwork. */
-body[data-scene="world"] .stage-viewport:before{background-color:#061422;filter:saturate(.90) brightness(.80)}
-body[data-scene="world"] .stage-scene .visual-frame{outline:1px solid #cbece82e;outline-offset:2px}
-body[data-scene="world"] .stage-scene .visual-frame.scene-feature{overflow:visible!important;}
-body[data-scene="world"] .stage-scene .v020-direct-panel{z-index:25;box-shadow:0 9px 24px #000c,0 0 0 1px #ffdf9077;}
-.v020-direct-panel button{touch-action:manipulation}
-.v020-direct-panel output{font-variant-numeric:tabular-nums}
-@media(max-width:760px){body[data-scene="world"] .stage-viewport:before{background-position:center,left center!important}}
-</style>
 
 </body></html>
