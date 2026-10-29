@@ -4876,7 +4876,10 @@ function movement(c,t,x,y,lit){
   if(lit){bloom(c,x,y,91,'#d3ffe6',.5);disc(c,x,y+61,4,'#c1ffe0')}
 }
 function bridge(c,n){for(let i=0;i<3;i++){const x=51+i*158,done=i<n;round(c,x,341+(done?0:15),144,27,5,done?'#b9a57b':'#243849',done?'#ffe6b4':'#8d9fab',2);for(const xx of [x+12,x+131])disc(c,xx,355+(done?0:15),3,done?'#fff4de':'#6f8999');}}
-function tower(c,t,kind){setup(c);
+function tower(c,t,kind){
+  // Maintain the cinematic frame aspect ratio on desktop; never stretch physics drawings.
+  if(c.canvas.width>=700 && c.canvas.height < c.canvas.width*0.80) c.canvas.height=Math.round(c.canvas.width*470/560);
+  setup(c);
   const boss=kind==='boss',resonance=kind==='rhythm',bb=boss?clockBoss:null;
   const T=boss?period(bb.length,bb.angle):resonance?period(60,12):period(state.bridgeLength,10);
   const phaseT=(boss&&bb.phase===1)?t-bb.startTime:(kind==='bridge'&&state.bridgeReady)?t-state.bridgeStart:t;
