@@ -1628,4 +1628,162 @@ catch(e){if(ms-lastRender>5000){console.error('描画エラー',e);lastRender=ms
 
 render();requestAnimationFrame(animate);
 </script>
+<script>
+/* Furiko Quest v0.14 — 2.5D art pass. Physics and game decisions unchanged. */
+(function(){
+'use strict';
+const TWO=Math.PI*2;
+const cache=new Map();
+function rgba(ctx,x0,y0,x1,y1,stops){let g=ctx.createLinearGradient(x0,y0,x1,y1);for(const s of stops)g.addColorStop(s[0],s[1]);return g}
+function disk(c,x,y,r,fill,stroke=null,width=1){c.beginPath();c.arc(x,y,r,0,TWO);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke()}}
+function polygon(c,points,fill,stroke=null,width=1){c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke()}}
+function rounded(c,x,y,w,h,r,fill,stroke=null,lw=1){c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=lw;c.stroke()}}
+function beam(c,x1,y1,x2,y2,width,fill,edge){c.save();c.lineCap='round';c.strokeStyle='#05131ecc';c.lineWidth=width+8;c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.strokeStyle=fill;c.lineWidth=width;c.stroke();c.strokeStyle=edge;c.lineWidth=Math.max(1.3,width*.15);c.beginPath();c.moveTo(x1-1,y1-1);c.lineTo(x2-1,y2-1);c.stroke();c.restore()}
+function rivet(c,x,y,r=4){disk(c,x,y,r,rgba(c,x-r,y-r,x+r,y+r,[[0,'#fff4c8'],[.32,'#a69e8b'],[1,'#263a45']]),'#1a303e',1);c.strokeStyle='#25313b';c.lineWidth=1.2;c.beginPath();c.moveTo(x-r*.5,y+r*.4);c.lineTo(x+r*.5,y-r*.4);c.stroke()}
+function text(c,t,x,y,size=19,color='#fff4cf',align='left'){c.save();c.font=`800 ${size}px system-ui,'Noto Sans JP',sans-serif`;c.textAlign=align;c.shadowColor='#071522';c.shadowBlur=5;c.fillStyle=color;c.fillText(t,x,y);c.restore()}
+function rad(c,x,y,r,color){let g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'#00000000');return g}
+function illumination(c,x,y,r,color='#ffcb83',alpha=.4){c.save();c.globalAlpha=alpha;c.fillStyle=rad(c,x,y,r,color);c.fillRect(x-r,y-r,r*2,r*2);c.restore()}
+function actorBob(c,x,y,r){c.save();c.shadowColor='#020d16';c.shadowBlur=18;c.shadowOffsetY=10;const g=c.createRadialGradient(x-r*.45,y-r*.5,2,x+r*.17,y+r*.17,r*1.35);g.addColorStop(0,'#fff8e8');g.addColorStop(.17,'#f4dfb8');g.addColorStop(.42,'#b9ad97');g.addColorStop(.61,'#687987');g.addColorStop(.84,'#293a46');g.addColorStop(1,'#102430');disk(c,x,y,r,g,'#efdbad',2);c.shadowBlur=0;c.shadowOffsetY=0;c.lineWidth=2;c.strokeStyle='#fff2d4c9';c.beginPath();c.arc(x,y,r*.83,3.5,5.1);c.stroke();c.fillStyle='#fff8dbcd';c.beginPath();c.ellipse(x-r*.36,y-r*.43,r*.22,r*.105,-.65,0,TWO);c.fill();rounded(c,x-6,y-r-8,12,10,2,'#b6ab93','#344752');rivet(c,x,y-r-4,3);c.restore()}
+function weight(c,x0,y0,x,y,r){const sh=c.createLinearGradient(x0-5,y0,x0+7,y0);sh.addColorStop(0,'#243745');sh.addColorStop(.35,'#f7e2b1');sh.addColorStop(.62,'#a7a8a2');sh.addColorStop(1,'#384c55');beam(c,x0,y0,x,y,6,sh,'#fff1c988');actorBob(c,x,y,r)}
+function apparatusMount(c,x,y){const m=rgba(c,x-74,y-21,x+74,y+8,[[0,'#253746'],[.15,'#8e9290'],[.35,'#c8bda2'],[.62,'#455967'],[.83,'#a7a292'],[1,'#182c38']]);rounded(c,x-85,y-18,170,22,6,m,'#d9c6a3',2);for(const xx of [x-66,x-43,x+44,x+68])rivet(c,xx,y-8,4);disk(c,x,y,16,rgba(c,x-12,y-12,x+14,y+14,[[0,'#fff4cb'],[.4,'#a0a5a2'],[1,'#3a5362']]),'#ead6a4',2);rivet(c,x,y,6)}
+function ring(c,x,y,r,alpha=.7){c.save();c.strokeStyle=`rgba(255,229,165,${alpha})`;c.lineWidth=2.5;c.beginPath();c.arc(x,y,r,0,TWO);c.stroke();c.restore()}
+function actionCue(c,x,y,t,active){if(!active)return;let p=reduceMotion()?0:(.5+.5*Math.sin(t*7));c.save();c.strokeStyle='#b7ffe4';c.lineWidth=3;c.shadowColor='#64ffd5';c.shadowBlur=12;c.globalAlpha=.75+.25*p;c.beginPath();c.arc(x,y,20+p*12,0,TWO);c.stroke();c.restore()}
+function mist(c,x,y,w,h,alpha=.25){c.save();c.globalAlpha=alpha;c.fillStyle=rgba(c,0,y,0,y+h,[[0,'#a3b6aa00'],[.5,'#b7bbaa3d'],[1,'#a0b0b500']]);c.fillRect(x,y,w,h);c.restore()}
+// Deterministic textures; created once and reused to keep 60 FPS animation lightweight.
+function randomAt(n){let k=Math.sin(n*65.718+12.21)*43758.5453;return k-Math.floor(k)}
+function paintTower(c,W,H){
+ c.fillStyle=rgba(c,0,0,W,H,[[0,'#0a1c2b'],[.3,'#183447'],[.68,'#233747'],[1,'#071725']]);c.fillRect(0,0,W,H);
+ for(let row=0;row<12;row++)for(let col=-1;col<10;col++){let x=col*82+(row%2?41:0),y=7+row*43;let z=randomAt(row*23+col*7);c.fillStyle=z>.55?'#52636b18':'#081d281a';rounded(c,x+2,y+2,78,40,2,c.fillStyle);c.strokeStyle='#a8aa9617';c.lineWidth=1;c.strokeRect(x,y,81,42);for(let j=0;j<6;j++){const px=x+randomAt(row*171+col*19+j)*79,py=y+randomAt(row*89+col*11+j)*38;disk(c,px,py,randomAt(row*9+j)*.9+.4,'#cabfa625')}}
+ // Three recesses, cold daylight and cast shadows
+ for(let n=0;n<3;n++){let x=110+n*175,y=104,w=113,h=260;
+  c.save();c.beginPath();c.moveTo(x-w/2,y+h);c.lineTo(x-w/2,y+58);c.arc(x,y+58,w/2,Math.PI,0);c.lineTo(x+w/2,y+h);c.closePath();c.fillStyle='#081e2b';c.fill();c.clip();
+  c.fillStyle=rgba(c,x,y,x+w*.2,y+h,[[0,'#8fbbca'],[.5,'#3e6b80'],[1,'#122b3d']]);c.fillRect(x-w/2,y,w,h);
+  polygon(c,[[x-w/2,y+52],[x+w/2,y+52],[x+w/2,y+h],[x-w/2,y+h]],'rgba(17,49,64,.23)');
+  c.strokeStyle='#d3d5b17a';c.lineWidth=3;c.beginPath();c.moveTo(x,y);c.lineTo(x,y+h);c.stroke();
+  for(let k=0;k<4;k++){c.strokeStyle='#d8ead51b';c.lineWidth=2;c.beginPath();c.moveTo(x-w/2+k*31,y+65);c.lineTo(x-w/2+k*27,y+h);c.stroke()}
+  c.restore();c.strokeStyle='#75858b';c.lineWidth=12;c.beginPath();c.moveTo(x-w/2-2,y+h);c.lineTo(x-w/2-2,y+58);c.arc(x,y+58,w/2+2,Math.PI,0);c.lineTo(x+w/2+2,y+h);c.stroke();c.strokeStyle='#edd7aa75';c.lineWidth=2;c.stroke();
+  illumination(c,x,y+85,140,'#8bb8d8',.14);
+ }
+ // Massive riveted iron columns, functional industrial framework
+ for(const x of [0,W-35]){c.fillStyle=rgba(c,x,0,x+35,0,[[0,'#0c202e'],[.27,'#77868a'],[.47,'#5d6870'],[.85,'#1d3541'],[1,'#0b1b2b']]);c.fillRect(x,0,35,H);for(let y=65;y<H;y+=80){c.fillStyle='#58626a';c.fillRect(x-5,y,45,12);c.fillStyle='#ebd9a44d';c.fillRect(x-5,y,45,2);rivet(c,x+7,y+6,3);rivet(c,x+28,y+6,3)}}
+ // Copper supply conduits, stationary behind the playable mechanics
+ for(const x of [56,W-69]){c.strokeStyle='#061e2b';c.lineWidth=12;c.beginPath();c.moveTo(x,85);c.bezierCurveTo(x-17,210,x+22,297,x,438);c.stroke();c.strokeStyle=rgba(c,x-5,0,x+5,0,[[0,'#5c4533'],[.25,'#c19b69'],[.55,'#f1ce8c'],[1,'#55463a']]);c.lineWidth=7;c.stroke();for(let y=170;y<421;y+=109){rounded(c,x-11,y,21,8,2,'#5a493e','#bd9e79');rivet(c,x,y+4,2.3)}}
+ // tiled cast-iron ground perspective
+ c.fillStyle=rgba(c,0,355,0,H,[[0,'#1c3543'],[.55,'#102633'],[1,'#061521']]);c.fillRect(0,355,W,H-355);
+ c.strokeStyle='#cbb78e53';c.lineWidth=1.3;for(let i=-7;i<=7;i++){c.beginPath();c.moveTo(W*.5+i*13,355);c.lineTo(W*.5+i*76,H);c.stroke()}for(let q=1;q<7;q++){const y=355+Math.pow(q/7,1.35)*(H-355);c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
+ // wheel silhouettes in rear, subdued so learning object remains dominant
+ for(const [x,y,r] of [[82,278,91],[515,300,65]]){c.strokeStyle='#c7a46824';c.lineWidth=8;c.beginPath();c.arc(x,y,r,0,TWO);c.stroke();for(let k=0;k<12;k++){let a=k*TWO/12;c.strokeStyle='#eed5a51c';c.lineWidth=2;c.beginPath();c.moveTo(x+Math.cos(a)*r*.3,y+Math.sin(a)*r*.3);c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r);c.stroke()}}
+ // lower vignette & warm shaft of light
+ c.fillStyle=rad(c,390,169,310,'#e1c4850c');c.fillRect(0,0,W,H);
+ c.fillStyle=rgba(c,0,0,0,H,[[0,'#06152255'],[.3,'#00000000'],[.8,'#00000000'],[1,'#030f1a88']]);c.fillRect(0,0,W,H);
+}
+function paintCanyon(c,W,H){
+ c.fillStyle=rgba(c,0,0,W,H,[[0,'#14293e'],[.45,'#3b6076'],[1,'#0c3443']]);c.fillRect(0,0,W,H);
+ disk(c,430,98,90,rad(c,430,98,97,'#e3d1af37'));
+ for(let n=0;n<5;n++){let y=148+n*37;c.fillStyle= n%2?'#35566865':'#3f6d7a65';polygon(c,[[0,y+45],[90,y-15],[205,y+30],[315,y-25],[435,y+24],[560,y-33],[560,H],[0,H]],c.fillStyle)}
+ // rugged strata, light catching only ridges
+ const walls=[[[0,180],[70,196],[112,227],[144,306],[112,470],[0,470]],[[435,147],[474,169],[502,208],[533,290],[560,305],[560,470],[438,470],[416,338]]];
+ for(let q=0;q<walls.length;q++){polygon(c,walls[q],rgba(c,q?416:0,200,q?560:140,390,[[0,'#8da08d'],[.2,'#586c6c'],[.64,'#294c5c'],[1,'#173848']]),'#c8bfa967',2);for(let k=0;k<36;k++){let x=q?(435+randomAt(q*39+k)*124):randomAt(q*39+k)*115;let y=179+randomAt(q*51+k)*280; c.strokeStyle=k%3===0?'#e2ccad6b':'#182e3b86';c.lineWidth=k%4===0?3:1.2;c.beginPath();c.moveTo(x,y);c.lineTo(x+(-1+randomAt(k*14)*2)*18,y+13+randomAt(k*4)*28);c.stroke()}}
+ mist(c,0,244,W,144,.8);mist(c,0,330,W,115,.75);
+ for(let k=0;k<45;k++){let x=randomAt(k*16+3)*W,y=180+randomAt(k*81)*280;c.fillStyle=k%3===0?'#d4ddbf38':'#eff2dd15';disk(c,x,y,k%4===0?2:1,c.fillStyle)}
+ // observation station on near bank
+ rounded(c,42,359,125,15,5,'#25343d','#b5a98c',2);for(const x of [58,149])beam(c,x,369,x-6,443,7,'#6f7372','#c4b5a3');
+}
+function bg(key,W,H){const cacheKey=key+'-'+W+'x'+H;let canvas=cache.get(cacheKey);if(canvas)return canvas;canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const c=canvas.getContext('2d');if(key==='canyon')paintCanyon(c,W,H);else paintTower(c,W,H);cache.set(cacheKey,canvas);return canvas}
+function begin(c,key,title,t){const W=c.canvas.width,H=c.canvas.height;c.drawImage(bg(key,W,H),0,0);if(!reduceMotion())for(let i=0;i<11;i++){let x=(i*123+41+t*(i%2?3:2))%W,y=(i*91+18+t*.9)%355;disk(c,x,y,i%3===0?1.8:.9,i%2?'#ffe9b65c':'#9ecdd34f')}
+ // scene title, integrated brass plaque, not an opaque overlay across the mechanics
+ rounded(c,19,15,W-38,47,8,rgba(c,20,15,W-20,62,[[0,'#081927ee'],[.52,'#123446e5'],[1,'#071827e8']]),'#8b997e88',1.4);c.fillStyle='#e7c77c';c.fillRect(30,59,W-60,2);text(c,title,36,47,26);rivet(c,W-47,38,4);
+}
+function movingBeam(c,t,x,y,lit){illumination(c,x,y,lit?125:75,lit?'#f5dc93':'#bbd4c8',lit?.37:.07);c.save();c.globalAlpha=lit?.25:.1;polygon(c,[[x-28,y-110],[x+42,y-110],[x+95,y+140],[x-109,y+140]],'rgba(255,231,157,.15)');c.restore()}
+function gearbox(c,x,y,t,lit){
+ c.save();c.shadowColor='#020e19';c.shadowBlur=15;c.shadowOffsetY=12;
+ rounded(c,x-98,y-110,190,213,18,rgba(c,x-98,y-110,x+92,y+103,[[0,'#374b58'],[.24,'#1e3542'],[.7,'#0b2232'],[1,'#526977']]),'#b6a17b',3);c.restore();
+ rounded(c,x-83,y-93,161,174,10,'#0b1d2bc9','#bf9f68b3',2);for(const [xx,yy] of [[x-87,y-100],[x+81,y-100],[x-87,y+92],[x+81,y+92]])rivet(c,xx,yy,4);
+ // Under-glass machinery: gears share direction mechanically but are visually distinguished from pendulum
+ drawGear(c,x-24,y-10,48,t,lit);drawGear(c,x+55,y+7,30,-t*48/30,lit);
+ const glass=rgba(c,x-84,y-90,x+78,y+82,[[0,'#d9f7f21e'],[.24,'#ffffff04'],[.65,'#f3d59a07'],[1,'#96bec21b']]);rounded(c,x-76,y-83,147,159,8,glass,'#d4ddd953',1);
+ c.save();c.strokeStyle='#dff9f346';c.lineWidth=3;c.beginPath();c.moveTo(x-66,y-80);c.lineTo(x-24,y-80);c.moveTo(x+61,y-45);c.lineTo(x+61,y-15);c.stroke();c.restore();
+ movingBeam(c,t,x,y,lit);
+}
+function pendulum(c,x0,y0,L,a,t,refAngle=0){const bx=x0+L*Math.sin(a),by=y0+L*Math.cos(a);
+ // ghost baseline arc and real motion mark, both geometric not arbitrary effects
+ c.save();c.strokeStyle='#c9e2ea4e';c.setLineDash([4,9]);c.lineWidth=2;c.beginPath();c.arc(x0,y0,L,Math.PI/2-Math.max(.17,refAngle),Math.PI/2+Math.max(.17,refAngle));c.stroke();c.setLineDash([]);c.restore();
+ illumination(c,bx,by,68,'#f4d89e',.12);weight(c,x0,y0,bx,by,29);apparatusMount(c,x0,y0);
+ return [bx,by];}
+function bottomHud(c,W,y,title,detail,good){rounded(c,23,y,W-46,67,12,rgba(c,0,y,W,y+67,[[0,'#081c2de8'],[.5,'#1b3b49ed'],[1,'#0d2634ee']]),good?'#a4f6d5':'#a5a187',2);text(c,title,41,y+26,20,good?'#b5ffe4':'#ffe4b1');text(c,detail,41,y+54,16,'#e5ebdf')}
+// Stage 07: material depth + mechanism status + linked visual response.
+mobileBridge=function(c,t){const W=c.canvas.width,H=c.canvas.height;begin(c,'tower','2秒のリズム橋',t);
+ const T=period(state.bridgeLength,10),dt=state.bridgeReady?t-state.bridgeStart:t;
+ const phase=2*Math.PI*dt/T,a=.35*Math.cos(phase),x0=171,y0=118,L=187;
+ // bridge segments are physically seen moving into place, not just scoreboard blocks
+ for(let j=0;j<3;j++){let x=48+j*159,y=362+(j<state.bridgeHits?0:11);c.save();c.shadowColor='#010e16';c.shadowBlur=8;c.shadowOffsetY=6;rounded(c,x,y,145,28,7,rgba(c,x,y,x,y+28,[[0,j<state.bridgeHits?'#dfc389':'#657883'],[.55,j<state.bridgeHits?'#9b7a48':'#3b5868'],[1,'#1e3946']]),j<state.bridgeHits?'#ffefc8':'#8cabb8',2);c.restore();for(const xx of [x+14,x+132])rivet(c,xx,y+13,4)}
+ const litAge=t-state.bridgePulseTime,lit=litAge>=0&&litAge<1.1;
+ gearbox(c,424,218,state.bridgeHits*.73+Math.min(1,Math.max(0,litAge))*.56,lit||state.bridgeHits===3);
+ const [bx,by]=pendulum(c,x0,y0,L,a,t,.35);
+ const hot=state.bridgeReady&&Math.abs(Math.sin(phase))>.75;
+ actionCue(c,x0,y0+L,t,hot&&focusEnabled);
+ if(focusEnabled&&hot){text(c,'中央を通過！',64,347,18,'#b4ffe0')}
+ bottomHud(c,W,403,'橋の修理 '+state.bridgeHits+' / 3',state.bridgeReady?(hot?'● いま！ スイッチを押そう':'● おもりが真下に来るのを待とう'):'① 糸の長さを調整して周期を測ろう',hot);
+};
+// Stage 11: scientific amplitude before/after comparison takes priority.
+mobileRhythm=function(c,t,v){const W=c.canvas.width;begin(c,'tower','共振ブランコ',t);
+ const x=278,y=119,L=216,T=period(v.length??60,v.amp??12);
+ const deg=6+Math.min(4,state.rhythmHit)*4;const theta=deg*Math.PI/180;const a=theta*Math.cos(TWO*t/T);
+ // fine brass reticle, 6° baseline vs current driven amplitude
+ c.save();c.strokeStyle='#a0bdd29a';c.lineWidth=3;c.setLineDash([6,8]);c.beginPath();c.arc(x,y,L,Math.PI/2-6*Math.PI/180,Math.PI/2+6*Math.PI/180);c.stroke();c.setLineDash([]);c.strokeStyle='#aaf8d4';c.lineWidth=6;c.shadowColor='#5ff1c4';c.shadowBlur=9;c.beginPath();c.arc(x,y,L,Math.PI/2-theta,Math.PI/2+theta);c.stroke();c.restore();
+ for(let side of [-1,1]){let xx=x+L*Math.sin(side*theta),yy=y+L*Math.cos(theta);disk(c,xx,yy,8,'#b7ffe0','#134d52',2);illumination(c,xx,yy,29,'#84ffe0',.22)}
+ const [bx,by]=pendulum(c,x,y,L,a,t,theta);
+ if(focusEnabled&&state.rhythmHit>0){text(c,'← 広がった揺れ幅 →',W/2,372,19,'#baffdf','center')}
+ const zone=Math.abs(Math.sin(TWO*t/T))>=.89;actionCue(c,x,y+L,t,zone&&focusEnabled);
+ bottomHud(c,W,399,'タイミング '+state.rhythmHit+' / 4',zone?'● いま！ 中央に来た':'● 真ん中に来る瞬間を待とう',zone);
+ // very clear educational legend
+ rounded(c,44,80,472,32,9,'#092634e1','#9cc0c08c');c.save();c.lineWidth=4;c.strokeStyle='#a0bdd2';c.setLineDash([5,5]);c.beginPath();c.moveTo(57,96);c.lineTo(95,96);c.stroke();c.setLineDash([]);c.strokeStyle='#9ef5d4';c.beginPath();c.moveTo(261,96);c.lineTo(301,96);c.stroke();c.restore();text(c,'はじめ',107,103,16);text(c,'いまの揺れ幅',314,103,16);
+};
+mobileEcho=function(c,t){const W=c.canvas.width,H=c.canvas.height;begin(c,'canyon','こだま峡谷',t);
+ const task=ECHO_MISSIONS[Math.min(state.echoRound,ECHO_MISSIONS.length-1)],isEcho=task.mode==='echo';
+ const x1=103,x2=452,y=247;
+ // observation hardware for stationary source and reflective rock face
+ rounded(c,70,293,66,17,4,'#7c8582','#f2d6a1',2);beam(c,86,303,74,355,8,'#9e9c88','#e2cba9');beam(c,119,303,132,355,8,'#9e9c88','#e2cba9');
+ disk(c,x1,y,27,rgba(c,x1-24,y-24,x1+24,y+24,[[0,'#fff0b8'],[.4,'#e1b56d'],[1,'#644b3a']]),'#ffe5b5',3);disk(c,x1,y,10,'#674d3e','#ffe2ae',2);
+ c.save();c.strokeStyle='#ffecd38c';c.lineWidth=2;c.setLineDash([4,7]);c.beginPath();c.moveTo(x1+40,y);c.lineTo(x2-21,y);c.stroke();c.restore();
+ // Propagating sound is a schematic traveling wavefront, explicitly not a light ray
+ const has=state.echoScanned;let dir='';
+ if(has){const q=Math.max(0,(t-state.echoScanStart)*.38)%1,back=isEcho&&q>=.5;const f=isEcho?(back?(1-q)*2:q*2):1-q;const px=x1+(x2-x1)*f;
+  const color=back?'#82f5db':'#ffe0a0';illumination(c,px,y,92,color,.38);
+  c.save();c.strokeStyle=color;c.shadowColor=color;c.shadowBlur=12;c.lineWidth=4;
+  for(let j=0;j<3;j++){c.globalAlpha=1-j*.21;c.beginPath();c.arc(px,y,21+j*20,-1.1,1.1);c.stroke()}c.restore();
+  if(back){illumination(c,x2,y,63,'#a9fff0',.31);dir='↩ 反射して戻る音（復路）'}else dir=isEcho?'→ 壁へ進む音（往路）':'← 雷から観測者への片道';
+ }else dir=isEcho?'▶ 音を発信して反射を観察':'▶ 雷の音が届く様子を観察';
+ text(c,isEcho?'音が壁に当たって戻る':'雷の音は片道だけ',39,92,21,'#fff0bb');
+ rounded(c,371,174,85,145,7,'#74837e7d','#dec9ac66',1.5);for(let j=0;j<12;j++){c.strokeStyle=j%2?'#eee0c66b':'#25485d';c.lineWidth=j%2?2:3;c.beginPath();c.moveTo(380,181+j*12);c.lineTo(445,178+j*12+(j%3));c.stroke()}
+ if(focusEnabled&&has&&isEcho){actionCue(c,x2,y,t,true)}
+ bottomHud(c,W,400,dir,isEcho?'金：往路　　青緑：復路（音の伝わり方の模式図）':'雷：光で見た位置と、音の到着を比べよう',!!has);
+};
+mobileBossClock=function(c,t){const W=c.canvas.width,H=c.canvas.height,b=clockBoss;begin(c,'tower','時計塔の最終修理',t);
+ const T=period(b.length,b.angle),dt=b.phase===1?t-b.startTime:t,a=b.angle*Math.PI/180*Math.cos(TWO*dt/T);
+ const old=t-(b.gearPulseTime??-100),lit=old>=0&&old<1.2,done=b.phase===2;
+ gearbox(c,426,226,done?t*.5:b.hits*.63+Math.min(1,Math.max(0,old))*.5,lit||done);
+ const x=169,y=121,L=206,[bx,by]=pendulum(c,x,y,L,a,t,b.angle*Math.PI/180);
+ const hot=b.phase===1&&Math.abs(Math.sin(TWO*dt/T))>=.78;
+ actionCue(c,x,y+L,t,hot&&focusEnabled);
+ // The escapement is an output/timing regulator, not energy source; label is explicit
+ text(c,'ぜんまい駆動の歯車',326,357,16,'#f2e3bf');
+ const title=b.phase===0?'① 1秒の振り子を作る':b.phase===1?'② 中央でタイミングよく押す':'③ 時計塔が復活！';
+ const desc=b.phase===0?'10往復を測り、糸の長さを調整':b.phase===1?`${hot?'● いま！　':'● 真下を待つ　'}成功 ${b.hits}/3`:'歯車は振り子のリズムで進む';
+ bottomHud(c,W,402,title,desc,hot||done);
+};
+// Desktop graphics receive the same surface polish through the existing detailed base scenes.
+// UI: material hierarchy without sacrificing accessibility.
+const css=document.createElement('style');css.textContent=`
+.visual-frame.scene-feature,.boss-graphic.scene-feature{border-color:#d0af72!important;background:#0a1b2b;box-shadow:0 0 0 1px #74552d,0 12px 34px #010c15b8,inset 0 0 25px #d2b57d13!important;padding:9px}
+.scene-feature canvas{border:1px solid #82765b;border-radius:11px!important;box-shadow:0 10px 24px #030b1680}
+.scene-label{color:#ffe6b1}
+.focus-console{background:linear-gradient(115deg,#3c3228,#173944)!important;border-color:#ba985d!important;box-shadow:inset 3px 0 0 #f0d28d,0 3px 16px #07172770!important}
+.btn.primary{background:linear-gradient(120deg,#f5e1a5,#b8e3d1 58%,#6ec4c6)!important;box-shadow:0 4px 0 #254d55,0 7px 16px #0005}
+.btn.primary:active{transform:translateY(2px);box-shadow:0 2px 0 #254d55}
+@media(prefers-reduced-motion:reduce){.scene-feature canvas{transition:none!important}}
+`;document.head.appendChild(css);
+})();
+
+</script>
 </body></html>
