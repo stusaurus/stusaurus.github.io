@@ -212,8 +212,22 @@
 </head>
 <body>
 <div class="wrap">
-<header class="topbar"><div class="brand"><div class="sigil" aria-hidden="true">◷</div><div><div class="eyebrow">SCIENCE GAME WORLD · EPISODE 01</div><h1>フリコ・クエスト</h1><p>振り子と振動／物理パズル × リズムアクション × キーワードクイズ</p></div></div><div class="status"><span class="pill">★ <strong id="stageCount">0</strong> / 21 ステージ</span><span class="pill">知識 <strong id="quizCount">0</strong> / 49 問</span><span class="pill">ボス <strong id="bossCount">0</strong> / 2</span><button class="sound-switch" id="soundSwitch" type="button" aria-pressed="false" aria-label="演出用の効果音を切り替える">🔇 効果音 OFF<small>授業中は無音で遊べます</small></button></div></header>
-<section class="hero"><div><div class="eyebrow">THE CLOCKTOWER & THE SOUND LAB</div><h2>21ステージから、ひとつの冒険へ。</h2><p>4つのエリアを進み、科学の力で時の街を救おう。装置を動かして法則を発見。ことばの宝物庫では、教材のまとめ49問に対応したクイズに挑戦しよう。</p></div><div class="progress-area"><div class="progress-label"><span>全体の冒険進行度</span><b id="progressText">0%</b></div><div class="bar" role="progressbar" aria-label="冒険進行度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><span id="progressFill"></span></div><p style="font-size:11px;margin-top:8px">※進み具合はこの端末のブラウザ内だけに保存されます。</p></div></section>
+<header class="topbar"><div class="brand"><div class="sigil" aria-hidden="true">◷</div><div><div class="eyebrow">ORIGINAL SCIENCE FANTASY · CHAPTER I</div><h1>フリコ・クエスト</h1><p>振り子と振動 · 科学を武器に進む冒険</p></div></div><div class="status"><span class="pill">★ <strong id="stageCount">0</strong> / 21 ステージ</span><span class="pill">知識 <strong id="quizCount">0</strong> / 49 問</span><span class="pill">ボス <strong id="bossCount">0</strong> / 2</span><button class="sound-switch" id="soundSwitch" type="button" aria-pressed="false" aria-label="演出用の効果音を切り替える">🔇 効果音 OFF<small>授業中は無音で遊べます</small></button></div></header>
+<section class="hero chronicle-hero" aria-label="フリコ・クエストの物語と冒険の進行状況">
+  <div class="hero-text"><div class="hero-chapter"><span class="hero-insignia" aria-hidden="true">✦</span> THE CHRONICLE OF SCIENCE <span class="roman">I</span></div>
+    <div class="hero-rule" aria-hidden="true"><span></span> ✧ <span></span></div>
+    <h2>時を動かせ。<br><em>理を解き明かせ。</em></h2>
+    <p class="hero-intro">止まった時計塔、響かなくなった音の街。<br>振り子と振動の法則を使って、冒険の仕掛けを動かそう。</p>
+    <div class="hero-quests" aria-label="冒険の内容"><span>⚙ 21ステージ</span><span>✦ 2つのボス</span><span>◇ 49問の知識</span></div>
+  </div>
+  <div class="progress-area progress-crest">
+    <div class="progress-orbit" aria-hidden="true"><span class="orbit-center">◈</span></div>
+    <div class="progress-heading">JOURNEY PROGRESS</div>
+    <div class="progress-label"><span>冒険の達成度</span><b id="progressText">0%</b></div>
+    <div class="bar" role="progressbar" aria-label="冒険進行度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><span id="progressFill"></span></div>
+    <p class="progress-note">進行記録は、この端末のブラウザ内に保存されます。</p>
+  </div>
+</section>
 <nav class="tabs" aria-label="ゲームのメニュー"><button class="tab" data-view="map">🗺️ 冒険マップ</button><button class="tab" data-view="world">🗝️ ステージ</button><button class="tab" data-view="boss">🏰 ボスチャレンジ</button><button class="tab" data-view="lab">🔬 じっけんラボ</button><button class="tab" data-view="quiz">📚 ことばクイズ</button><button class="tab" data-view="teacher">📋 先生向け</button></nav>
 <div class="jumpbar" aria-label="新しいアニメーションを直接見る"><strong>👀 今回の見どころを直接開く</strong><div class="jumpbuttons">
 <button type="button" data-quickstage="s07">🌉 07 歯車と橋</button>
@@ -983,8 +997,7 @@ function drawScene(canvas,t,s){
       ctx.strokeStyle='#436780';ctx.lineWidth=1;ctx.strokeRect(x,y-h/2,w,h);
       line(ctx,x,y,x+w,y,'#568298',1);
       ctx.lineWidth=2.8;ctx.strokeStyle=color;ctx.beginPath();
-      const cycles=freq/110, height=Math.min(h*.4,amp*.3);
-      for(let i=0;i<=w;i+=3){const a=2*Math.PI*cycles*(i/w)-t*2.8;const v=y-Math.sin(a)*height;
+      const cycles=freq/110, height=Math.min(h*.4,amp*.3);      for(let i=0;i<=w;i+=3){const a=2*Math.PI*cycles*(i/w)-t*2.8;const v=y-Math.sin(a)*height;
         if(i===0)ctx.moveTo(x+i,v);else ctx.lineTo(x+i,v);
       }
       ctx.stroke();
@@ -997,7 +1010,8 @@ function drawScene(canvas,t,s){
    const round=Math.min(state.echoRound,ECHO_MISSIONS.length-1);
    const task=ECHO_MISSIONS[round];
    const isEcho=task.mode==='echo';
-   // Landscape: layers, mist, cliff and distinct traveling/return colors.   const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#173c62');sky.addColorStop(.65,'#2d6372');sky.addColorStop(1,'#213b4f');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+   // Landscape: layers, mist, cliff and distinct traveling/return colors.
+   const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#173c62');sky.addColorStop(.65,'#2d6372');sky.addColorStop(1,'#213b4f');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
    ctx.fillStyle='#5f91a83b';ctx.beginPath();ctx.arc(W*.72,H*.09,87,0,7);ctx.fill();
    for(let k=0;k<3;k++){ctx.fillStyle=['#1c405e','#24506b','#315b72'][k];ctx.beginPath();ctx.moveTo(0,H*.65+k*19);for(let j=0;j<=W;j+=18)ctx.lineTo(j,H*(.43+k*.07)-22*Math.sin(j*.012+k));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();}
    holoTag(ctx,isEcho?'こだま  /  行きと帰り':'雷  /  音の片道',18,13,{color:'#fce2a5'});
@@ -1982,8 +1996,7 @@ art.src = [
   'wdGgDu7BVqh5FG0M/A17j31B1X2YSR6JbA+CuOPx56paMBgiTcX72P654TrT07c4qa+k1PZ/j+hfq/0diLLIgoovXHaBogoEvhqybm89yDz6',
   'bFhHlrs1HPK1JpfUyzpNoOLF16+Lau6q9qG9Ll/ISKlszl7HFiFLWkmvXmbzWBAfsYQf53OGrSg1HgcH0pYB7RmkxnrPnS0JzKZo9bI8t5t9',
   'eDt5BJKGUBW8u+tUV0YRqphpP6tpyyGE1w1NWYZRBM4jDUiaCcNd0z88QPOzsC1N4qG1hOi+rz7uUgZNntvwOf0SinNp33KqqB2JWm5Xyl/k',
-  'lbBxBErP8zl/7rPmjiNi0q15iy4CRz8IhguSO6it/c4+aOTHTbbFttL3ki6azIh+B4xj/1Jc+4ntHrfPgwd721V2Z0+6r+r/S8NgerlVtyrI',
-  'NaFQsTfsVDMjRD5ZPBwqZaToH1kidyXRssmMw0iL6AuTdtF/2+uA3ROmskyV0KTN8qi7svO0Zkfs12QjQNMhuXg+mnRA6wFm8dAsE/znBOJr',
+  'lbBxBErP8zl/7rPmjiNi0q15iy4CRz8IhguSO6it/c4+aOTHTbbFttL3ki6azIh+B4xj/1Jc+4ntHrfPgwd721V2Z0+6r+r/S8NgerlVtyrI',  'NaFQsTfsVDMjRD5ZPBwqZaToH1kidyXRssmMw0iL6AuTdtF/2+uA3ROmskyV0KTN8qi7svO0Zkfs12QjQNMhuXg+mnRA6wFm8dAsE/znBOJr',
   'cLaVtwRxqe7oheZwP9GC8YNFivtHxQUq/9sCvVyj3n6rlktTGTMudnDKG4sA1cV5MFbVeBDA80KA3KEqSfwCWdaDYl0qA82RrlTjnilm5bhY',
   'imXkqRtVolTdVKY08vARQE334IweFwkmBBalZ5FY38aHvls0lXEZ2N5h1PyqhDEIxiWbAqP4I+CjFhp2l13TnhXPCq/c4EsEWa7E61G3x9lB',
   'sxbVBfCHZMGH6X02LfEfnoCR3BdtJwgO5Xh4a+rAfyj+mIJ2qKVDNsubY3Lb09VXuBcYSjTdhJLr4jxhjRR/AqwxSyA/4dnrWfZEUZfroO1h',
@@ -1996,7 +2009,8 @@ art.src = [
   'EuiG2SKgxC0w0XUQG4X8HBmVjMrDNpg2Wz8d5HBoAb/zpw96fUc1aUN3R52/cJPcCiuC6dvJN+P/OSjINT7NwoKfzhTTETpNTG6+mreG8Clh',
   'oSkeSiDukzWA/4maB3JJms/nAIqCDitCjeLNfUmEAtLuyAzXpb1CFQGx2eHum2c15pjVvfvG2WfqslU9uwHfr8M62WyjA6Quzt6MxubVeY+M',
   'DE6V65qn3Xe4yQeKo7/dqMnwwAchHQwU93r61vkIN9JSphxzgCE56nsxG1JYdcjfk0Mr8kerh+EPf1gZ2dUChnNPowr26raG4qfZ38QYwWqp',
-  '/+PkMXGen20UkfMAs30LcHuGuqO8n34lpVCK5Y09vmqVdya/su/gdPehabH+1GroxR++dsBOZZuPhexuWhvYCGcb1rthh0oU7jL9NEWz6eFO',  'uJQFL4Do45pQIccqeparbfwcA1nm3+euwy+19iYl9u5sex3P5aXo4UsbAhGWQiqcA5SAPV5sJjW5jaJEFQ+C2LSynaKIVxsn4AOGBC0TBvFd',
+  '/+PkMXGen20UkfMAs30LcHuGuqO8n34lpVCK5Y09vmqVdya/su/gdPehabH+1GroxR++dsBOZZuPhexuWhvYCGcb1rthh0oU7jL9NEWz6eFO',
+  'uJQFL4Do45pQIccqeparbfwcA1nm3+euwy+19iYl9u5sex3P5aXo4UsbAhGWQiqcA5SAPV5sJjW5jaJEFQ+C2LSynaKIVxsn4AOGBC0TBvFd',
   'UMzPUrqAFQF+8dDHrrnzbwV+5ZOfjFGImVt35SNWG35TZeJIuwMajqnltlWpoBZvdp+aIj+0N4bPI6BcrqerHGANBAU+ZH4q0KgXxG8ryU1O',
   'xw0agkvUNEPhMdepZstKdW06c4SuTY5mJgt6YSxZQIN8My2pYyETCStGARkdwrPlYbZU0OECMYzgaOy0yroIFaA09jUx/ecYKqR4yrbsAxQp',
   'Atzuz+/t9CA27KoEQ/Z9XYjWdp4PrDglW3iFvb0V6SePIJJ+/gBIzQvnN86uO4c+4X9fP90Kiho6c3ESRjATMcwRMiO4EXh5UzC1gm4fBQW0',
@@ -2981,8 +2995,7 @@ art.src = [
   'TEUpnRuS3oqFIzwB+f4UKzNoSW22nfb4+n9LGus5bn0+g+dZNv+hdYYRjQLILx2uK2A3D9HD1gAQ0SBcf3MYwKS6uNtluXdorfn85lKOvoTt',
   '7P0OH75JoUqwrgmb75iyFigS4BDSU8GviMH0JmG2GIM8lxueXM5unCQvBmtASk9Ex+71vsHBw/vS5jfyiV+HCQ/a6R2jo0MZs8MT+lSxFGJ5',
   'vHs/OM/4qeN6N5kSbBCjleRvVvet9xgiMsHLpH/cG9iAUW/ip5jZ85U7+bMer0IJ8Zgn/z84pBLgKFwZv6ZhJBHHMzJOGcUaU7RYIU1wlQDe',
-  'lI59F3D1wCHHkngth0yUjqIICUSHhkFIh2h4syE+JAcsVhjK078qaOcmZFgWGZEQbFub82KU7CuqOUNG+W/E9Q86FUa80VKIv46kI9vXt5xv',
-  'gmy5hqojdFrHEt0RhxPD/ZlS4j0smZQiAil4tl6tlN5qJlh4pFa13Y9crnEYCBZ8eUtpOovEQVgpfd0yUO8aUmmQ5bl2zpNe/a9csdwNxu5l',
+  'lI59F3D1wCHHkngth0yUjqIICUSHhkFIh2h4syE+JAcsVhjK078qaOcmZFgWGZEQbFub82KU7CuqOUNG+W/E9Q86FUa80VKIv46kI9vXt5xv',  'gmy5hqojdFrHEt0RhxPD/ZlS4j0smZQiAil4tl6tlN5qJlh4pFa13Y9crnEYCBZ8eUtpOovEQVgpfd0yUO8aUmmQ5bl2zpNe/a9csdwNxu5l',
   'NWeDEpLhF1g1amyEC1PUdDN9mSSedWRJKzC23u7wAK96eocINebPJaFf5L9MB6MD7KEvEnu8Tw9YXKm4/y4P9NqaD2j/2fwYZp4WqJHNjZ1c',
   'pOdaqJJnSs7s3b6jGV1J1Fkof5H0JX66bS1swcCZ+40gYBxK1P8lD2VMBD8tBhJVAUU0zY2aVvo5MNp84nRsoTDSCUwi/LEfqXhAcNF+C7nk',
   'Qp2M4Nrd9/bv7wiujTkuB0xZkmVcYraPT7rpPOkgCeorxamiuUqtU8kavK6G+dfsW2BZTgPURvAjZj4xag7xL2Ghc9v/bMgHbR7DZ0LDjP3e',
@@ -2995,7 +3008,8 @@ art.src = [
   'xbUTxRRpPWW42OefII/L05pvDMgUOD8a+G5OGbWUcVpS2J4Yyq3KN75P1jMOpImtX8IP+gCCdCfzMlLQypwVlCO+yAQt+hd5Fr5VaSd7tX7M',
   'cZfCfXwPEPvaWhKJsViflrjrjEbMCdIZqSyj870zE8sSK0Rux0ydVemGx14BjnzPvNdUo65HyHtJRWRbddJsLv4nW8cqsOzqlxftKGEzvFya',
   'QFR/l+GtTm/RnmlGOQz6c5o+QYA4+PAIoGjNHm0W4LNbvBWcogxhCN78xxzjeLUMPFgk2RBz9vrFAS3gW2ICrOgV44i+4ClWnRcMqcI08lQU',
-  'epOkKfhudOMWaNAQ4CaofCfbKWAkz2skL5tGIY0v3UF7wZyEvf88NHDH1P1vvEK4Jph9yV1FZSEwLvfhtLajGoT/kVu24dLwIJU7YLrcZUr4',  'WIWdDn4VoxCQrbQDVwE+1YoBx1jrsBgRNdg6Hxg+W+843elVhuyScLtFAmpZ6+rbqOJFa5fBmaQzD3HlURBZwSD/g6n5XzC7Ic6q3EmHHjiC',
+  'epOkKfhudOMWaNAQ4CaofCfbKWAkz2skL5tGIY0v3UF7wZyEvf88NHDH1P1vvEK4Jph9yV1FZSEwLvfhtLajGoT/kVu24dLwIJU7YLrcZUr4',
+  'WIWdDn4VoxCQrbQDVwE+1YoBx1jrsBgRNdg6Hxg+W+843elVhuyScLtFAmpZ6+rbqOJFa5fBmaQzD3HlURBZwSD/g6n5XzC7Ic6q3EmHHjiC',
   'yx92viTaElq9VCtTXcwfXR9eKSALaQzf5MFEos5bYmnq/bCbH8LlcxDTAaEGt0ksn/9WkikKTh6GxQP/hqK9JP4LJIfXdq1stbLx6zQ9oeWM',
   'FjA46w3JCcAq9OeXRyU/AKXm+d1Z4iRHMPpXsEvwCs8IfOlTZ2neGDB+sBuJFsSZMSb2IqcPjw9iZd0DPk7Vf3IgJkmGUb+ySWYHpIVtLZx5',
   'gfg27o6An39ehy60mF33AmdPptZF38IVOlbkXZjmpJUcpZLwZEeRWYU8B8+wqEIw/qQa2XGj9aZE3qrVBRJbZYrskDdpw0RnYbt+LzeMWFiC',
@@ -3980,8 +3994,7 @@ art.src = [
   'eZ//jq80vfbjjngE4/wU6QJNrAha34Y/Aa2somZgbVx1qJ5bxZt+hJLa/rD9Z3XLXNxXhWd37MeVn9EnsfbEPdycJa6vl1P1E+YtmW84w7XZ',
   'aHbY818uxdO60zOLaUTmB1QgLpl/R8rXpc4PB/ntTq1s10OTrT5kxLryY+EEaEs9PFVrMh9P+aOY7VZCJhwjBAT45jB7MVh8C09yensy0eJe',
   'ipCcHqzrLfFOwjNjhX3hq7NQfybQk+Mr1mw/R9WW7bo015T9RODh/mJcx9DN8CnDR3V2pa+7elX+slXXhCQNrgaJaycGKsiQHWvku22jNo60',
-  '8+GlnkWde8dXxJ4mBa2+EnGq89sldsleDdJ56n3JUezlKkL1/h+664JUWrxacmF+QRBvJ9598GlefdwnPu3dxrnm2rZZsSKlq82nhpWS5jV6',
-  'wjV0EeI/0uq4XlYPcNDFmS9h+PG95rXvYIuemYG9BlAfCM6tHvkjIKzGBPA8gZfpUlOY98MUn+GJ+6I50WSbyYoMSF+d8gLjrbMzxO3h8ksn',
+  '8+GlnkWde8dXxJ4mBa2+EnGq89sldsleDdJ56n3JUezlKkL1/h+664JUWrxacmF+QRBvJ9598GlefdwnPu3dxrnm2rZZsSKlq82nhpWS5jV6',  'wjV0EeI/0uq4XlYPcNDFmS9h+PG95rXvYIuemYG9BlAfCM6tHvkjIKzGBPA8gZfpUlOY98MUn+GJ+6I50WSbyYoMSF+d8gLjrbMzxO3h8ksn',
   'V2BeyW9KNvFBfWxzGPKw+1mIph2Iy9q4+nH3iRaFbgkR+mCRJtLosPlQgByS+fJjDMPyrayem+SY/wDJpdmeufC0NiYSixZsIHtoY7fYeIhG',
   'BDVQQ1jXUF3j6i3YhQXupD+kMsj1irY8yWJcKXsT40A6FEozua4pcy2IuTl531zKQpPlLoaX1lzQjga0nH1CW773ZVooQAgowJTC+0A0Rboz',
   'bhSB8RbGmHYJEGro4P7lkG2AE60UDZJSYRtzpwSB2zQT+HZu76+Opv25/2JEWKkBOuJZQo5SQWO2/kBwD3gM047VHGoLNCpeHsJqyWeP0gIs',
@@ -3994,7 +4007,8 @@ art.src = [
   'Cf24FUuuc+kmPIJ4LGa9f0WXZbwCbi9TwMHSgajsxTJUu1MT1b75ALzQB2bsZhNfYzuBJz9CfPY162dbDdPO3mZnL4Cfw71Fgc/kLjzkbQkB',
   'cXgDc40CHQyLvG54ZLU+3kQbd4exQAZwSqxqQpuOlYXfAxQBE5vketkWSLC6IKL9Dfk4a5kq/RgRFu8Q/3RfmgA2Tfl4GI+Rej9reMFFJbG2',
   'YLOJ7BJXFfQgc7RIDCHCtd3msYVWAUrrIkKcfjIYym/srs6tqoCZzIllz6P958B+fnOIyEXT5e/1LxB1BxjPyCP+dpic0/FjGka12lueV9rw',
-  '2IhOu0Wuat+QR7xHGLGEg9Xvk2ArTdoYCbyQZYiN/rpld2ayQjW4wohD3BIKEpux2TZm0QzXIR7zsysgxKKh6opAsgAQ6oKBFVcUKdsPuW+C',  'AAG2nZrNjFsytfk13wBCWd/HsdFZ1YFHTXh6UZYSTt7Ucn9Pg8l2cEt6OJqD6NN8Lhk3hnuGdYVWd/qXw1aeX/KDVP33pOmG1XBAWA/D8RU0',
+  '2IhOu0Wuat+QR7xHGLGEg9Xvk2ArTdoYCbyQZYiN/rpld2ayQjW4wohD3BIKEpux2TZm0QzXIR7zsysgxKKh6opAsgAQ6oKBFVcUKdsPuW+C',
+  'AAG2nZrNjFsytfk13wBCWd/HsdFZ1YFHTXh6UZYSTt7Ucn9Pg8l2cEt6OJqD6NN8Lhk3hnuGdYVWd/qXw1aeX/KDVP33pOmG1XBAWA/D8RU0',
   'zno8QDB+SSFCrouTbaUWchhAHfqZSI+xNDGlCHaNI2EWWJvzalxcgLoxmPgA1Yo/ap23p6xRkT1yBObGKjouBsM7Z5aCp8tK0b7FA6zh8cJ/',
   'LM06SWV8td/uujFWtQJWHGErzlW8zqBp3vmly4C5GpPUtfGyE3ILVxW+tAG5Eh42DOZRuOdI10mnFjSWZN0pP3r5/PNVQW7K8QVyPAxIyNVK',
   '5IRTXT/L53J2sKyCRtBMX6URJPLA7TuPHmgpGP5equoGVJvfEXh6gcrxYIGENtNgNwD0RQC4Kkr9j59aeYCmm4C2hDD8h4LNH/wQ97XEW0to',
@@ -4935,5 +4949,96 @@ const marked=document.querySelector('.footer');if(marked)marked.textContent=mark
 // Always keep local file playable without extra image request; all artwork is embedded.
 })();
 
+</script>
+
+<script id="rpg-art-direction-v017">
+(function(){
+  'use strict';
+  // Theme only: gameplay, physical constants, state transitions and storage remain untouched.
+  const styleEl=document.createElement('style');
+  styleEl.id='rpg-theme-v017';
+  styleEl.textContent=String.raw`
+/* v0.17 / Celestial Clock Chronicle. Original fantasy-adventure direction. */
+:root{--bg:#070d18;--panel:#101a2b;--panel2:#192538;--ink:#f8f4ea;--sub:#d1d6dc;--line:#6d6758;--cyan:#76dfdc;--amber:#f5d69b;--green:#a1eed6;--round:17px}
+body{background:radial-gradient(ellipse at 20% 0%,#28455b 0%,transparent 36%),radial-gradient(ellipse at 95% 24%,#44372f 0%,transparent 28%),linear-gradient(160deg,#080f1b 0%,#0d1420 56%,#0b141d 100%);color:#f5f1e9}
+body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(0deg,rgba(0,0,0,.25),transparent 25%),radial-gradient(ellipse at center,transparent 24%,rgba(2,7,15,.54) 100%)}
+.wrap{position:relative;z-index:1;max-width:1320px;padding-top:18px}
+.brand{gap:17px}.sigil{position:relative;background:radial-gradient(circle at 36% 28%,#ffefd0 0%,#d0b172 18%,#776342 43%,#181e2b 70%);color:#fff1c3;border:2px solid #e6cc9c;border-radius:50%;width:67px;height:67px;box-shadow:inset 0 0 0 4px #293343,inset 0 0 0 6px #b6a174,0 0 25px #e8bd6940;text-shadow:0 2px 4px #000}
+.sigil:before,.sigil:after{content:"✦";position:absolute;top:50%;left:50%;font-size:9px;color:#f6e2b8;transform:translate(-50%,-50%) translateY(-26px)}
+.sigil:after{transform:translate(-50%,-50%) translateY(26px)}
+.brand h1{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;letter-spacing:.12em;font-size:clamp(24px,3.2vw,37px);color:#fff6de;text-shadow:0 3px 18px #000,0 0 30px #ecbd6f24}
+.brand p{color:#c8d6df}.eyebrow{color:#e4c48b;letter-spacing:.23em;font-family:Georgia,serif}
+.status .pill{background:linear-gradient(145deg,rgba(25,39,56,.91),rgba(12,23,33,.95));border:1px solid #816c4d;color:#e1e8ee;border-radius:9px;box-shadow:inset 0 0 0 1px #c4a97620;padding:10px 13px}
+.status .pill strong{color:#ffe2a8}.sound-switch{border-color:#9b835c!important;background:linear-gradient(135deg,#283a4a,#121e2c)!important;box-shadow:0 0 0 1px #9b835c25;color:#fff0cd!important}
+/* Cinematic title screen, editorial hierarchy and ornate progress seal. */
+.hero.chronicle-hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(230px,.55fr);align-items:center;gap:28px;min-height:375px;padding:36px 39px;overflow:hidden;position:relative;border:2px solid #d3b577!important;border-radius:13px;background-image:linear-gradient(90deg,#07111bed 0%,#081727ce 43%,#07132050 100%),var(--cinematic-art)!important;background-size:cover,cover!important;background-position:center,62% 46%!important;box-shadow:0 25px 60px #0008,inset 0 0 0 6px #080e169c,inset 0 0 0 8px #b19a6033}
+.hero.chronicle-hero:before{content:"";position:absolute;inset:14px;border:1px solid #eed7a660;pointer-events:none;z-index:0;border-radius:3px;background:linear-gradient(135deg,#f7dc9d 0 3px,transparent 4px) left top/25px 25px no-repeat,linear-gradient(225deg,#f7dc9d 0 3px,transparent 4px) right top/25px 25px no-repeat,linear-gradient(45deg,#f7dc9d 0 3px,transparent 4px) left bottom/25px 25px no-repeat,linear-gradient(315deg,#f7dc9d 0 3px,transparent 4px) right bottom/25px 25px no-repeat}
+.hero.chronicle-hero:after{content:"";pointer-events:none;position:absolute;inset:0;width:auto;height:auto;border:0;border-radius:0;background:radial-gradient(circle at 58% 20%,#fff0b954 0 1px,transparent 3px),radial-gradient(circle at 82% 36%,#f5dd9c85 0 1px,transparent 3px),radial-gradient(circle at 49% 73%,#fff1bb5e 0 1px,transparent 2px);box-shadow:none;animation:ambientGlitter 8s ease-in-out infinite alternate}
+@keyframes ambientGlitter{0%{opacity:.35;transform:translateY(0)}100%{opacity:1;transform:translateY(-13px)}}
+.hero-text{position:relative;z-index:1;max-width:690px}.hero-chapter{font-family:Georgia,serif;font-weight:700;font-size:13px;letter-spacing:.22em;color:#f3d5a0;display:flex;align-items:center;gap:11px;text-shadow:0 2px 10px #000}
+.hero-insignia{display:grid;place-items:center;border:1px solid #e8cd91;border-radius:50%;width:29px;height:29px;font-size:14px;box-shadow:0 0 13px #e0be6d66}
+.roman{margin-left:5px;font-size:22px;font-family:Georgia,serif;color:#fff0c2}
+.hero-rule{display:flex;gap:10px;align-items:center;color:#f9dea7;max-width:265px;margin:14px 0}.hero-rule span{height:1px;flex:1;background:linear-gradient(90deg,transparent,#e8c994,#e8c994)}.hero-rule span:last-child{transform:scaleX(-1)}
+.hero.chronicle-hero h2{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(31px,4vw,57px);line-height:1.34;letter-spacing:.05em;margin:0 0 14px;color:#fff8e5;text-shadow:0 4px 22px #000,0 2px 2px #000}.chronicle-hero h2 em{font-style:normal;color:#ffe0a1}
+.hero.chronicle-hero .hero-intro{max-width:490px;color:#e6e9ec!important;line-height:1.85;font-size:clamp(13px,1.5vw,16px);text-shadow:0 2px 9px #000}
+.hero-quests{display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}.hero-quests span{font-size:12px;letter-spacing:.035em;color:#ffe9ba;background:#0d2134c7;border:1px solid #c1a46c96;padding:8px 12px;border-radius:4px;box-shadow:inset 0 0 16px #f4d18917}
+.progress-crest{position:relative;z-index:1;border:1px solid #cbb680a3;align-self:center;background:linear-gradient(135deg,#071524f2,#13273ad9);padding:22px 20px;border-radius:9px;box-shadow:0 16px 35px #0008,inset 0 0 0 4px #f8e3a013,inset 0 0 38px #e5bd6630}
+.progress-crest:before,.progress-crest:after{content:"❖";position:absolute;color:#f3d6a0;font-size:16px;top:-12px;left:calc(50% - 9px);background:#162536;padding:0 4px}.progress-crest:after{top:auto;bottom:-12px}
+.progress-orbit{width:108px;height:108px;display:grid;place-items:center;margin:0 auto 15px;border-radius:50%;border:2px solid #d3ad73;background:radial-gradient(circle,#19374c 0 28%,#0c1b2b 29% 55%,#a68c6044 56% 60%,transparent 62%),conic-gradient(from 15deg,#dfc38a,#29455b,#b89b64,#20384e,#dfc38a);box-shadow:0 0 0 6px #1b2e3b,0 0 0 7px #8b7b60,0 0 25px #e1bd6b40}
+.orbit-center{font-size:39px;color:#ffe4a0;text-shadow:0 0 20px #ffc87f;animation:orbitGlow 4s ease-in-out infinite alternate}
+@keyframes orbitGlow{to{filter:brightness(1.3);transform:scale(1.08)}}
+.progress-heading{font-family:Georgia,serif;letter-spacing:.16em;text-align:center;font-size:11px;color:#ecc88c;margin:0 0 8px}.progress-crest .progress-label{color:#dee9ef}.progress-crest .bar{height:9px;border:1px solid #927950;background:#030e1a}.progress-crest .bar>span{background:linear-gradient(90deg,#d19e58,#ffe4a7,#a8ecdf);box-shadow:0 0 12px #ffe2a6}
+.progress-crest .progress-note{color:#b5c1c8;font-size:10px;margin:12px 0 0;line-height:1.55}
+/* RPG command palette */
+.tabs{position:relative;gap:8px;padding:12px;border-radius:12px;background:linear-gradient(100deg,#101a27ed,#1b2d39f2,#101b28ed);border:1px solid #b49461;box-shadow:inset 0 0 0 2px #e4c79212,0 10px 32px #0008}
+.tabs:before{content:"COMMAND MENU";position:absolute;top:-12px;left:21px;padding:0 10px;background:#152434;color:#f3d9a0;font-family:Georgia,serif;font-size:12px;letter-spacing:.14em}
+.tab{flex:1;min-width:0;position:relative;border-radius:6px;background:linear-gradient(160deg,#25384b,#101d2c);border:1px solid #7d807b;color:#e9eef1;font-weight:800;letter-spacing:.025em;padding:14px 11px;box-shadow:inset 0 1px 0 #efffff1b,0 2px 5px #02070b70;transition:background .22s,box-shadow .22s,transform .22s}
+.tab:hover{background:linear-gradient(150deg,#39546c,#192e3e);transform:translateY(-2px)}.tab[aria-current="page"]{color:#231b10;border-color:#fff2c8;background:linear-gradient(160deg,#fff0c8,#dcb778 60%,#aa844d);box-shadow:inset 0 2px 0 #fff8e5,0 0 18px #ffd79770;text-shadow:0 1px 0 #fff5db}
+/* Ambient chapter panels */
+.panel{position:relative;background:linear-gradient(145deg,#1a2d3cfa,#0d1828 62%,#121e2bdc);border:1px solid #8b795d;border-radius:10px;box-shadow:inset 0 0 0 1px #e0c18a22,0 15px 34px #0008}
+.panel:after{content:"";position:absolute;inset:6px;border:1px solid #c3a8761c;pointer-events:none;border-radius:6px}
+.section-kicker{font-family:Georgia,serif;color:#ebc787;letter-spacing:.19em}
+.section-title{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;color:#fff0d0;font-size:clamp(22px,2.3vw,28px);text-shadow:0 2px 13px #000}
+.headline .page{background:linear-gradient(145deg,#382d22,#192b38);color:#f7d7a1;border:1px solid #9f855d;border-radius:4px}
+.brief{color:#eaf0ef;line-height:1.8}
+.mission.active{background:linear-gradient(90deg,#51432c,#233748);border-color:#d5b777;color:#fff4d5;box-shadow:inset 3px 0 #ffdd95}
+.mission .num{color:#edc894}.mission:hover{background:#344659}
+.visual-frame.scene-feature,.boss-graphic.scene-feature{position:relative;border:4px double #deba78!important;padding:4px!important;border-radius:10px!important;background:#070f1a!important;box-shadow:0 12px 38px #020710d9,inset 0 0 0 2px #fbe3b345,0 0 25px #efbe6344!important}
+.visual-frame.scene-feature:before,.boss-graphic.scene-feature:before{content:"";display:none;position:absolute;left:13px;top:11px;z-index:3;pointer-events:none;font-family:Georgia,serif;font-size:10px;letter-spacing:.11em;color:#fff5d8;padding:5px 9px;border:1px solid #dcc08982;background:#091522c9;box-shadow:0 3px 10px #0007;border-radius:3px}
+.visual-frame.scene-feature:after,.boss-graphic.scene-feature:after{content:"✧";position:absolute;right:12px;top:9px;z-index:3;color:#f3d198;filter:drop-shadow(0 0 5px #fff2c3);font-size:22px;pointer-events:none}
+.scene-label{color:#ffe2aa;font-family:"Yu Mincho",serif;font-size:15px;letter-spacing:.05em}
+.focus-console{border:1px solid #d9bd82;background:linear-gradient(105deg,#443722,#172e3b 68%,#0d2839);border-radius:7px;box-shadow:inset 0 0 0 2px #ffe9b322,0 10px 20px #0005}
+.focus-eye{background:linear-gradient(145deg,#f5dea3,#ba8b4c);box-shadow:0 0 17px #ffcf7e66;color:#202733}
+.focus-copy strong{color:#ffe4ab}.focus-toggle{border:1px solid #c7a76a;background:#243846;color:#fcebc9}
+.controls{border:1px solid #b3925d;background:linear-gradient(170deg,#111f30,#0b1725);border-radius:9px;box-shadow:inset 0 0 0 3px #c3a46e17}
+.control-head{color:#fbe0a8;letter-spacing:.04em;font-family:"Yu Mincho",serif;font-size:15px}
+.stat{border:1px solid #6e7b7c;background:linear-gradient(165deg,#23384a,#111e2d);border-radius:6px}.stat b{color:#ffdda0}
+.range-field input{accent-color:#e8c484}
+.btn{border-radius:5px;position:relative;min-height:45px;letter-spacing:.01em;box-shadow:inset 0 1px #ffffff41,0 5px 12px #0005}
+.btn.primary,.btn.amber{background:linear-gradient(160deg,#ffefc9,#e5bd7e 63%,#b18a50);color:#281d13;border:1px solid #fff1ca;text-shadow:0 1px #fff4d0}
+.btn.secondary{background:linear-gradient(165deg,#294255,#142739);border:1px solid #9b896b;color:#f4e9d3}
+.btn:hover:not(:disabled){box-shadow:inset 0 1px #fff9,0 0 15px #efcb8859;filter:brightness(1.07)}
+.jumpbar{border:1px solid #a99368;border-radius:8px;background:linear-gradient(90deg,#222b36,#152938,#111f2f);padding:13px 16px;box-shadow:inset 0 0 0 2px #c1ad7923,0 7px 20px #0005}
+.jumpbar strong{font-family:Georgia,"Yu Mincho",serif;font-size:15px;letter-spacing:.07em;color:#ffe0a4}
+.jumpbar button{background:linear-gradient(145deg,#324858,#142b3a);border:1px solid #ad966e;border-radius:5px;box-shadow:inset 0 1px #ffffff29}
+.story-hero{border:2px solid #d5b783;border-radius:10px;box-shadow:inset 0 0 0 6px #070f1a80,0 20px 46px #0008;padding:31px}
+.story-hero:after{content:"";position:absolute;inset:12px;pointer-events:none;border:1px solid #e8d7ae65}
+.story-head h2{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;color:#fff6da;text-shadow:0 2px 16px #000}
+.area-card{border-color:#9c8969!important;background:linear-gradient(140deg,#1d3040f3,#13202df3)!important;border-radius:8px!important;box-shadow:0 12px 30px #02080ecc,inset 0 1px #ffe1a51c!important}
+.area-card.focus{border-color:#ebc67e!important;box-shadow:0 0 0 2px #bf9c5a58,0 12px 30px #000a!important}
+.area-head h3{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;color:#ffe3af}
+.stage-dot{border-color:#ae9569!important}.stage-dot.done{background:#4c4432!important;color:#ffdf9e!important}
+.badge{border-color:#8e7755!important;background:#182635}
+.boss-tile{border-color:#9c8258!important;background:linear-gradient(145deg,#1d3445,#172333)!important;border-radius:8px!important}
+.boss-tile.active{border-color:#efd596!important;box-shadow:0 0 21px #e5bd6952!important}
+.footer{color:#aebbc4;border-top:1px solid #7a6b4e;padding-top:12px}
+@media(max-width:980px){.hero.chronicle-hero{grid-template-columns:minmax(0,1fr) 230px;padding:27px}.tabs{flex-wrap:wrap}.tab{flex-basis:30%}}
+@media(max-width:700px){.wrap{padding:11px 10px 36px}.topbar{margin-bottom:15px}.brand h1{font-size:26px}.sigil{width:58px;height:58px}.brand p{font-size:11px}.status{gap:5px}.status .pill{font-size:11px;padding:8px 9px}.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px 7px;margin-top:13px}.tab{min-width:0;min-height:52px;font-size:12px;line-height:1.4;padding:9px 5px}.hero.chronicle-hero{grid-template-columns:1fr;min-height:0;gap:22px;padding:30px 22px 25px;background-position:center,55% 38%!important}.hero.chronicle-hero:before{inset:8px}.hero-chapter{font-size:10px;letter-spacing:.12em}.hero-rule{margin:10px 0}.hero.chronicle-hero h2{font-size:clamp(29px,7vw,39px)}.hero.chronicle-hero .hero-intro{font-size:13px;line-height:1.72}.hero-quests{gap:5px}.hero-quests span{font-size:10px;padding:5px 7px}.progress-crest{display:grid;grid-template-columns:68px 1fr;align-items:center;column-gap:13px;padding:13px}.progress-orbit{width:64px;height:64px;grid-row:1/5;margin:0;border-width:1px;box-shadow:0 0 0 3px #1b2e3b,0 0 0 4px #8b7b60}.orbit-center{font-size:27px}.progress-heading{font-size:9px;text-align:left;margin:0}.progress-crest .progress-label{margin:3px 0}.progress-crest .progress-note{margin:4px 0 0;font-size:9px}.progress-crest:before,.progress-crest:after{display:none}.visual-frame.scene-feature:before,.boss-graphic.scene-feature:before{font-size:8px;left:7px;top:6px;padding:3px 5px}.visual-frame.scene-feature:after,.boss-graphic.scene-feature:after{font-size:14px;right:7px;top:4px}.story-hero{padding:18px}.story-head h2{font-size:25px}.panelpad,.quizbox{padding:16px}.section-title{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.hero.chronicle-hero:after,.orbit-center{animation:none!important}}
+`;
+  document.head.appendChild(styleEl);
+  const footer=document.querySelector('.footer');
+  if(footer)footer.textContent=footer.textContent.replace(/v0\.16(?:（[^）]*）)?/, 'v0.17（オリジナル・ファンタジーRPG演出）');
+})();
 </script>
 </body></html>
