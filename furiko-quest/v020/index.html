@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>フリコ・クエスト｜振り子と振動</title>
+<title>フリコ・クエスト v0.20｜天空時計塔</title>
 <style>
 :root{--bg:#0b1528;--panel:#111e36;--panel2:#182a46;--ink:#f2f6ff;--sub:#b0c6e6;--line:#344862;--cyan:#64dfeb;--amber:#ffcb77;--green:#86e3a7;--pink:#f7a6c0;--round:22px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;background:radial-gradient(circle at 80% -100px,#1b4770 0,transparent 31%),radial-gradient(circle at 9% 18%,#2d244b 0,transparent 38%),var(--bg);line-height:1.6;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--cyan)}
@@ -5339,7 +5339,7 @@ body[data-scene="world"] .stage-scene .visual-frame{position:relative}
 </script>
 
 <style id="immersive-v020">
-/* v0.20 release: cinematic sanctuary, precise direct touch, optimized assets */
+/* v0.20: cinematic sanctuary; camera-like depth without disturbing scientific controls */
 :root{--v020-sanctuary:none;--v020-walkways:none;--v020-science:none;--v020-boss:none}
 .hero.chronicle-hero{
  background-image:linear-gradient(180deg,#08142375 0%,#07172c18 31%,#06142766 63%,#050e1fe9 95%),var(--v020-sanctuary)!important;
@@ -5354,7 +5354,7 @@ body[data-scene="map"] .story-hero{
 body[data-scene="world"] .stage-viewport:before{
  background-image:linear-gradient(180deg,#041224b5 0%,#091b2a59 35%,#07182a8c 75%,#040d1beb),var(--v020-science)!important;
  background-size:cover,auto 205%!important;
- background-position:center,calc(50% + var(--stage-cam-x,0px)) calc(94% + var(--stage-cam-y,0px))!important;
+ background-position:center,calc(50% + var(--stage-cam-x,0px)) calc(52% + var(--stage-cam-y,0px))!important;
  background-repeat:no-repeat!important;
  transition:background-position .45s ease-out;
 }
@@ -5395,7 +5395,6 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
  .v020-pan-controls{right:11px;bottom:153px}
  .v020-pan-controls .v020-pan-tip{display:none}
 }
-@media(min-width:761px){.v020-direct-panel{bottom:9px!important}}
 @media(prefers-reduced-motion:reduce){.v020-ambience{animation:none!important}.hero.chronicle-hero{transition:none!important}}
 </style>
 
@@ -5427,38 +5426,59 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
   const viewport=scene.closest('.stage-viewport');
   if(viewport&&!viewport.querySelector('.v020-ambience')){const amb=document.createElement('div');amb.className='v020-ambience';viewport.prepend(amb)}
   let d=scene.querySelector('.v020-direct-panel');
-  if(!d){d=document.createElement('div');d.className='v020-direct-panel';d.innerHTML='<span class="v020-drag-label">↕ 玉の近くを上下にドラッグ</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';scene.append(d);
+  if(!d){d=document.createElement('div');d.className='v020-direct-panel';d.innerHTML='<span class="v020-drag-label">↕ 指で振り子を上下に</span><button type="button" data-v020="short" aria-label="糸を5cm短くする">−</button><span>糸の長さ</span><output aria-live="off"></output><button type="button" data-v020="long" aria-label="糸を5cm長くする">＋</button>';scene.append(d);
    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    const slider=app.querySelector('#rng-length');if(!slider)return;
+    const slider=app.querySelector('#rng-length, #rng-bridgeLength');if(!slider)return;
     const dir=b.dataset.v020==='short'?-1:1;updateLength(slider,Number(slider.value)+dir*5);
    }));
   }
-  const slider=app.querySelector('#rng-length');
+  const slider=app.querySelector('#rng-length, #rng-bridgeLength');
   d.hidden=!slider;
   if(slider)d.querySelector('output').textContent=slider.value+'cm';
-  // Canvas is recreated between stages; reinstall direct manipulation without touching physics.
+  // Direct control is active only near the visible moving pendulum bob.
+  // Tapping the scenery must never alter the experiment's settings.
   if(!canvas.dataset.v020Direct){canvas.dataset.v020Direct='1';
    let drag=null;
-   canvas.addEventListener('pointerdown',e=>{const sl=app.querySelector('#rng-length');if(!sl||e.button>0)return;
-    // Only accept touches on the real pendulum's approximate movement envelope.
-    // Background scenery and empty canvas must never change the experiment.
-    const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
-    const x=(e.clientX-rect.left)/rect.width*canvas.width;
-    const y=(e.clientY-rect.top)/rect.height*canvas.height;
-    const L=72+Number(sl.value)*.89;
-    const cx=canvas.width*.45,cy=36;
-    const a=Math.min(30,Math.max(5,Number(app.querySelector('#rng-amp')?.value)||12))*Math.PI/180;
-    const xTol=Math.max(45,L*Math.sin(a)+20);
-    if(Math.abs(x-cx)>xTol || Math.abs(y-(cy+L))>48)return;
-    drag={y:e.clientY,start:Number(sl.value)};
-    canvas.style.cursor='ns-resize';
-    try{canvas.setPointerCapture(e.pointerId)}catch{};
+   function hitBob(e){
+    const current=stage();if(!current||!['pendulum','beatbridge'].includes(current.mode))return false;
+    const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return false;
+    const sx=(e.clientX-rect.left)*canvas.width/rect.width;
+    const sy=(e.clientY-rect.top)*canvas.height/rect.height;
+    const t=performance.now()/1000;
+    let x,y,tolerance;
+    if(current.mode==='beatbridge'){
+     const T=period(state.bridgeLength,10);
+     const phase=2*Math.PI*(state.bridgeReady?t-state.bridgeStart:t)/T;
+     const ang=.35*Math.cos(phase);
+     x=(175+220*Math.sin(ang))*canvas.width/560;
+     y=(114+220*Math.cos(ang))*canvas.height/470;
+     tolerance=52*canvas.width/560;
+    }else{
+     const length=state.pValues.length,amp=state.pValues.amp;
+     const T=period(length,amp),angle=amp*Math.PI/180*Math.cos(2*Math.PI*t/T);
+     const L=72+length*.89;
+     x=canvas.width*.45+L*Math.sin(angle);
+     y=36+L*Math.cos(angle);
+     tolerance=60;
+    }
+    const dx=(sx-x)*rect.width/canvas.width;
+    const dy=(sy-y)*rect.height/canvas.height;
+    const scaledTol=Math.max(28,tolerance*rect.width/canvas.width);
+    return dx*dx+dy*dy<=scaledTol*scaledTol;
+   }
+   canvas.addEventListener('pointerdown',e=>{
+    const sl=app.querySelector('#rng-length, #rng-bridgeLength');
+    if(!sl||e.button>0||!hitBob(e))return;
+    drag={y:e.clientY,start:Number(sl.value),pointer:e.pointerId};
+    try{canvas.setPointerCapture(e.pointerId)}catch(_e){}
    });
-   canvas.addEventListener('pointermove',e=>{if(!drag)return;const sl=app.querySelector('#rng-length');if(!sl)return;
+   canvas.addEventListener('pointermove',e=>{
+    if(!drag||drag.pointer!==e.pointerId)return;
+    const sl=app.querySelector('#rng-length, #rng-bridgeLength');if(!sl)return;
     const change=Math.round((e.clientY-drag.y)/2.1);
     updateLength(sl,drag.start+change);
    });
-   for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,()=>{drag=null;canvas.style.cursor='';});
+   for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,()=>{drag=null});
   }
   if(viewport&&!viewport.querySelector('.v020-pan-controls')){
    const bar=document.createElement('div');bar.className='v020-pan-controls';
@@ -5480,4 +5500,13 @@ body[data-scene="world"] .stage-viewport.commands-open .v020-direct-panel{opacit
 })();
 </script>
 
+
+<style id="v020-final-polish">
+/* Distinguish scenic architecture from the live scientific experiment. */
+body[data-scene="world"] .stage-viewport:before {filter:blur(8px) brightness(.50) saturate(.82);transform:scale(1.045);}
+body[data-scene="world"] .stage-scene .visual-frame {outline:2px solid #cfefff5c;outline-offset:4px;}
+body[data-scene="world"] .stage-scene canvas {touch-action:none;}
+body[data-scene="world"] .v020-direct-panel {box-shadow:0 8px 30px #000c,0 0 15px #a6e9e64d;}
+@media(prefers-reduced-motion:reduce){body[data-scene="world"] .stage-viewport:before {transition:none!important;}}
+</style>
 </body></html>
