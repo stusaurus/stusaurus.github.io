@@ -246,7 +246,7 @@
   <p class="preview-alert"><strong>操作できないとき：</strong>HTMLファイルのプレビューではなく、JavaScriptを動かせるSafariなどのブラウザで開いてください。これまでの21ステージとクイズはファイル内に収録されています。</p>
   <p class="preview-hint">この案内が表示されたままなら、ゲーム本体のスクリプトが実行されていません。</p>
 </section>
-</main><footer class="footer">授業用の試作版 v0.12（プレビュー判別対応）。効果音は初期設定でOFF。波形・音の実験では再生ボタンから試聴できます。振り子は単振り子近似（大きな角度では補正）、音速は教材に示された代表値を使っています。音の反射迷宮は進路を単純化した模式図です。</footer>
+</main><footer class="footer">授業用の試作版 v0.15（ビジュアル・観察演出強化）。効果音は初期設定でOFF。波形・音の実験では再生ボタンから試聴できます。振り子は単振り子近似（大きな角度では補正）、音速は教材に示された代表値を使っています。音の反射迷宮は進路を単純化した模式図です。</footer>
 </div>
 <noscript><p style="padding:24px;background:#fff3cc;color:#202020">JavaScriptが無効です。ブラウザでJavaScriptを有効にして開いてください。</p></noscript>
 <div id="questFxLayer" class="fx-host" aria-hidden="true"></div>
@@ -1772,6 +1772,179 @@ mobileBossClock=function(c,t){const W=c.canvas.width,H=c.canvas.height,b=clockBo
  const desc=b.phase===0?'10往復を測り、糸の長さを調整':b.phase===1?`${hot?'● いま！　':'● 真下を待つ　'}成功 ${b.hits}/3`:'歯車は振り子のリズムで進む';
  bottomHud(c,W,402,title,desc,hot||done);
 };
+/* Furiko Quest v0.15 — cinematic interaction-aware art and observation system.
+   Does not change the underlying physics, success criteria or saved progress. */
+function glassSheen(c,x,y,w,h,t,intensity=.25){
+ c.save();c.beginPath();c.roundRect(x,y,w,h,12);c.clip();
+ const offset=((t*.16)%1.65)-.45;
+ const sh=c.createLinearGradient(x+w*offset,y,x+w*(offset+.55),y+h);
+ sh.addColorStop(0,'#ffffff00');sh.addColorStop(.33,`rgba(240,255,248,${intensity*.10})`);
+ sh.addColorStop(.49,`rgba(247,243,208,${intensity*.8})`);
+ sh.addColorStop(.53,`rgba(255,255,255,${intensity*.17})`);sh.addColorStop(.8,'#ffffff00');
+ c.fillStyle=sh;c.fillRect(x,y,w,h);c.restore();
+}
+function etchedDial(c,x,y,r,angle,progress,legend){
+ c.save();c.shadowColor='#061018';c.shadowBlur=15;c.shadowOffsetY=4;
+ disk(c,x,y,r,rgba(c,x-r,y-r,x+r,y+r,[[0,'#d5b87c'],[.1,'#6a634e'],[.52,'#223643'],[1,'#927453']]),'#e2c690',2);c.restore();
+ disk(c,x,y,r-8,rgba(c,x,y-r,x,y+r,[[0,'#173342'],[.6,'#0a1e2b'],[1,'#183846']]),'#ba9f70',2);
+ for(let i=0;i<=12;i++){const a=-Math.PI*.8+i*Math.PI*1.6/12;const long=i%3===0;
+  c.strokeStyle=long?'#e6d9b4':'#9bbaa7';c.lineWidth=long?2:1;
+  c.beginPath();c.moveTo(x+Math.cos(a)*(r-14),y+Math.sin(a)*(r-14));c.lineTo(x+Math.cos(a)*(r-(long?25:19)),y+Math.sin(a)*(r-(long?25:19)));c.stroke();}
+ const a=-Math.PI*.8+Math.PI*1.6*Math.max(0,Math.min(1,progress));
+ c.save();c.shadowColor='#9af5cf';c.shadowBlur=10;c.strokeStyle='#b8f7df';c.lineWidth=2.6;c.beginPath();c.moveTo(x-Math.cos(a)*9,y-Math.sin(a)*9);c.lineTo(x+Math.cos(a)*(r-26),y+Math.sin(a)*(r-26));c.stroke();c.restore();
+ disk(c,x,y,5,'#f1d7a0','#203c48',1.2);
+ text(c,legend,x,y+r+19,13,'#f5e3c1','center');
+}
+function tinyEngraving(c,x,y,copy,w=98){
+ rounded(c,x,y,w,24,5,'#091c2cd9','#baaa8350',1);
+ text(c,copy,x+7,y+16,13,'#f1d6a4');
+}
+function metalDust(c,t,x1,y1,w,h,amount=13,color='#ffe8bb'){
+ if(reduceMotion())return;
+ c.save();for(let i=0;i<amount;i++){
+  const p=randomAt(104+i*17),q=randomAt(19+i*47),x=x1+p*w+Math.sin(t*.2+i*12)*3,y=y1+((q+(t*(.01+.005*(i%3))))%1)*h;
+  c.globalAlpha=.10+(.15+.16*Math.sin(t*.9+i)*Math.sin(t*.9+i))*(i%5===0?1:.5);
+  disk(c,x,y,i%4===0?1.5:.7,color);
+ }c.restore();
+}
+function specularSweep(c,x,y,r,t,active){
+ if(!active)return;
+ const s=reduceMotion()?0:t;
+ c.save();c.translate(x,y);c.rotate(s*.36);
+ const g=c.createLinearGradient(-r,-r,r,r);
+ g.addColorStop(0,'#ffffff00');g.addColorStop(.36,'#ffffff00');g.addColorStop(.5,'#ffefbd62');g.addColorStop(.59,'#ffffff05');g.addColorStop(1,'#ffffff00');
+ c.fillStyle=g;c.beginPath();c.arc(0,0,r,0,TWO);c.fill();c.restore();
+}
+function glint(c,x,y,age,color='#ffe9b2'){
+ if(age<0||age>1||reduceMotion())return;
+ const grow=1+Math.sin(Math.PI*age)*1.6;
+ c.save();c.globalAlpha=(1-age)*.9;c.translate(x,y);c.strokeStyle=color;c.shadowColor=color;c.shadowBlur=13;c.lineWidth=2;
+ for(const xy of [[-20,0,20,0],[0,-20,0,20]]){c.beginPath();c.moveTo(xy[0]*grow,xy[1]*grow);c.lineTo(xy[2]*grow,xy[3]*grow);c.stroke();}c.restore();
+}
+// Decorative foreground is now responsive to science actions rather than continuously flashing.
+const v014Bridge=mobileBridge;
+mobileBridge=function(c,t){v014Bridge(c,t);
+ const T=period(state.bridgeLength,10),elapsed=state.bridgeReady?t-state.bridgeStart:t;
+ const phase=2*Math.PI*elapsed/T,angle=.35*Math.cos(phase);
+ const ballX=171+187*Math.sin(angle),ballY=118+187*Math.cos(angle);
+ // Mechanical transmission: independent power source and a timing regulator.
+ c.save();c.strokeStyle='#d4a872';c.lineWidth=3;c.beginPath();c.moveTo(459,336);c.lineTo(459,341);c.lineTo(485,341);c.stroke();c.restore();
+ rounded(c,439,328,76,28,8,'#172f3acb','#cdb17b',1.5);text(c,'動力',452,348,15,'#efd9a6');
+ glassSheen(c,349,117,151,184,t,.18);specularSweep(c,400,206,61,t,state.bridgeHits===3);
+ // Precision arc and measured timing marks are shown as instrument details.
+ c.save();c.strokeStyle='#e6d1a36c';c.lineWidth=2;c.beginPath();c.arc(171,118,187,Math.PI*.38,Math.PI*.62);c.stroke();c.restore();
+ for(let i=-4;i<=4;i++){
+  const a=i*.08,x=171+187*Math.sin(a),y=118+187*Math.cos(a);
+  c.strokeStyle=i===0?'#baf5e0':'#e7d2a07d';c.lineWidth=i===0?3:1.5;
+  c.beginPath();c.moveTo(x,y-5);c.lineTo(x,y+(i%2===0?9:4));c.stroke();
+ }
+ // A short highlight follows the bob; it never changes the period displayed by the game.
+ c.save();c.strokeStyle='#fff0bdba';c.lineWidth=2;c.globalAlpha=.5;
+ c.beginPath();c.arc(ballX-8,ballY-9,22,Math.PI*1.16,Math.PI*1.78);c.stroke();c.restore();
+ const progress=Math.min(1,Math.max(0,state.bridgeHits/3)),pulse=t-state.bridgePulseTime;
+ if(pulse>=0&&pulse<1.1){glint(c,424,213,pulse);glint(c,ballX,ballY,pulse*.87,'#aeffea')}
+ if(state.bridgeReady){
+   const hot=Math.abs(Math.sin(phase))>.75;
+   c.save();c.globalAlpha=hot?.86:.29;c.fillStyle=hot?'#aaf9de':'#e4c98b';
+   rounded(c,30,321,86,23,6,hot?'#17574d':'#263a44');text(c,hot?'いま！':'待機中',40,338,15,hot?'#d3ffed':'#e8d7bc');c.restore();
+ }
+ metalDust(c,t,26,88,506,268,15,'#f2d8a2');
+};
+const v014Rhythm=mobileRhythm;
+mobileRhythm=function(c,t,v){v014Rhythm(c,t,v);
+ const hits=Math.max(0,Math.min(4,state.rhythmHit||0));
+ const now=6+hits*4;
+ // A genuine before/after instrument stays legible even while the swing is moving.
+ rounded(c,30,180,179,126,13,'#071d2de5','#9d987b',2);
+ text(c,'振れ幅を観察',46,202,17,'#ffe6b5');
+ c.fillStyle='#c0d0d8b0';c.fillRect(45,220,141,1);
+ text(c,'はじめ',47,241,14,'#bad4dd');text(c,'6°',161,242,17,'#d5e4ee','right');
+ text(c,'いま',47,270,14,'#a1f0d0');text(c,`${now}°`,164,271,22,'#adffe0','right');
+ rounded(c,46,285,142,7,4,'#234451','#4b6572',1);
+ rounded(c,47,286,Math.max(6,140*hits/4),5,2,'#8df1d0');
+ // Moving pendulum cast-shadow stays subtle; main object is not visually obscured.
+ const periodNow=period(v.length??60,v.amp??12),angle=now*Math.PI/180*Math.cos(TWO*t/periodNow);
+ const bx=278+216*Math.sin(angle),by=119+216*Math.cos(angle);
+ c.save();c.globalAlpha=.37;c.fillStyle=rad(c,bx+17,by+19,70,'#020f1a');c.fillRect(bx-62,by-62,128,128);c.restore();
+ glint(c,bx-8,by-12,t-state.rhythmPulseTime,'#a7ffe7');
+ if(hits>0){
+  rounded(c,240,348,278,30,8,'#0d383bd9','#7ed6bf',1.1);
+  text(c,'うまく押すと、揺れ幅が広がる',252,368,15,'#baffdf');
+ }
+ metalDust(c,t,28,112,503,230,10,'#d8e7d3');
+};
+const v014Echo=mobileEcho;
+mobileEcho=function(c,t){v014Echo(c,t);
+ const task=ECHO_MISSIONS[Math.min(state.echoRound,ECHO_MISSIONS.length-1)],isEcho=task.mode==='echo';
+ // Mode labels are explicit: a pulse goes one way for lightning, round trip for an echo.
+ rounded(c,31,117,298,41,10,'#0c283acb','#c1aa7b',1.2);
+ text(c,isEcho?'壁で反射して戻る（往復）':'光と音の到着差（片道）',43,145,18,'#ffe7bd');
+ if(state.echoScanned){
+  const q=((Math.max(0,t-state.echoScanStart)*.38)%1),back=isEcho&&q>=.5;
+  const f=isEcho?(back?(1-q)*2:q*2):1-q,x=103+(452-103)*f;
+  const color=back?'#95ffdf':'#ffdca3';
+  // Distinct traveling wavefronts, rather than a laser beam.
+  c.save();c.strokeStyle=color;c.globalAlpha=.50;c.lineWidth=2;c.setLineDash([3,7]);
+  c.beginPath();c.moveTo(back?452:103,272);c.lineTo(x,272);c.stroke();c.setLineDash([]);c.restore();
+  glint(c,isEcho?452:103,247,isEcho?Math.abs(q-.5)*3:q*2,color);
+  if(isEcho&&back){
+   c.save();c.globalAlpha=.26;c.strokeStyle='#83f9df';c.lineWidth=3;
+   for(let j=0;j<3;j++){c.beginPath();c.arc(452,247,17+j*18,2.12,4.1);c.stroke()}c.restore();
+  }
+ }
+ tinyEngraving(c,342,330,isEcho?'↔ 音の往復':'→ 音の片道',121);
+ metalDust(c,t,28,158,505,184,16,'#d5dfdb');
+};
+const v014Boss=mobileBossClock;
+mobileBossClock=function(c,t){v014Boss(c,t);
+ const b=clockBoss,age=t-(b.gearPulseTime??-100),active=b.phase===2;
+ // Real clockwork is powered by its wound spring. The pendulum regulates rate.
+ c.save();c.strokeStyle='#e1c18b';c.lineWidth=3;c.beginPath();c.moveTo(410,352);c.lineTo(410,342);c.lineTo(431,342);c.stroke();c.restore();
+ rounded(c,354,349,167,29,7,'#102532d8','#be9f6b',1.2);
+ text(c,'動力：ぜんまい',365,370,17,'#f8dcb1');
+ glassSheen(c,345,116,155,200,t,.24);specularSweep(c,413,220,70,t,active);
+ if(age>=0&&age<1.4){glint(c,420,216,age*.72);}
+ if(active){
+  // Victory is a change in the environment, not only a scoreboard flash.
+  c.save();c.globalAlpha=.17+.03*Math.cos(t);c.fillStyle=rad(c,423,222,200,'#ffdb8d');c.fillRect(240,45,320,360);c.restore();
+  for(let i=0;i<9;i++){
+    const x=330+randomAt(38+i*7)*178,y=125+randomAt(73+i*17)*165;
+    c.save();c.globalAlpha=.38+.22*Math.sin(t*.8+i);disk(c,x,y,1.5+i%2,'#ffe9ae');c.restore();
+  }
+ }
+ metalDust(c,t,35,82,485,280,16,'#eddbb6');
+};
+// Focus the composition on the interactive art; keep controls, hints and lesson content intact.
+const cineCSS=document.createElement('style');cineCSS.textContent=`
+:root{--amber:#f4d395;--cyan:#78e6e6;--green:#9cf2c4}
+.panelpad:has(> .visual-frame) .scene-label{font-weight:900;letter-spacing:.03em}
+.visual-frame.scene-feature,.boss-graphic.scene-feature{position:relative;overflow:hidden!important;border:1px solid #b99c67!important;border-radius:19px!important;background:#081d2b!important;padding:10px!important;box-shadow:0 13px 33px #0009,0 0 0 1px #806b4e80,inset 0 0 31px #d1ad6a16!important}
+.visual-frame.scene-feature:after,.boss-graphic.scene-feature:after{content:'';pointer-events:none;position:absolute;inset:5px;border:1px solid #f6e1af40;border-radius:15px;box-shadow:inset 0 0 15px #050d1f73}
+.scene-feature canvas{display:block;filter:contrast(1.065) saturate(1.05);border:1px solid #b69a69!important;box-shadow:0 6px 20px #020916a8!important}
+.focus-console{border-color:#bea56d!important;background:linear-gradient(128deg,#2f2b25,#163642 70%)!important}
+.scene-label small{color:#a9d7db}
+/* The illustration is the star on phones; instructions remain directly below it. */
+@media(max-width:700px){
+ .panelpad:has(> .visual-frame){display:flex;flex-direction:column}
+ .panelpad:has(> .visual-frame)> .section-kicker{order:0}
+ .panelpad:has(> .visual-frame)> .challenge-ribbon{order:1}
+ .panelpad:has(> .visual-frame)> .headline{order:2}
+ .panelpad:has(> .visual-frame)> .mobile-select{order:3}
+ .panelpad:has(> .visual-frame)> .scene-label{order:4;margin-top:7px}
+ .panelpad:has(> .visual-frame)> .visual-frame{order:5}
+ .panelpad:has(> .visual-frame)> .focus-console{order:6;margin-top:10px!important}
+ .panelpad:has(> .visual-frame)> .brief{order:7;margin-top:16px!important;color:#e5f2ee}
+ .panelpad:has(> .visual-frame)> .controls{order:8}
+ .panelpad:has(> .visual-frame)> details.tip{order:9}
+ .panelpad:has(> .visual-frame)> .feedback{order:10}
+ .panelpad:has(> .visual-frame)> #questTransition{order:11}
+ .panelpad:has(> .visual-frame)> #knowledgeReveal{order:12}
+ .panelpad:has(> .visual-frame)> .mission-actions{order:13}
+ .scene-feature canvas{width:100%;height:auto}
+}
+@media(prefers-reduced-motion:reduce){.scene-feature canvas{animation:none;transition:none}}
+`;document.head.appendChild(cineCSS);
+
 // Desktop graphics receive the same surface polish through the existing detailed base scenes.
 // UI: material hierarchy without sacrificing accessibility.
 const css=document.createElement('style');css.textContent=`
