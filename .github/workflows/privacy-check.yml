@@ -1,0 +1,30 @@
+name: Verify shared disclosure page
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "privacy/**"
+      - "tests/test_privacy_page.py"
+      - ".github/workflows/privacy-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "privacy/**"
+      - "tests/test_privacy_page.py"
+      - ".github/workflows/privacy-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate six-site policy links and disclosure
+        run: python -m unittest discover -s tests -p 'test_privacy_page.py' -v
